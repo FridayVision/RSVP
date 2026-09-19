@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DnA — Derin & Akshita</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --pearl:         #F8F5EF;
+      --pearl-2:       #F0EAE0;
+      --lavender:      #C9B8E8;
+      --lavender-deep: #8B73BC;
+      --lavender-pale: #EDE6F7;
+      --gold:          #C9A84C;
+      --gold-light:    #EDD98A;
+      --gold-deep:     #9A7228;
+      --gold-glow:     rgba(201,168,76,0.18);
+      --ink:           #2C2A26;
+      --ink-soft:      #7A746E;
+      --white:         #FFFFFF;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Jost', sans-serif; background: var(--pearl); color: var(--ink); overflow-x: hidden; }
+
+    /* ── Floating petals overlay ─────────────────────────────── */
+    #petals-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+
+
+    /* ── Scroll-reveal ───────────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left  { opacity: 0; transform: translateX(-50px); transition: opacity 0.9s ease, transform 0.9s ease; }
+    .reveal-right { opacity: 0; transform: translateX(50px);  transition: opacity 0.9s ease, transform 0.9s ease; }
+    .reveal-left.visible, .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* ── Dividers ────────────────────────────────────────────── */
+    .divider-h {
+      width: 80px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto;
+    }
+    .divider-v {
+      width: 1px; height: 48px;
+      background: linear-gradient(180deg, transparent, var(--lavender), transparent);
+      margin: 0 auto;
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       HERO
+    ════════════════════════════════════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 80px 24px 100px;
+      position: relative; overflow: hidden;
+    }
+
+    /* Beach watercolor background */
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 110%, rgba(201,168,76,0.13) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 20% 80%, rgba(201,168,76,0.09) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(201,168,76,0.07) 0%, transparent 60%),
+        linear-gradient(180deg, var(--pearl) 0%, #F4EDE0 100%);
+      z-index: 0;
+    }
+
+    /* Animated wave SVG — kept for beach-flow strip below hero */
+    @keyframes waveScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── Wedding ring art ────────────────────────────────────── */
+    .hero-rings {
+      position: absolute; top: 26%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(480px, 70vw);
+      pointer-events: none; z-index: 3;
+      mix-blend-mode: multiply;
+    }
+    .rings-img {
+      width: 100%; height: auto;
+      display: block;
+      opacity: 0.65;
+    }
+
+    /* Outer wrapper: one-time drop from above */
+    .rings-drop {
+      animation: ringsDrop 1.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    /* Inner wrapper: gentle eternal float after landing */
+    .rings-float {
+      animation: ringsFloat 9s 1.8s ease-in-out infinite;
+    }
+
+    @keyframes ringsDrop {
+      0%   { transform: translateY(-115vh); opacity: 0; }
+      30%  { opacity: 1; }
+      100% { transform: translateY(0);      opacity: 1; }
+    }
+    @keyframes ringsFloat {
+      0%,100% { transform: translateY(0px); }
+      50%     { transform: translateY(-9px); }
+    }
+
+    /* ── Hero beach base ─────────────────────────────────────── */
+    .hero-beach {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 180px; pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .hero-beach .wave-a { width: 200%; animation: waveScroll 20s linear infinite; }
+    .hero-beach .wave-b { width: 200%; animation: waveScroll 14s linear infinite reverse; margin-top: -30px; }
+
+    /* Particle canvas */
+    #particle-canvas { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+
+    .hero-inner {
+      position: relative; z-index: 2;
+      margin-top: min(200px, 26vw);
+    }
+
+    .hero-eyebrow {
+      position: absolute; top: 7%; left: 0; right: 0;
+      text-align: center;
+      font-family: 'Jost', sans-serif; font-weight: 300;
+      font-size: 0.72rem; letter-spacing: 0.45em; text-transform: uppercase;
+      color: var(--ink-soft);
+      z-index: 2;
+      animation: fadeUp 1.2s ease both;
+    }
+
+    .dna-monogram {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(5.5rem, 20vw, 15rem);
+      font-weight: 300; line-height: 1; letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      animation: fadeUp 1.2s 0.2s ease both;
+      filter: drop-shadow(0 8px 32px rgba(155,133,196,0.18));
+    }
+    .dna-monogram .D { color: var(--lavender-deep); }
+    .dna-monogram .n { color: var(--gold); font-style: italic; font-size: 0.68em; vertical-align: 0.08em; }
+    .dna-monogram .A { color: var(--lavender-deep); }
+
+    .hero-names {
+      display: flex; align-items: baseline; justify-content: space-around;
+      width: min(500px, 72vw); margin: -4px auto 14px;
+      animation: fadeUp 1.2s 0.35s ease both;
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif; font-weight: 500;
+      font-size: clamp(1.2rem, 3.2vw, 2rem);
+      color: var(--gold-deep); letter-spacing: 0.1em;
+    }
+
+    .hero-tagline {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-weight: 300; font-size: clamp(0.95rem, 2.5vw, 1.4rem);
+      color: var(--ink-soft); letter-spacing: 0.06em; margin-bottom: 40px;
+      animation: fadeUp 1.2s 0.5s ease both;
+    }
+
+    .hero-date-row {
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; margin-bottom: 48px;
+      animation: fadeUp 1.2s 0.6s ease both;
+    }
+    .hero-date-line { width: 50px; height: 1px; background: var(--gold); }
+    .hero-date {
+      font-family: 'Jost', sans-serif; font-weight: 300;
+      font-size: 0.78rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold-deep);
+    }
+
+    .hero-scroll-hint {
+      position: absolute; bottom: 36px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      animation: breathe 2.5s ease-in-out infinite;
+      z-index: 2;
+    }
+    .hero-scroll-hint span {
+      font-size: 0.6rem; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--ink-soft);
+    }
+    .scroll-line { width: 1px; height: 40px; background: linear-gradient(180deg, var(--gold), transparent); }
+
+    @keyframes fadeUp   { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes breathe  { 0%,100%{ opacity: 0.4; transform: translateX(-50%) translateY(0);   }
+                          50%    { opacity: 1;   transform: translateX(-50%) translateY(8px);  } }
+
+    /* ════════════════════════════════════════════════════════════
+       COUNTDOWN
+    ════════════════════════════════════════════════════════════ */
+    #countdown {
+      padding: 110px 24px 80px;
+      background: linear-gradient(180deg, var(--pearl) 0%, #F0E8D8 50%, var(--pearl) 100%);
+      text-align: center;
+      position: relative; overflow: hidden; z-index: 1;
+    }
+    .countdown-bg-img {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(1.12);
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      opacity: 0.32;
+      mix-blend-mode: multiply;
+      pointer-events: none; z-index: 0;
+    }
+    #countdown .countdown-label,
+    #countdown .countdown-grid { position: relative; z-index: 1; }
+    #countdown::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(201,168,76,0.07) 0%, transparent 70%);
+    }
+    #countdown::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .countdown-label {
+      font-family: 'Cormorant Garamond', serif; font-weight: 700;
+      font-size: 1.2rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--ink); margin-bottom: 40px;
+      position: absolute; top: 36px; left: 0; right: 0; text-align: center;
+    }
+
+    .countdown-grid {
+      display: flex; justify-content: center; align-items: center;
+      gap: clamp(16px, 4vw, 48px); flex-wrap: wrap;
+      position: relative;
+    }
+
+    .countdown-unit {
+      display: flex; flex-direction: column; align-items: center;
+    }
+
+    .countdown-number {
+      font-family: 'Cormorant Garamond', serif; font-weight: 700;
+      font-size: clamp(4rem, 10vw, 7.5rem); line-height: 1;
+      color: var(--ink); letter-spacing: -0.02em;
+      position: relative;
+    }
+    .countdown-number::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .countdown-unit-label {
+      font-family: 'Jost', sans-serif; font-weight: 700;
+      font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase;
+      color: var(--ink); margin-top: 12px;
+    }
+
+    .countdown-sep {
+      font-family: 'Cormorant Garamond', serif; font-size: 3rem;
+      color: var(--gold); opacity: 0.5; margin-bottom: 20px;
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       OUR STORY
+    ════════════════════════════════════════════════════════════ */
+    #story {
+      padding: 110px 24px;
+      background: var(--white);
+      position: relative; overflow: hidden; z-index: 1;
+    }
+    .story-hearts {
+      position: absolute; inset: 0;
+      pointer-events: none; z-index: -1;
+      opacity: 0.18;
+    }
+
+    .story-container {
+      max-width: 960px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 72px; align-items: center; position: relative;
+    }
+
+    .section-label {
+      font-family: 'Jost', sans-serif; font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.45em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 14px;
+    }
+    .section-heading {
+      font-family: 'Cormorant Garamond', serif; font-weight: 400;
+      font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.15;
+      color: var(--ink); margin-bottom: 24px;
+    }
+    .section-heading em { font-style: italic; color: var(--lavender-deep); }
+
+    .story-text { font-size: 1rem; line-height: 1.9; color: var(--ink-soft); font-weight: 300; }
+    .story-text p + p { margin-top: 1.1em; }
+
+    /* Photo frame */
+    .photo-wrap { position: relative; max-width: 360px; margin: 0 auto; }
+
+    .photo-ring {
+      position: absolute; inset: -16px;
+      border: 1px solid var(--lavender);
+      border-radius: 58% 42% 52% 48% / 52% 48% 58% 42%;
+      animation: morphRing 12s ease-in-out infinite;
+    }
+    @keyframes morphRing {
+      0%,100%{ border-radius: 58% 42% 52% 48% / 52% 48% 58% 42%; }
+      33%    { border-radius: 42% 58% 48% 52% / 48% 52% 42% 58%; }
+      66%    { border-radius: 52% 48% 60% 40% / 60% 40% 52% 48%; }
+    }
+
+    .photo-frame {
+      aspect-ratio: 3/4; border-radius: 55% 45% 50% 50% / 50% 50% 55% 45%;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--pearl-2), var(--lavender-pale));
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.6s ease;
+    }
+    .photo-frame:hover { transform: scale(1.02); }
+
+    .photo-initials-block { text-align: center; }
+    .photo-initials {
+      font-family: 'Cormorant Garamond', serif; font-size: 5rem;
+      font-weight: 300; color: var(--gold-deep); line-height: 1;
+    }
+    .photo-amp {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1.4rem; font-weight: 300; color: var(--lavender-deep);
+      display: block; margin-top: 4px;
+    }
+    .photo-frame.has-photo .photo-initials-block { display: none; }
+
+    .photo-badge {
+      position: absolute; bottom: -16px; right: -16px;
+      width: 60px; height: 60px; border-radius: 50%;
+      background: var(--white); border: 1px solid var(--gold-light);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.6rem;
+      color: var(--gold); box-shadow: 0 4px 20px rgba(201,168,76,0.15);
+      animation: floatBadge 4s ease-in-out infinite;
+    }
+    @keyframes floatBadge { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-6px); } }
+
+    @media (max-width: 700px) {
+      .story-container { grid-template-columns: 1fr; gap: 56px; }
+      .story-visual { order: 1; } .story-words { order: 2; }
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       EVENT DETAILS
+    ════════════════════════════════════════════════════════════ */
+    #details {
+      padding: 110px 24px;
+      position: relative; overflow: visible; z-index: 1;
+    }
+    /* Beach gradient background for details section */
+    #details::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(180deg, var(--pearl) 0%, #F0E8D8 50%, var(--pearl) 100%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 200'%3E%3Cpath d='M0,100 Q180,60 360,100 Q540,140 720,100 Q900,60 1080,100 Q1260,140 1440,100 L1440,200 L0,200Z' fill='%23C9A84C' opacity='0.06'/%3E%3C/svg%3E") bottom/100% auto no-repeat;
+    }
+
+    .details-header { text-align: center; margin-bottom: 64px; }
+
+    /* ── Card deck — stacked + horizontal split reveal ────────── */
+    .card-deck-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 520px;
+      overflow: visible;
+    }
+    .card-deck {
+      position: relative;
+      width: 300px;
+      height: 440px;
+      cursor: pointer;
+    }
+    /* Both cards absolute-stacked inside the deck */
+    .card-slot-a,
+    .card-slot-b {
+      position: absolute;
+      top: 0; left: 0;
+      width: 300px; height: 440px;
+      perspective: 1600px;
+      -webkit-perspective: 1600px;
+      border-radius: 18px;
+      box-shadow: 0 12px 36px rgba(44,42,38,0.22), 0 2px 6px rgba(44,42,38,0.14);
+      transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    }
+    /* Ceremony sits slightly behind */
+    .card-slot-a { transform: translate(-8px, 7px) rotate(-3deg); z-index: 1; }
+    /* Reception on top of the deck */
+    .card-slot-b { transform: translate(5px, -3px) rotate(1.5deg); z-index: 2; }
+    /* Split: fly cards apart left and right */
+    .card-deck.split .card-slot-a { transform: translateX(-290px) rotate(0deg); }
+    .card-deck.split .card-slot-b { transform: translateX(290px)  rotate(0deg); }
+
+    .event-card {
+      background: var(--white); padding: 52px 44px;
+      border-top: 2px solid transparent;
+      position: relative; overflow: hidden;
+      box-shadow: 0 2px 40px rgba(44,42,38,0.06);
+    }
+    .event-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--lavender), var(--gold), var(--lavender));
+    }
+    .event-card::after {
+      content: 'DnA';
+      position: absolute; bottom: 16px; right: 20px;
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 2.8rem; font-weight: 300;
+      color: var(--lavender); opacity: 0.12;
+      pointer-events: none; user-select: none;
+    }
+
+    .event-icon { width: 40px; height: 40px; color: var(--gold); margin-bottom: 24px; }
+    .event-type {
+      font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 500;
+      letter-spacing: 0.45em; text-transform: uppercase;
+      color: var(--lavender-deep); margin-bottom: 8px;
+    }
+    .event-name {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;
+      font-weight: 400; color: var(--ink); margin-bottom: 28px;
+    }
+    .event-row {
+      display: flex; align-items: flex-start; gap: 14px;
+      margin-bottom: 16px; font-size: 0.875rem; font-weight: 300;
+      color: var(--ink-soft);
+    }
+    .event-row svg { flex-shrink: 0; color: var(--gold); margin-top: 2px; }
+    .event-row-label {
+      font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--lavender-deep); margin-bottom: 3px;
+    }
+
+    /* ── Card flipper (NO filter — it flattens preserve-3d) ───── */
+    .card-flipper {
+      position: relative;
+      width: 100%; height: 100%;
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+      transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 18px;
+    }
+    /* Horizontal flip (rotateY) — slight delay so the split leads */
+    .card-deck.split .card-flipper {
+      transform: rotateY(180deg);
+      transition-delay: 0.18s;
+    }
+    .card-face {
+      position: absolute; inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 18px;
+    }
+    .card-back { overflow: hidden; }
+    .card-back {
+      background: linear-gradient(160deg, #2E1A0E 0%, #4A2C14 40%, #3A2010 100%);
+      display: flex; align-items: stretch; justify-content: center;
+    }
+    .card-back-svg { width: 100%; height: 100%; display: block; }
+    /* FRONT — pre-rotated Y so it appears when flipper rotates Y 180° */
+    .card-front { transform: rotateY(180deg); }
+    .card-front .event-card {
+      position: absolute; inset: 0;
+      box-sizing: border-box; border-radius: 18px;
+      overflow: hidden; padding-top: 72px;
+    }
+    .card-front .event-card::before {
+      height: 56px;
+      background: linear-gradient(135deg, var(--lavender-deep), #6B52A0);
+    }
+
+    /* Mobile: unstacked vertical layout, no horizontal split */
+    @media (max-width: 640px) {
+      .card-deck-wrap { min-height: auto; }
+      .card-deck {
+        width: min(280px, 88vw);
+        height: auto;
+        display: flex; flex-direction: column; gap: 24px;
+      }
+      .card-slot-a, .card-slot-b {
+        position: static;
+        width: 100%; height: 400px;
+        transform: none !important;
+      }
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       RSVP
+    ════════════════════════════════════════════════════════════ */
+    #rsvp {
+      padding: 110px 24px 130px;
+      background: var(--white);
+      text-align: center; position: relative; overflow: hidden; z-index: 1;
+    }
+    #rsvp::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, var(--lavender-pale) 0%, transparent 70%);
+      opacity: 0.4;
+    }
+
+    .rsvp-header { margin-bottom: 48px; position: relative; }
+    .rsvp-deadline {
+      font-size: 0.75rem; font-weight: 300; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--ink-soft); margin-top: 14px;
+    }
+    /* TODO: Update RSVP deadline */
+    .rsvp-deadline span { color: var(--gold-deep); }
+
+    .rsvp-choice { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 48px; position: relative; }
+
+    .btn-accept {
+      font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.35em; text-transform: uppercase;
+      padding: 18px 44px; background: var(--gold); color: var(--white);
+      border: none; cursor: pointer;
+      transition: background 0.3s, transform 0.25s, box-shadow 0.3s;
+      box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+    }
+    .btn-accept:hover { background: var(--gold-deep); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(201,168,76,0.4); }
+
+    .btn-decline {
+      font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 400;
+      letter-spacing: 0.35em; text-transform: uppercase;
+      padding: 18px 44px; background: transparent;
+      color: var(--lavender-deep); border: 1px solid var(--lavender);
+      cursor: pointer; transition: all 0.3s;
+    }
+    .btn-decline:hover { background: var(--lavender-pale); transform: translateY(-3px); }
+
+    /* Form */
+    .rsvp-form-wrap { max-width: 500px; margin: 0 auto; display: none; text-align: left; position: relative; }
+    .rsvp-form-wrap.open { display: block; animation: slideDown 0.5s ease both; }
+
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .field { margin-bottom: 24px; }
+    .field-label {
+      display: block; font-size: 0.62rem; font-weight: 500;
+      letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--ink-soft); margin-bottom: 8px;
+    }
+    .field-input {
+      width: 100%; padding: 14px 16px;
+      background: var(--pearl); border: none;
+      border-bottom: 1px solid var(--lavender);
+      font-family: 'Jost', sans-serif; font-size: 0.9rem; font-weight: 300;
+      color: var(--ink); outline: none; transition: border-color 0.3s;
+    }
+    .field-input:focus { border-bottom-color: var(--gold); background: var(--pearl-2); }
+    .field-input::placeholder { color: var(--ink-soft); opacity: 0.45; }
+    .field-input.err { border-bottom-color: #B94040; }
+    .field-err { font-size: 0.72rem; color: #B94040; margin-top: 5px; display: none; }
+    .field-input.err ~ .field-err { display: block; }
+
+    .plus-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 16px; background: var(--pearl);
+      border-bottom: 1px solid var(--lavender);
+    }
+    .plus-text { font-size: 0.875rem; font-weight: 300; color: var(--ink-soft); }
+    .toggle { position: relative; width: 46px; height: 26px; flex-shrink: 0; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .t-slider {
+      position: absolute; inset: 0; background: var(--pearl-2);
+      border: 1px solid var(--lavender); border-radius: 26px;
+      cursor: pointer; transition: background 0.3s;
+    }
+    .t-slider::before {
+      content: ''; position: absolute;
+      width: 18px; height: 18px; left: 3px; top: 3px;
+      background: var(--ink-soft); border-radius: 50%; transition: all 0.3s;
+    }
+    .toggle input:checked + .t-slider { background: var(--lavender-deep); }
+    .toggle input:checked + .t-slider::before { transform: translateX(20px); background: var(--white); }
+
+    .btn-submit {
+      width: 100%; margin-top: 10px;
+      font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.35em; text-transform: uppercase;
+      padding: 20px; background: var(--gold); color: var(--white);
+      border: none; cursor: pointer;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+    }
+    .btn-submit:hover:not(:disabled) { background: var(--gold-deep); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,168,76,0.4); }
+    .btn-submit:disabled { opacity: 0.6; cursor: wait; }
+
+    /* State panels */
+    .rsvp-state { display: none; max-width: 480px; margin: 0 auto; text-align: center; }
+    .rsvp-state.open { display: block; animation: slideDown 0.5s ease both; }
+    .state-icon {
+      width: 60px; height: 60px; border-radius: 50%;
+      border: 1px solid var(--gold-light);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px; color: var(--gold);
+    }
+    .state-h {
+      font-family: 'Cormorant Garamond', serif; font-size: 2rem;
+      font-weight: 400; margin-bottom: 14px;
+    }
+    .state-p { font-size: 0.9rem; font-weight: 300; color: var(--ink-soft); line-height: 1.8; }
+    .retry-btn {
+      margin-top: 20px; background: none; border: none;
+      font-family: 'Jost', sans-serif; font-size: 0.72rem;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold-deep); cursor: pointer; text-decoration: underline;
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════════════════════════ */
+    footer {
+      background: var(--ink); padding: 48px 24px;
+      text-align: center; position: relative; z-index: 1;
+    }
+    footer::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .footer-mono {
+      font-family: 'Cormorant Garamond', serif; font-size: 2.4rem;
+      font-weight: 300; margin-bottom: 14px;
+    }
+    .footer-mono .D, .footer-mono .A { color: var(--lavender); }
+    .footer-mono .n { color: var(--gold); font-style: italic; font-size: 0.7em; vertical-align: 0.08em; }
+    .footer-sub {
+      font-size: 0.65rem; font-weight: 300;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+
+    @media (max-width: 480px) {
+      .rsvp-choice { flex-direction: column; align-items: center; }
+      .btn-accept, .btn-decline { width: 100%; max-width: 300px; text-align: center; }
+      .event-card { padding: 36px 24px; }
+    }
+
+    /* ── Audio toggle button ─────────────────────────────────── */
+    #audio-btn {
+      position: fixed;
+      top: 20px; right: 20px;
+      z-index: 200;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(201,168,76,0.45);
+      background: rgba(248,245,239,0.82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 14px rgba(44,42,38,0.14);
+      transition: border-color 0.3s ease, background 0.3s ease, transform 0.2s ease;
+      padding: 0;
+    }
+    #audio-btn:hover { border-color: var(--gold); transform: scale(1.1); }
+    #audio-btn svg { width: 19px; height: 19px; color: var(--gold-deep); display: block; }
+    /* Playing state — golden ring pulse */
+    #audio-btn.playing {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.1);
+    }
+    #audio-btn.playing::after {
+      content: '';
+      position: absolute; inset: -5px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.35);
+      animation: audioRing 2.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes audioRing {
+      0%   { transform: scale(1);    opacity: 0.7; }
+      70%  { transform: scale(1.35); opacity: 0; }
+      100% { transform: scale(1.35); opacity: 0; }
+    }
+    /* Hide/show the correct icon based on state */
+    #audio-btn .icon-muted   { display: block; }
+    #audio-btn .icon-playing { display: none; }
+    #audio-btn.playing .icon-muted   { display: none; }
+    #audio-btn.playing .icon-playing { display: block; }
+  </style>
+</head>
+<body>
+
+<!-- ── Background audio ─────────────────────────────────────── -->
+<!-- TODO: Replace song.mp3 with your actual audio file -->
+<audio id="bg-audio" loop preload="auto">
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ── Audio toggle button (fixed top-right) ─────────────────── -->
+<button id="audio-btn" aria-label="Toggle music">
+  <!-- Muted icon -->
+  <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+    <line x1="23" y1="9" x2="17" y2="15"/>
+    <line x1="17" y1="9" x2="23" y2="15"/>
+  </svg>
+  <!-- Playing icon -->
+  <svg class="icon-playing" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+  </svg>
+</button>
+
+<!-- ── Floating petals canvas (global) ──────────────────────── -->
+<canvas id="petals-canvas" aria-hidden="true"></canvas>
+
+<!-- ════════════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════════ -->
+<section id="hero">
+
+  <!-- Wedding rings — fall once, settle behind DnA -->
+  <div class="hero-rings" aria-hidden="true">
+    <div class="rings-drop">
+      <div class="rings-float">
+        <img src="ring.png" alt="" class="rings-img">
+      </div>
+    </div>
+  </div>
+
+  <!-- Beach at hero bottom: sandy dunes + animated waves -->
+  <div class="hero-beach" aria-hidden="true">
+    <svg class="wave-a" viewBox="0 0 2880 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Sandy dune layer -->
+      <path d="M0,120 Q180,80 360,110 Q540,140 720,100 Q900,60 1080,90 Q1260,120 1440,100 Q1620,80 1800,110 Q1980,140 2160,110 Q2340,80 2520,100 Q2700,120 2880,90 L2880,180 L0,180Z" fill="#E8D5A0" opacity="0.32"/>
+      <path d="M0,140 Q240,115 480,132 Q720,149 960,128 Q1200,107 1440,128 Q1680,149 1920,132 Q2160,115 2400,132 Q2640,149 2880,132 L2880,180 L0,180Z" fill="#C9A84C" opacity="0.14"/>
+      <!-- Wave crest lines -->
+      <path d="M0,108 Q360,88 720,108 Q1080,128 1440,108 Q1800,88 2160,108 Q2520,128 2880,108" fill="none" stroke="#C9A84C" stroke-width="1.2" opacity="0.25"/>
+      <path d="M0,122 Q300,106 600,122 Q900,138 1200,122 Q1500,106 1800,122 Q2100,138 2400,122 Q2700,106 2880,122" fill="none" stroke="#C9B8E8" stroke-width="0.8" opacity="0.2"/>
+    </svg>
+    <svg class="wave-b" viewBox="0 0 2880 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,30 Q240,10 480,30 Q720,50 960,30 Q1200,10 1440,30 Q1680,50 1920,30 Q2160,10 2400,30 Q2640,50 2880,30 L2880,60 L0,60Z" fill="#C9A84C" opacity="0.08"/>
+    </svg>
+  </div>
+
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- Eyebrow pinned above ring landing zone -->
+  <p class="hero-eyebrow">You are warmly invited to celebrate the wedding of</p>
+
+  <!-- DnA + tagline + date sit below ring -->
+  <div class="hero-inner">
+    <div class="dna-monogram" aria-label="DnA">
+      <span class="D">D</span><span class="n">n</span><span class="A">A</span>
+    </div>
+    <div class="hero-names">
+      <span class="hero-name">Derin</span>
+      <span class="hero-name">Akshita</span>
+    </div>
+    <p class="hero-tagline">Two souls, one story</p>
+    <div class="hero-date-row">
+      <span class="hero-date-line"></span>
+      <!-- TODO: Replace with actual wedding date -->
+      <span class="hero-date">07 · February · 2027</span>
+      <span class="hero-date-line"></span>
+    </div>
+    <div class="divider-v"></div>
+  </div>
+
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     OUR STORY
+════════════════════════════════════════════════════════════ -->
+<section id="story">
+
+  <!-- Sketch hearts background art -->
+  <div class="story-hearts" aria-hidden="true">
+    <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <!-- heart centered at origin, ~24×19 px at scale 1 -->
+        <path id="hrt" d="M0 9.5C-6 4.5-12-.5-12-4.5C-12-7.5-10-9.5-7-9.5C-5-9.5-2-7.5 0-4.5C2-7.5 5-9.5 7-9.5C10-9.5 12-7.5 12-4.5C12-.5 6 4.5 0 9.5Z"/>
+      </defs>
+      <!-- Gold hearts -->
+      <use href="#hrt" transform="translate(68,55) rotate(-20) scale(1.8)"  stroke="#C9A84C" stroke-width="0.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(338,32) rotate(10)  scale(1.2)"  stroke="#C9A84C" stroke-width="0.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(652,72) rotate(15)  scale(2.0)"  stroke="#C9A84C" stroke-width="0.65" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(762,252) rotate(-5) scale(1.4)"  stroke="#C9A84C" stroke-width="0.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(248,298) rotate(-18) scale(1.6)" stroke="#C9A84C" stroke-width="0.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(522,198) rotate(22) scale(1.0)"  stroke="#C9A84C" stroke-width="1.0" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(58,452) rotate(8)   scale(2.2)"  stroke="#C9A84C" stroke-width="0.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(392,532) rotate(-12) scale(1.5)" stroke="#C9A84C" stroke-width="0.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(702,518) rotate(5)  scale(1.8)"  stroke="#C9A84C" stroke-width="0.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(470,440) rotate(-8) scale(0.9)"  stroke="#C9A84C" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Lavender hearts -->
+      <use href="#hrt" transform="translate(182,112) rotate(15)  scale(1.4)" stroke="#C9B8E8" stroke-width="0.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(492,82)  rotate(-10) scale(1.8)" stroke="#C9B8E8" stroke-width="0.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(138,312) rotate(-25) scale(1.2)" stroke="#C9B8E8" stroke-width="0.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(452,378) rotate(8)   scale(2.0)" stroke="#C9B8E8" stroke-width="0.65" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(712,382) rotate(-15) scale(1.3)" stroke="#C9B8E8" stroke-width="0.85" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(28,198)  rotate(12)  scale(1.0)" stroke="#C9B8E8" stroke-width="1.0" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(578,478) rotate(-8)  scale(1.6)" stroke="#C9B8E8" stroke-width="0.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(202,552) rotate(20)  scale(1.2)" stroke="#C9B8E8" stroke-width="0.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(320,178) rotate(-6)  scale(0.8)" stroke="#C9B8E8" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Gold hearts – second batch -->
+      <use href="#hrt" transform="translate(152,178) rotate(18)  scale(1.3)" stroke="#C9A84C" stroke-width="0.85" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(598,298) rotate(-14) scale(1.6)" stroke="#C9A84C" stroke-width="0.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(348,418) rotate(7)   scale(1.1)" stroke="#C9A84C" stroke-width="0.95" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(748,128) rotate(-22) scale(1.5)" stroke="#C9A84C" stroke-width="0.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(88,328)  rotate(11)  scale(0.9)" stroke="#C9A84C" stroke-width="1.05" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(478,558) rotate(-9)  scale(1.4)" stroke="#C9A84C" stroke-width="0.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(228,398) rotate(24)  scale(2.1)" stroke="#C9A84C" stroke-width="0.62" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(648,438) rotate(-3)  scale(1.2)" stroke="#C9A84C" stroke-width="0.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(38,558)  rotate(16)  scale(1.7)" stroke="#C9A84C" stroke-width="0.72" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Lavender hearts – second batch -->
+      <use href="#hrt" transform="translate(278,58)  rotate(9)   scale(1.3)" stroke="#C9B8E8" stroke-width="0.85" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(548,348) rotate(-19) scale(1.9)" stroke="#C9B8E8" stroke-width="0.68" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(398,198) rotate(5)   scale(1.1)" stroke="#C9B8E8" stroke-width="0.95" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(718,478) rotate(-11) scale(1.4)" stroke="#C9B8E8" stroke-width="0.82" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(158,478) rotate(21)  scale(1.6)" stroke="#C9B8E8" stroke-width="0.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(552,128) rotate(-7)  scale(1.0)" stroke="#C9B8E8" stroke-width="1.0" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(308,498) rotate(13)  scale(0.8)" stroke="#C9B8E8" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(678,198) rotate(-17) scale(1.5)" stroke="#C9B8E8" stroke-width="0.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(418,108) rotate(3)   scale(2.2)" stroke="#C9B8E8" stroke-width="0.62" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#hrt" transform="translate(98,118)  rotate(-13) scale(1.3)" stroke="#C9B8E8" stroke-width="0.85" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <div class="story-container">
+    <div class="story-visual reveal-left">
+      <div class="photo-wrap">
+        <div class="photo-ring"></div>
+        <div class="photo-frame has-photo" id="couple-photo"
+             style="background-image:url('DnA.png');background-size:cover;background-position:center top;">
+          <div class="photo-initials-block">
+            <div class="photo-initials">D&amp;A</div>
+            <span class="photo-amp">always &amp; forever</span>
+          </div>
+        </div>
+        <div class="photo-badge">&#9829;</div>
+      </div>
+    </div>
+
+    <div class="story-words reveal-right">
+      <h2 class="section-heading">
+        Felt in Our Hearts,<br><em>Encoded in Our DnA</em>
+      </h2>
+      <div class="divider-h" style="margin: 0 0 28px;"></div>
+      <div class="story-text">
+        <p>
+          What began as shared glances along the shores of Besant Nagar grew into something neither could quite explain — a pull as quiet and certain as the tide.
+        </p>
+        <p>
+          Through every chapter that followed, through new cities and new beginnings, that bond only deepened. And now, with hearts full of gratitude and joy, We are now ready to say forever —
+        </p>
+        <p>
+          <em style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--lavender-deep);">and we want you there when we do.</em>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     EVENT DETAILS
+════════════════════════════════════════════════════════════ -->
+<section id="details">
+  <div class="details-header reveal">
+    <p class="section-label">Mark your calendar</p>
+    <h2 class="section-heading" style="text-align:center;">The Celebration</h2>
+    <div class="divider-h" style="margin-top:16px;"></div>
+  </div>
+
+  <div class="card-deck-wrap">
+  <div class="card-deck" id="card-deck">
+
+    <!-- Ceremony — slides left on reveal -->
+    <div class="card-slot-a">
+      <div class="card-flipper">
+        <!-- BACK -->
+        <div class="card-face card-back">
+          <svg class="card-back-svg" viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <path id="hA" d="M0,20 C-1,8 -26,4 -26,-12 C-26,-28 -14,-36 0,-22 C14,-36 26,-28 26,-12 C26,4 1,8 0,20Z"/>
+              <linearGradient id="bgA" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#D4920C"/><stop offset="45%" stop-color="#C9841A"/><stop offset="100%" stop-color="#A86A08"/>
+              </linearGradient>
+              <linearGradient id="bnTA" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#7A4A04"/><stop offset="100%" stop-color="#9A6010"/>
+              </linearGradient>
+              <linearGradient id="bnBA" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#9A6010"/><stop offset="100%" stop-color="#7A4A04"/>
+              </linearGradient>
+              <linearGradient id="fldA" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#FFF8EC"/><stop offset="100%" stop-color="#F5E8CC"/>
+              </linearGradient>
+              <radialGradient id="glA" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FFFFFF" stop-opacity=".5"/>
+                <stop offset="65%" stop-color="#FFFFFF" stop-opacity=".18"/>
+                <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <!-- Warm amber gold base -->
+            <rect width="300" height="420" rx="20" fill="url(#bgA)"/>
+            <!-- Thick dark border rim -->
+            <rect width="300" height="420" rx="20" fill="none" stroke="#7A4A04" stroke-width="18"/>
+            <!-- Gold inner border -->
+            <rect x="9" y="9" width="282" height="402" rx="13" fill="none" stroke="#EDD98A" stroke-width="1.6" opacity=".7"/>
+            <!-- Top banner -->
+            <path d="M0,18 Q0,0 18,0 L282,0 Q300,0 300,18 L300,88 L0,88Z" fill="url(#bnTA)"/>
+            <!-- Bottom banner -->
+            <path d="M0,332 L300,332 L300,402 Q300,420 282,420 L18,420 Q0,420 0,402Z" fill="url(#bnBA)"/>
+            <line x1="18" y1="88"  x2="282" y2="88"  stroke="#EDD98A" stroke-width="1.4" opacity=".8"/>
+            <line x1="18" y1="332" x2="282" y2="332" stroke="#EDD98A" stroke-width="1.4" opacity=".8"/>
+            <!-- Cream illustration field -->
+            <rect x="18" y="94" width="264" height="232" rx="8" fill="url(#fldA)" opacity=".92"/>
+            <!-- ── HEARTS (hero bloom + orbiting, card-3 style) ── -->
+            <!-- Hero central heart -->
+            <use href="#hA" transform="translate(150,218) scale(2.7)" fill="#C9B8E8" opacity=".58"/>
+            <use href="#hA" transform="translate(150,218) scale(2.7)" fill="#8B73BC" opacity=".14"/>
+            <!-- Medium orbiting hearts -->
+            <use href="#hA" transform="translate(86,168) scale(1.15) rotate(-22)"  fill="#BFB0E0" opacity=".88"/>
+            <use href="#hA" transform="translate(216,166) scale(1.08) rotate(18)"  fill="#C9B8E8" opacity=".85"/>
+            <use href="#hA" transform="translate(70,250) scale(.9)  rotate(-30)"  fill="#BFB0E0" opacity=".78"/>
+            <use href="#hA" transform="translate(234,248) scale(.92) rotate(26)"  fill="#C9B8E8" opacity=".78"/>
+            <use href="#hA" transform="translate(118,302) scale(.76) rotate(-10)" fill="#BFB0E0" opacity=".7"/>
+            <use href="#hA" transform="translate(186,300) scale(.74) rotate(12)"  fill="#C9B8E8" opacity=".7"/>
+            <!-- Small accent hearts -->
+            <use href="#hA" transform="translate(46,140)  scale(.5)  rotate(-38)" fill="#C9B8E8" opacity=".55"/>
+            <use href="#hA" transform="translate(258,140) scale(.48) rotate(32)"  fill="#BFB0E0" opacity=".5"/>
+            <use href="#hA" transform="translate(150,108) scale(.52)"              fill="#C9B8E8" opacity=".55"/>
+            <use href="#hA" transform="translate(96,308)  scale(.44) rotate(-18)" fill="#C9B8E8" opacity=".48"/>
+            <use href="#hA" transform="translate(210,308) scale(.42) rotate(20)"  fill="#C9B8E8" opacity=".45"/>
+            <!-- DnA white halo (makes text visible over hearts) -->
+            <ellipse cx="150" cy="213" rx="76" ry="66" fill="url(#glA)"/>
+            <!-- DnA — deep amber gold, bold and visible -->
+            <text x="100" y="210" text-anchor="middle" dominant-baseline="middle"
+                  font-family="Cormorant Garamond, serif" font-size="82" font-weight="500" fill="#7A5010">D</text>
+            <text x="151" y="218" text-anchor="middle" dominant-baseline="middle"
+                  font-family="Cormorant Garamond, serif" font-size="54" font-style="italic" font-weight="500" fill="#C9A84C">n</text>
+            <text x="200" y="210" text-anchor="middle" dominant-baseline="middle"
+                  font-family="Cormorant Garamond, serif" font-size="82" font-weight="500" fill="#7A5010">A</text>
+            <!-- Top banner: hearts + LOVE label -->
+            <use href="#hA" transform="translate(30,46) scale(.58)"  fill="#C9B8E8" opacity=".92"/>
+            <use href="#hA" transform="translate(270,46) scale(.58)" fill="#C9B8E8" opacity=".92"/>
+            <use href="#hA" transform="translate(68,46) scale(.4)"   fill="#C9B8E8" opacity=".65"/>
+            <use href="#hA" transform="translate(232,46) scale(.4)"  fill="#C9B8E8" opacity=".65"/>
+            <text x="150" y="40" text-anchor="middle" dominant-baseline="middle"
+                  font-family="Cormorant Garamond, serif" font-size="20" font-weight="600" letter-spacing="5" fill="#EDD98A">LOVE</text>
+            <text x="150" y="66" text-anchor="middle" dominant-baseline="middle"
+                  font-family="sans-serif" font-size="6.5" letter-spacing="4.5" fill="#EDD98A" opacity=".8">WEDDING RESOURCE CARD</text>
+            <!-- Bottom: 5 heart resource count -->
+            <use href="#hA" transform="translate(72,360)  scale(.54)" fill="#C9B8E8" opacity=".9"/>
+            <use href="#hA" transform="translate(108,360) scale(.54)" fill="#C9B8E8" opacity=".9"/>
+            <use href="#hA" transform="translate(150,355) scale(.66)" fill="#EDD98A" opacity=".98"/>
+            <use href="#hA" transform="translate(192,360) scale(.54)" fill="#C9B8E8" opacity=".9"/>
+            <use href="#hA" transform="translate(228,360) scale(.54)" fill="#C9B8E8" opacity=".9"/>
+            <text x="150" y="400" text-anchor="middle" dominant-baseline="middle"
+                  font-family="sans-serif" font-size="7" letter-spacing="4.5" fill="#EDD98A" opacity=".82">♦ TAP TO REVEAL ♦</text>
+          </svg>
+        </div>
+        <!-- FRONT -->
+        <div class="card-face card-front">
+          <div class="event-card">
+            <svg class="event-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L9 8H3l5 4-2 7 6-4 6 4-2-7 5-4h-6z"/>
+            </svg>
+            <p class="event-type">Wedding Ceremony</p>
+            <h3 class="event-name">[Venue Name]</h3>
+            <div class="event-row">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <div><div class="event-row-label">Location</div><span>[City, Country]</span></div>
+            </div>
+            <div class="event-row">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              <div><div class="event-row-label">Date</div><span>[Date, Month Year]</span></div>
+            </div>
+            <div class="event-row">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              <div><div class="event-row-label">Time</div><span>[HH:MM AM/PM]</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reception — slides right on reveal -->
+    <div class="card-slot-b">
+      <div class="card-flipper">
+        <!-- BACK (same design, unique IDs) -->
+        <div class="card-face card-back">
+          <svg class="card-back-svg" viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <path id="hB" d="M0,20 C-1,8 -26,4 -26,-12 C-26,-28 -14,-36 0,-22 C14,-36 26,-28 26,-12 C26,4 1,8 0,20Z"/>
+              <linearGradient id="bgB" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#D4920C"/><stop offset="45%" stop-color="#C9841A"/><stop offset="100%" stop-color="#A86A08"/>
+              </linearGradient>
+              <linearGradient id="bnTB" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#7A4A04"/><stop offset="100%" stop-color="#9A6010"/>
+              </linearGradient>
+              <linearGradient id="bnBB" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#9A6010"/><stop offset="100%" stop-color="#7A4A04"/>
+              </linearGradient>
+              <linearGradient id="fldB" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#FFF8EC"/><stop offset="100%" stop-color="#F5E8CC"/>
+              </linearGradient>
+              <radialGradient id="glB" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FFFFFF" stop-opacity=".5"/>
+                <stop offset="65%" stop-color="#FFFFFF" stop-opacity=".18"/>
+                <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <rect width="300" height="420" rx="20" fill="url(#bgB)"/>
+            <rect width="300" height="420" rx="20" fill="none" stroke="#7A4A04" stroke-width="18"/>
+            <rect x="9" y="9" width="282" height="402" rx="13" fill="none" stroke="#EDD98A" stroke-width="1.6" opacity=".7"/>
+            <path d="M0,18 Q0,0 18,0 L282,0 Q300,0 300,18 L300,88 L0,88Z" fill="url(#bnTB)"/>
+            <path d="M0,332 L300,332 L300,402 Q300,420 282,420 L18,420 Q0,420 0,402Z" fill="url(#bnBB)"/>
+            <line x1="18" y1="88"  x2="282" y2="88"  stroke="#EDD98A" stroke-width="1.4" opacity=".8"/>
+            <line x1="18" y1="332" x2="282" y2="332" stroke="#EDD98A" stroke-width="1.4" opacity=".8"/>
+            <rect x="18" y="94" width="264" height="232" rx="8" fill="url(#fldB)" opacity=".92"/>
+            <!-- Hero central heart -->
+            <use href="#hB" transform="translate(150,218) scale(2.7)"             fill="#C9B8E8" opacity=".58"/>
+            <use href="#hB" transform="translate(150,218) scale(2.7)"             fill="#8B73BC" opacity=".14"/>
+            <!-- Medium orbiting hearts -->
+            <use href="#hB" transform="translate(86,168) scale(1.15) rotate(-22)" fill="#BFB0E0" opacity=".88"/>
+            <use href="#hB" transform="translate(216,166) scale(1.08) rotate(18)" fill="#C9B8E8" opacity=".85"/>
+            <use href="#hB" transform="translate(70,250) scale(.9)  rotate(-30)"  fill="#BFB0E0" opacity=".78"/>
+            <use href="#hB" transform="translate(234,248) scale(.92) rotate(26)"  fill="#C9B8E8" opacity=".78"/>
+            <use href="#hB" transform="translate(118,302) scale(.76) rotate(-10)" fill="#BFB0E0" opacity=".7"/>
+            <use href="#hB" transform="translate(186,300) scale(.74) rotate(12)"  fill="#C9B8E8" opacity=".7"/>
+            <!-- Small accent hearts -->
+            <use href="#hB" transform="translate(46,140)  scale(.5)  rotate(-38)" fill="#C9B8E8" opacity=".55"/>
+            <use href="#hB" transform="translate(258,140) scale(.48) rotate(32)"  fill="#BFB0E0" opacity=".5"/>
+            <use href="#hB" transform="translate(150,108) scale(.52)"              fill="#C9B8E8" opacity=".55"/>
+            <use href="#hB" transform="translate(96,308)  scale(.44) rotate(-18)" fill="#C9B8E8" opacity=".48"/>
+            <use href="#hB" transform="translate(210,308) scale(.42) rotate(20)"  fill="#C9B8E8" opacity=".45"/>
+            <!-- DnA white halo -->
+            <ellipse cx="150" cy="213" rx="76" ry="66" fill="url(#glB)"/>
+            <!-- DnA — deep amber gold -->
+            <text x="100" y="210" text-anchor="middle" dominant-baseline="middle"
+                  font-family="Cormorant Garamond, serif" font-size="82" font-weight="500" fill="#7A5010">D</text>
+            <text x="151" y="218" text-anchor="middle" dominant-baseline="middle"
+                  font-family="Cormorant Garamond, serif" font-size="54" font-style="italic" font-weight="500" fill="#C9A84C">n</text>
+            <text x="200" y="210" text-anchor="middle" dominant-baseline="middle"
+                  font-family="Cormorant Garamond, serif" font-size="82" font-weight="500" fill="#7A5010">A</text>
+            <!-- Top banner -->
+            <use href="#hB" transform="translate(30,46)  scale(.58)" fill="#C9B8E8" opacity=".92"/>
+            <use href="#hB" transform="translate(270,46) scale(.58)" fill="#C9B8E8" opacity=".92"/>
+            <use href="#hB" transform="translate(68,46)  scale(.4)"  fill="#C9B8E8" opacity=".65"/>
+            <use href="#hB" transform="translate(232,46) scale(.4)"  fill="#C9B8E8" opacity=".65"/>
+            <text x="150" y="40" text-anchor="middle" dominant-baseline="middle"
+                  font-family="Cormorant Garamond, serif" font-size="20" font-weight="600" letter-spacing="5" fill="#EDD98A">LOVE</text>
+            <text x="150" y="66" text-anchor="middle" dominant-baseline="middle"
+                  font-family="sans-serif" font-size="6.5" letter-spacing="4.5" fill="#EDD98A" opacity=".8">WEDDING RESOURCE CARD</text>
+            <!-- Bottom: 5 heart resource count -->
+            <use href="#hB" transform="translate(72,360)  scale(.54)" fill="#C9B8E8" opacity=".9"/>
+            <use href="#hB" transform="translate(108,360) scale(.54)" fill="#C9B8E8" opacity=".9"/>
+            <use href="#hB" transform="translate(150,355) scale(.66)" fill="#EDD98A" opacity=".98"/>
+            <use href="#hB" transform="translate(192,360) scale(.54)" fill="#C9B8E8" opacity=".9"/>
+            <use href="#hB" transform="translate(228,360) scale(.54)" fill="#C9B8E8" opacity=".9"/>
+            <text x="150" y="400" text-anchor="middle" dominant-baseline="middle"
+                  font-family="sans-serif" font-size="7" letter-spacing="4.5" fill="#EDD98A" opacity=".82">♦ TAP TO REVEAL ♦</text>
+          </svg>
+        </div>
+        <!-- FRONT -->
+        <div class="card-face card-front">
+          <div class="event-card">
+            <svg class="event-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 17H5a2 2 0 0 0-2 2v2h18v-2a2 2 0 0 0-2-2h-4M12 3v10M8 7l4-4 4 4"/>
+            </svg>
+            <p class="event-type">Reception &amp; Dinner</p>
+            <h3 class="event-name">[Venue Name]</h3>
+            <div class="event-row">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <div><div class="event-row-label">Location</div><span>[City, Country]</span></div>
+            </div>
+            <div class="event-row">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              <div><div class="event-row-label">Date</div><span>[Date, Month Year]</span></div>
+            </div>
+            <div class="event-row">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              <div><div class="event-row-label">Time</div><span>[HH:MM AM/PM]</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /card-deck -->
+  </div><!-- /card-deck-wrap -->
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     COUNTDOWN
+════════════════════════════════════════════════════════════ -->
+<section id="countdown">
+  <img src="bessy&sg.png" class="countdown-bg-img" alt="" aria-hidden="true">
+  <p class="countdown-label reveal">Until we say forever</p>
+  <div class="countdown-grid reveal">
+    <div class="countdown-unit">
+      <span class="countdown-number" id="cd-days">000</span>
+      <span class="countdown-unit-label">Days</span>
+    </div>
+    <span class="countdown-sep">·</span>
+    <div class="countdown-unit">
+      <span class="countdown-number" id="cd-hours">00</span>
+      <span class="countdown-unit-label">Hours</span>
+    </div>
+    <span class="countdown-sep">·</span>
+    <div class="countdown-unit">
+      <span class="countdown-number" id="cd-mins">00</span>
+      <span class="countdown-unit-label">Minutes</span>
+    </div>
+    <span class="countdown-sep">·</span>
+    <div class="countdown-unit">
+      <span class="countdown-number" id="cd-secs">00</span>
+      <span class="countdown-unit-label">Seconds</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     RSVP
+════════════════════════════════════════════════════════════ -->
+<section id="rsvp">
+  <div class="rsvp-header reveal">
+    <p class="section-label">Will you join us?</p>
+    <h2 class="section-heading">RSVP</h2>
+    <div class="divider-h" style="margin-top:16px; margin-bottom:20px;"></div>
+    <p class="rsvp-deadline">
+      Kindly respond by <span><!-- TODO: Replace deadline -->[31 January 2025]</span>
+    </p>
+  </div>
+
+  <!-- Choice -->
+  <div class="rsvp-choice reveal" id="rsvp-choice">
+    <button class="btn-accept" onclick="showForm()">Joyfully Accept</button>
+    <button class="btn-decline" onclick="showDecline()">Regretfully Decline</button>
+  </div>
+
+  <!-- Accept form -->
+  <div class="rsvp-form-wrap" id="rsvp-form-wrap">
+    <form id="rsvp-form" novalidate>
+      <div class="field">
+        <label class="field-label" for="f-name">Full Name</label>
+        <input class="field-input" type="text" id="f-name" placeholder="Your full name" required />
+        <span class="field-err">Please enter your full name.</span>
+      </div>
+      <div class="field">
+        <label class="field-label" for="f-phone">Phone Number</label>
+        <input class="field-input" type="tel" id="f-phone" placeholder="+65 or +91 …" required />
+        <span class="field-err">Please enter a valid phone number.</span>
+      </div>
+      <div class="field">
+        <label class="field-label" for="f-email">Email Address</label>
+        <input class="field-input" type="email" id="f-email" placeholder="your@email.com" required />
+        <span class="field-err">Please enter a valid email address.</span>
+      </div>
+      <div class="field">
+        <label class="field-label">Bringing a plus-one?</label>
+        <div class="plus-row">
+          <span class="plus-text">Yes, I'll be bringing a guest</span>
+          <label class="toggle">
+            <input type="checkbox" id="f-plus" />
+            <span class="t-slider"></span>
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="btn-submit" id="btn-submit">Confirm Attendance</button>
+    </form>
+  </div>
+
+  <!-- Decline state -->
+  <div class="rsvp-state" id="state-decline">
+    <div class="state-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </div>
+    <h3 class="state-h">We'll miss you</h3>
+    <p class="state-p">We're sorry you can't make it, but we'll carry you in our hearts that day.<br>Wishing you all the love in the world.</p>
+  </div>
+
+  <!-- Success state -->
+  <div class="rsvp-state" id="state-success">
+    <div class="state-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h3 class="state-h">See you there!</h3>
+    <p class="state-p">Your RSVP has been received. We're so thrilled to celebrate with you.<br>Look out for a confirmation in your inbox from the DnA family.</p>
+  </div>
+
+  <!-- Error state -->
+  <div class="rsvp-state" id="state-error">
+    <div class="state-icon" style="color:#B94040; border-color:#F5C6C6;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+    </div>
+    <h3 class="state-h">Something went wrong</h3>
+    <p class="state-p">We couldn't save your RSVP just now. Please try again.<br>
+      <button class="retry-btn" onclick="retryForm()">Try again</button>
+    </p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-mono">
+    <span class="D">D</span><span class="n">n</span><span class="A">A</span>
+  </div>
+  <p class="footer-sub">Derin &amp; Akshita &nbsp;·&nbsp; With love, always</p>
+</footer>
+
+<script>
+/* ── Countdown ──────────────────────────────────────────────── */
+// TODO: Replace with actual wedding date/time and timezone
+const WEDDING = new Date('2027-02-07T18:00:00+08:00');
+
+function updateCountdown() {
+  const now  = new Date();
+  const diff = WEDDING - now;
+  if (diff <= 0) {
+    document.getElementById('cd-days').textContent  = '00';
+    document.getElementById('cd-hours').textContent = '00';
+    document.getElementById('cd-mins').textContent  = '00';
+    document.getElementById('cd-secs').textContent  = '00';
+    return;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000)  / 60000);
+  const s = Math.floor((diff % 60000)    / 1000);
+  document.getElementById('cd-days').textContent  = String(d).padStart(3, '0');
+  document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+  document.getElementById('cd-mins').textContent  = String(m).padStart(2, '0');
+  document.getElementById('cd-secs').textContent  = String(s).padStart(2, '0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+/* ── Scroll reveals — bidirectional ─────────────────────────── */
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const observer  = new IntersectionObserver((entries) => {
+  entries.forEach(e => e.target.classList.toggle('visible', e.isIntersecting));
+}, { threshold: 0.12 });
+revealEls.forEach(el => observer.observe(el));
+
+/* ── Card deck — stacked split reveal (2.5 s auto, tap anytime) ─ */
+(function () {
+  const deck = document.getElementById('card-deck');
+  if (!deck) return;
+  let timer = null;
+
+  function reveal() {
+    if (deck.classList.contains('split')) return;
+    deck.classList.add('split');
+  }
+  function reset() {
+    deck.classList.remove('split');
+    clearTimeout(timer);
+    timer = null;
+  }
+
+  const deckObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        timer = setTimeout(reveal, 2500);
+      } else {
+        clearTimeout(timer);
+        timer = null;
+        reset();
+      }
+    });
+  }, { threshold: 0.3 });
+
+  deckObs.observe(deck);
+  deck.addEventListener('click',   reveal);
+  deck.addEventListener('touchend', e => { e.preventDefault(); reveal(); });
+}());
+
+/* ── Hero re-entry: replay ring drop + text fadeUp ───────────── */
+function resetAnim(el) {
+  el.style.animation = 'none';
+  void el.offsetHeight; // force reflow
+  el.style.animation = '';
+}
+const heroObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      resetAnim(document.querySelector('.rings-drop'));
+      resetAnim(document.querySelector('.rings-float'));
+      document.querySelectorAll('.hero-eyebrow, .dna-monogram, .hero-names, .hero-tagline, .hero-date-row')
+        .forEach(resetAnim);
+    }
+  });
+}, { threshold: 0.1 });
+heroObserver.observe(document.getElementById('hero'));
+
+/* ── RSVP flow ──────────────────────────────────────────────── */
+function showForm() {
+  document.getElementById('rsvp-choice').style.display = 'none';
+  document.getElementById('rsvp-form-wrap').classList.add('open');
+}
+function showDecline() {
+  document.getElementById('rsvp-choice').style.display = 'none';
+  open('state-decline');
+}
+function open(id) { document.getElementById('state-' + id).classList.add('open'); }
+function retryForm() {
+  document.getElementById('state-error').classList.remove('open');
+  document.getElementById('rsvp-form-wrap').classList.add('open');
+}
+
+/* ── Validation ─────────────────────────────────────────────── */
+function validate(el) {
+  const ok = el.value.trim() !== '' && el.checkValidity();
+  el.classList.toggle('err', !ok);
+  return ok;
+}
+['f-name','f-phone','f-email'].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('blur', () => validate(el));
+});
+
+/* ── Form submit ─────────────────────────────────────────────── */
+// TODO: Replace this URL with your deployed Google Apps Script web app URL
+const SCRIPT_URL = 'https://script.google.com/macros/s/TODO_REPLACE_WITH_YOUR_SCRIPT_ID/exec';
+
+document.getElementById('rsvp-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const name  = document.getElementById('f-name');
+  const phone = document.getElementById('f-phone');
+  const email = document.getElementById('f-email');
+  const plus  = document.getElementById('f-plus');
+  if (![name, phone, email].map(validate).every(Boolean)) return;
+
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true; btn.textContent = 'Sending…';
+
+  try {
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: name.value.trim(), phone: phone.value.trim(),
+        email: email.value.trim(), plusOne: plus.checked,
+        timestamp: new Date().toISOString()
+      })
+    });
+    if (!res.ok) throw new Error();
+    document.getElementById('rsvp-form-wrap').classList.remove('open');
+    open('success');
+  } catch {
+    btn.disabled = false; btn.textContent = 'Confirm Attendance';
+    document.getElementById('rsvp-form-wrap').classList.remove('open');
+    open('error');
+  }
+});
+
+/* ── Gold shimmer particles (hero) ─────────────────────────── */
+(function() {
+  const c = document.getElementById('particle-canvas');
+  const x = c.getContext('2d');
+  let W, H, pts;
+  function resize() { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; }
+  function P() { this.reset(); }
+  P.prototype.reset = function() {
+    this.x = Math.random() * W; this.y = Math.random() * H;
+    this.r = Math.random() * 2 + 0.3;
+    this.a = Math.random() * 0.6 + 0.1;
+    this.vx = (Math.random() - 0.5) * 0.2; this.vy = -Math.random() * 0.35 - 0.05;
+    this.life = 0; this.max = Math.random() * 240 + 100;
+  };
+  P.prototype.tick = function() {
+    this.x += this.vx; this.y += this.vy; this.life++;
+    if (this.life > this.max) this.reset();
+  };
+  P.prototype.draw = function() {
+    const t = this.life / this.max;
+    const a = this.a * (1 - Math.abs(t - 0.5) * 2);
+    x.beginPath(); x.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    x.fillStyle = `rgba(201,168,76,${a})`; x.fill();
+  };
+  function init() { resize(); pts = Array.from({length:80}, () => new P()); }
+  function loop() { x.clearRect(0,0,W,H); pts.forEach(p=>{ p.tick(); p.draw(); }); requestAnimationFrame(loop); }
+  window.addEventListener('resize', resize);
+  init(); loop();
+})();
+
+/* ── Floating petals (global) ──────────────────────────────── */
+(function() {
+  const c = document.getElementById('petals-canvas');
+  const x = c.getContext('2d');
+  let W, H, petals;
+
+  function resize() { W = c.width = window.innerWidth; H = c.height = window.innerHeight; }
+
+  function Petal() { this.reset(true); }
+  Petal.prototype.reset = function(init) {
+    this.x  = Math.random() * W;
+    this.y  = init ? Math.random() * H : -20;
+    this.r  = Math.random() * 5 + 2;
+    this.vx = (Math.random() - 0.5) * 0.6;
+    this.vy = Math.random() * 0.5 + 0.2;
+    this.rot= Math.random() * Math.PI * 2;
+    this.vr = (Math.random() - 0.5) * 0.02;
+    this.a  = Math.random() * 0.25 + 0.06;
+    // Alternate between gold and lavender petals
+    this.col = Math.random() > 0.5 ? `rgba(201,168,76,${this.a})` : `rgba(201,184,232,${this.a})`;
+  };
+  Petal.prototype.tick = function() {
+    this.x   += this.vx + Math.sin(Date.now() * 0.0005 + this.y * 0.01) * 0.2;
+    this.y   += this.vy;
+    this.rot += this.vr;
+    if (this.y > H + 20) this.reset(false);
+  };
+  Petal.prototype.draw = function() {
+    x.save();
+    x.translate(this.x, this.y);
+    x.rotate(this.rot);
+    x.beginPath();
+    x.ellipse(0, 0, this.r, this.r * 0.55, 0, 0, Math.PI * 2);
+    x.fillStyle = this.col;
+    x.fill();
+    x.restore();
+  };
+
+  function init() { resize(); petals = Array.from({length:55}, () => new Petal()); }
+  function loop() { x.clearRect(0,0,W,H); petals.forEach(p=>{ p.tick(); p.draw(); }); requestAnimationFrame(loop); }
+  window.addEventListener('resize', resize);
+  init(); loop();
+})();
+
+/* ── Audio player ────────────────────────────────────────────── */
+(function () {
+  const audio = document.getElementById('bg-audio');
+  const btn   = document.getElementById('audio-btn');
+  if (!audio || !btn) return;
+
+  audio.volume = 0.65;
+  let userMuted = false; // true only when user explicitly hits the mute button
+
+  // Start audio with sound. Safe to call multiple times — play() is idempotent.
+  // Safari requires this to be called from within a gesture event handler.
+  function startAudio() {
+    if (userMuted) return;
+    audio.muted = false;
+    const p = audio.play();
+    if (p) p.then(() => btn.classList.add('playing')).catch(() => {});
+  }
+
+  // Try immediately — works on Chrome/Firefox. Safari rejects silently.
+  startAudio();
+
+  // Safari: the initial play() may "succeed" but produce no sound, leaving
+  // audio.paused === false with silence. Always re-call play() on the first
+  // real user gesture to guarantee audible output.
+  function onFirstGesture(e) {
+    if (btn.contains(e.target)) return; // button has its own handler
+    document.removeEventListener('touchstart', onFirstGesture);
+    document.removeEventListener('pointerdown', onFirstGesture);
+    startAudio(); // calling play() in a gesture context always unlocks Safari
+  }
+  document.addEventListener('touchstart', onFirstGesture, { passive: true });
+  document.addEventListener('pointerdown', onFirstGesture);
+
+  // Mute button: toggle sound. Muted state persists until user unmutes or reloads.
+  btn.addEventListener('click', () => {
+    document.removeEventListener('touchstart', onFirstGesture);
+    document.removeEventListener('pointerdown', onFirstGesture);
+
+    if (userMuted || audio.muted || audio.paused) {
+      userMuted = false;
+      startAudio();
+    } else {
+      userMuted = true;
+      audio.muted = true;
+      btn.classList.remove('playing');
+    }
+  });
+}());
+</script>
+</body>
+</html>

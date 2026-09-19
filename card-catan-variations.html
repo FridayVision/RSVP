@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DnA · Catan Card Variations</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#E8E0D4;font-family:'Jost',sans-serif;padding:52px 24px 100px}
+    h1{text-align:center;font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;
+       letter-spacing:.4em;text-transform:uppercase;color:#2C2A26;margin-bottom:6px}
+    .sub{text-align:center;font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;
+         color:#7A746E;margin-bottom:60px}
+    .grid{display:flex;justify-content:center;align-items:flex-start;
+          gap:48px;flex-wrap:wrap;max-width:960px;margin:0 auto}
+    .card-wrap{display:flex;flex-direction:column;align-items:center;gap:18px}
+    .card-svg{border-radius:20px;
+              box-shadow:0 24px 64px rgba(44,42,38,.38),0 6px 18px rgba(44,42,38,.2);
+              width:220px;height:auto}
+    .label{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:500;
+            color:#2C2A26;letter-spacing:.2em}
+    .desc{font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;
+          color:#7A746E;text-align:center;max-width:200px;line-height:1.7}
+    .note{text-align:center;margin-top:60px;font-size:.68rem;letter-spacing:.22em;
+          text-transform:uppercase;color:#9A8E82}
+  </style>
+</head>
+<body>
+
+<h1>Catan Card Variations</h1>
+<p class="sub">DnA Wedding · Golden · Lavender Hearts · Catan-Inspired</p>
+
+<div class="grid">
+
+<!-- ════════════════════════════════════════════════
+     1 · THE LOVE RESOURCE
+     Classic Catan resource card — warm amber gold,
+     lavender hearts fill the illustration field,
+     DnA glowing at center
+════════════════════════════════════════════════ -->
+<div class="card-wrap">
+<svg class="card-svg" viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <!-- Reusable heart shape centered at (0,0), ~52w × 46h -->
+  <path id="h1" d="M0,20 C-1,8 -26,4 -26,-12 C-26,-28 -14,-36 0,-22 C14,-36 26,-28 26,-12 C26,4 1,8 0,20Z"/>
+
+  <linearGradient id="cardBg1" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#D4920C"/>
+    <stop offset="40%"  stop-color="#C9841A"/>
+    <stop offset="100%" stop-color="#A86A08"/>
+  </linearGradient>
+  <linearGradient id="topBan1" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#7A4A04"/>
+    <stop offset="100%" stop-color="#9A6010"/>
+  </linearGradient>
+  <linearGradient id="botBan1" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#9A6010"/>
+    <stop offset="100%" stop-color="#7A4A04"/>
+  </linearGradient>
+  <!-- Cream illustration field -->
+  <linearGradient id="field1" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#FFF8EC"/>
+    <stop offset="100%" stop-color="#F5E8CC"/>
+  </linearGradient>
+  <!-- DnA glow -->
+  <radialGradient id="dnaGlow1" cx="50%" cy="50%" r="50%">
+    <stop offset="0%"   stop-color="#C9B8E8" stop-opacity=".55"/>
+    <stop offset="70%"  stop-color="#C9B8E8" stop-opacity=".12"/>
+    <stop offset="100%" stop-color="#C9B8E8" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+
+<!-- Card base — warm amber gold -->
+<rect width="300" height="420" rx="20" fill="url(#cardBg1)"/>
+
+<!-- Thick textured border (darker rim) -->
+<rect width="300" height="420" rx="20" fill="none" stroke="#7A4A04" stroke-width="18"/>
+<rect x="9" y="9" width="282" height="402" rx="14" fill="none" stroke="#EDD98A" stroke-width="1.5" opacity=".6"/>
+
+<!-- Top banner: resource name area -->
+<rect x="0" y="0" width="300" height="86" rx="0" fill="url(#topBan1)"/>
+<rect x="0" y="0" width="300" height="86" rx="20" fill="url(#topBan1)"/><!-- round top -->
+<!-- Bottom resource count area -->
+<rect x="0" y="334" width="300" height="86" fill="url(#botBan1)"/>
+<rect x="0" y="334" width="300" height="86" rx="20" fill="url(#botBan1)"/><!-- round bottom -->
+
+<!-- Separator lines (gold) -->
+<line x1="18" y1="86" x2="282" y2="86" stroke="#EDD98A" stroke-width="1.4" opacity=".7"/>
+<line x1="18" y1="334" x2="282" y2="334" stroke="#EDD98A" stroke-width="1.4" opacity=".7"/>
+
+<!-- Illustration field (the central "resource art" area) -->
+<rect x="18" y="92" width="264" height="236" rx="8" fill="url(#field1)" opacity=".88"/>
+
+<!-- ── HEARTS (scattered, lavender, Catan resource art) ── -->
+<!-- Large central cluster -->
+<use href="#h1" transform="translate(150,220) scale(1.6)" fill="#C9B8E8" opacity=".92"/>
+<use href="#h1" transform="translate(105,190) scale(1.1) rotate(-18)" fill="#B8A4D8" opacity=".85"/>
+<use href="#h1" transform="translate(198,188) scale(1.05) rotate(15)" fill="#C9B8E8" opacity=".82"/>
+<!-- Mid cluster -->
+<use href="#h1" transform="translate(72,240) scale(.85) rotate(-28)" fill="#BFB0E0" opacity=".78"/>
+<use href="#h1" transform="translate(234,232) scale(.9) rotate(22)" fill="#C9B8E8" opacity=".76"/>
+<use href="#h1" transform="translate(130,278) scale(.78) rotate(-8)" fill="#B8A4D8" opacity=".72"/>
+<use href="#h1" transform="translate(175,272) scale(.72) rotate(12)" fill="#C9B8E8" opacity=".7"/>
+<!-- Small accent hearts -->
+<use href="#h1" transform="translate(50,175) scale(.55) rotate(-35)" fill="#C9B8E8" opacity=".55"/>
+<use href="#h1" transform="translate(255,170) scale(.5) rotate(30)" fill="#BFB0E0" opacity=".5"/>
+<use href="#h1" transform="translate(90,308) scale(.5) rotate(-15)" fill="#C9B8E8" opacity=".5"/>
+<use href="#h1" transform="translate(215,305) scale(.48) rotate(18)" fill="#C9B8E8" opacity=".48"/>
+<use href="#h1" transform="translate(150,305) scale(.42) rotate(0)" fill="#B8A4D8" opacity=".45"/>
+
+<!-- DnA glow halo -->
+<ellipse cx="150" cy="210" rx="72" ry="62" fill="url(#dnaGlow1)"/>
+
+<!-- DnA Monogram — shining lavender + gold -->
+<!-- Glow layer (slightly larger, opacity) -->
+<text x="101" y="215" text-anchor="middle" dominant-baseline="middle"
+      font-family="Cormorant Garamond,serif" font-size="80" font-weight="300" fill="#EDD98A" opacity=".25">D</text>
+<text x="200" y="215" text-anchor="middle" dominant-baseline="middle"
+      font-family="Cormorant Garamond,serif" font-size="80" font-weight="300" fill="#EDD98A" opacity=".25">A</text>
+<!-- Main text -->
+<text x="100" y="210" text-anchor="middle" dominant-baseline="middle"
+      font-family="Cormorant Garamond,serif" font-size="78" font-weight="300" fill="#C9B8E8">D</text>
+<text x="150" y="216" text-anchor="middle" dominant-baseline="middle"
+      font-family="Cormorant Garamond,serif" font-size="50" font-style="italic" font-weight="400" fill="#EDD98A">n</text>
+<text x="200" y="210" text-anchor="middle" dominant-baseline="middle"
+      font-family="Cormorant Garamond,serif" font-size="78" font-weight="300" fill="#C9B8E8">A</text>
+
+<!-- Top banner content -->
+<!-- Small heart symbols top-left and top-right -->
+<use href="#h1" transform="translate(32,44) scale(.55)" fill="#C9B8E8" opacity=".85"/>
+<use href="#h1" transform="translate(268,44) scale(.55)" fill="#C9B8E8" opacity=".85"/>
+<!-- Resource name -->
+<text x="150" y="38" text-anchor="middle" dominant-baseline="middle"
+      font-family="Cormorant Garamond,serif" font-size="18" font-weight="600" letter-spacing="5"
+      fill="#EDD98A">LOVE</text>
+<text x="150" y="64" text-anchor="middle" dominant-baseline="middle"
+      font-family="Jost,sans-serif" font-size="6.5" font-weight="400" letter-spacing="4.5"
+      fill="#EDD98A" opacity=".75">WEDDING RESOURCE CARD</text>
+
+<!-- Bottom: 5 heart resource count symbols -->
+<use href="#h1" transform="translate(70,365) scale(.52)"  fill="#C9B8E8" opacity=".85"/>
+<use href="#h1" transform="translate(105,365) scale(.52)" fill="#C9B8E8" opacity=".85"/>
+<use href="#h1" transform="translate(150,360) scale(.62)" fill="#EDD98A" opacity=".95"/>
+<use href="#h1" transform="translate(195,365) scale(.52)" fill="#C9B8E8" opacity=".85"/>
+<use href="#h1" transform="translate(230,365) scale(.52)" fill="#C9B8E8" opacity=".85"/>
+<!-- Bottom label -->
+<text x="150" y="400" text-anchor="middle" dominant-baseline="middle"
+      font-family="Jost,sans-serif" font-size="6.5" letter-spacing="4.5" fill="#EDD98A" opacity=".7">♦ TAP TO REVEAL ♦</text>
+</svg>
+<div class="label">1 · The Love Resource</div>
+<div class="desc">Warm amber · Catan illustration field · Heart resource count</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     2 · THE GOLD MINE
+     Richer dark gold — hearts arranged in a
+     glowing mandala — DnA as the central gem
+════════════════════════════════════════════════ -->
+<div class="card-wrap">
+<svg class="card-svg" viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <path id="h2" d="M0,20 C-1,8 -26,4 -26,-12 C-26,-28 -14,-36 0,-22 C14,-36 26,-28 26,-12 C26,4 1,8 0,20Z"/>
+  <linearGradient id="cardBg2" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#6B4008"/>
+    <stop offset="45%"  stop-color="#5A3206"/>
+    <stop offset="100%" stop-color="#6B4008"/>
+  </linearGradient>
+  <linearGradient id="ban2" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%"   stop-color="#3D2204"/>
+    <stop offset="50%"  stop-color="#5A3206"/>
+    <stop offset="100%" stop-color="#3D2204"/>
+  </linearGradient>
+  <radialGradient id="centerGlow2" cx="50%" cy="50%" r="55%">
+    <stop offset="0%"   stop-color="#C9A84C" stop-opacity=".22"/>
+    <stop offset="55%"  stop-color="#C9A84C" stop-opacity=".06"/>
+    <stop offset="100%" stop-color="#5A3206" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="dnaGlow2" cx="50%" cy="50%" r="50%">
+    <stop offset="0%"   stop-color="#C9B8E8" stop-opacity=".6"/>
+    <stop offset="60%"  stop-color="#C9B8E8" stop-opacity=".15"/>
+    <stop offset="100%" stop-color="#C9B8E8" stop-opacity="0"/>
+  </radialGradient>
+  <!-- Subtle gold texture -->
+  <pattern id="goldDot2" x="0" y="0" width="18" height="18" patternUnits="userSpaceOnUse">
+    <circle cx="9" cy="9" r=".7" fill="#C9A84C" opacity=".18"/>
+  </pattern>
+</defs>
+
+<!-- Card base — deep antique gold -->
+<rect width="300" height="420" rx="20" fill="url(#cardBg2)"/>
+<rect width="300" height="420" rx="20" fill="url(#goldDot2)"/>
+<rect width="300" height="420" rx="20" fill="url(#centerGlow2)"/>
+
+<!-- Thick dark border rim -->
+<rect width="300" height="420" rx="20" fill="none" stroke="#3D2204" stroke-width="16"/>
+
+<!-- Gold ornate double border -->
+<rect x="8" y="8" width="284" height="404" rx="14" fill="none" stroke="#C9A84C" stroke-width="2.2"/>
+<rect x="14" y="14" width="272" height="392" rx="11" fill="none" stroke="#EDD98A" stroke-width=".7" opacity=".5"/>
+
+<!-- Banners -->
+<path d="M0,18 Q0,0 18,0 L282,0 Q300,0 300,18 L300,88 L0,88Z" fill="url(#ban2)"/>
+<path d="M0,332 L300,332 L300,402 Q300,420 282,420 L18,420 Q0,420 0,402Z" fill="url(#ban2)"/>
+<line x1="8" y1="88" x2="292" y2="88" stroke="#C9A84C" stroke-width="1.6"/>
+<line x1="8" y1="332" x2="292" y2="332" stroke="#C9A84C" stroke-width="1.6"/>
+
+<!-- Corner ornaments -->
+<path d="M8,38 L8,8 L38,8" fill="none" stroke="#C9A84C" stroke-width="3" stroke-linecap="square"/>
+<path d="M262,8 L292,8 L292,38" fill="none" stroke="#C9A84C" stroke-width="3" stroke-linecap="square"/>
+<path d="M8,382 L8,412 L38,412" fill="none" stroke="#C9A84C" stroke-width="3" stroke-linecap="square"/>
+<path d="M262,412 L292,412 L292,382" fill="none" stroke="#C9A84C" stroke-width="3" stroke-linecap="square"/>
+<polygon points="8,8 15,15 8,22 1,15" fill="#C9A84C"/>
+<polygon points="292,8 299,15 292,22 285,15" fill="#C9A84C"/>
+<polygon points="8,412 15,419 8,426 1,419" fill="#C9A84C"/>
+<polygon points="292,412 299,419 292,426 285,419" fill="#C9A84C"/>
+
+<!-- Top banner -->
+<use href="#h2" transform="translate(36,46) scale(.6)" fill="#C9B8E8" opacity=".9"/>
+<use href="#h2" transform="translate(264,46) scale(.6)" fill="#C9B8E8" opacity=".9"/>
+<text x="150" y="40" text-anchor="middle" dominant-baseline="middle"
+      font-family="Cormorant Garamond,serif" font-size="19" font-weight="600" letter-spacing="5" fill="#EDD98A">LOVE</text>
+<text x="150" y="66" text-anchor="middle" dominant-baseline="middle"
+      font-family="Jost,sans-serif" font-size="6.5" letter-spacing="4" fill="#C9B8E8" opacity=".75">D n A  ·  W E D D I N G</text>
+
+<!-- Hearts arranged in 3 concentric rings around center -->
+<!-- Outer ring: 8 hearts -->
+<use href="#h2" transform="translate(150,108) scale(.75)" fill="#C9B8E8" opacity=".7"/>
+<use href="#h2" transform="translate(215,124) scale(.68) rotate(45)" fill="#BFB0E0" opacity=".65"/>
+<use href="#h2" transform="translate(244,184) scale(.72) rotate(90)" fill="#C9B8E8" opacity=".68"/>
+<use href="#h2" transform="translate(222,250) scale(.68) rotate(135)" fill="#BFB0E0" opacity=".65"/>
+<use href="#h2" transform="translate(150,278) scale(.75) rotate(180)" fill="#C9B8E8" opacity=".7"/>
+<use href="#h2" transform="translate(80,252) scale(.68) rotate(225)" fill="#BFB0E0" opacity=".65"/>
+<use href="#h2" transform="translate(56,184) scale(.72) rotate(270)" fill="#C9B8E8" opacity=".68"/>
+<use href="#h2" transform="translate(80,124) scale(.68) rotate(315)" fill="#BFB0E0" opacity=".65"/>
+
+<!-- Inner ring: 4 hearts -->
+<use href="#h2" transform="translate(150,140) scale(.55)" fill="#C9B8E8" opacity=".75"/>
+<use href="#h2" transform="translate(200,210) scale(.55) rotate(90)" fill="#C9B8E8" opacity=".72"/>
+<use href="#h2" transform="translate(150,256) scale(.55) rotate(180)" fill="#C9B8E8" opacity=".75"/>
+<use href="#h2" transform="translate(100,210) scale(.55) rotate(270)" fill="#C9B8E8" opacity=".72"/>
+
+<!-- Decorative ring lines -->
+<circle cx="150" cy="210" r="85" fill="none" stroke="#C9A84C" stroke-width=".8" opacity=".28"/>
+<circle cx="150" cy="210" r="54" fill="none" stroke="#C9A84C" stroke-width=".5" opacity=".2"/>
+
+<!-- Central DnA glow -->
+<ellipse cx="150" cy="210" rx="58" ry="52" fill="url(#dnaGlow2)"/>
+
+<!-- DnA Monogram -->
+<text x="100" y="205" text-anchor="middle" dominant-baseline="middle"
+      font-family="Cormorant Garamond,serif" font-size="76" font-weight="300" fill="#EDD98A" opacity=".28">D</text>
+<text x="201" y="205" text-anchor="middle" dominant-baseline="middle"
+      font-family="Cormorant Garamond,serif" font-size="76" font-weight="300" fill="#EDD98A" opacity=".28">A</text>
+<text x="100" y="202" text-anchor="middle" dominant-baseline="middle"
+      font-family="Cormorant Garamond,serif" font-size="76" font-weight="300" fill="#C9B8E8">D</text>
+<text x="150" y="208" text-anchor="middle" dominant-baseline="middle"
+      font-family="Cormorant Garamond,serif" font-size="50" font-style="italic" font-weight="400" fill="#EDD98A">n</text>
+<text x="200" y="202" text-anchor="middle" dominant-baseline="middle"
+      font-family="Cormorant Garamond,serif" font-size="76" font-weight="300" fill="#C9B8E8">A</text>
+
+<!-- Bottom banner -->
+<use href="#h2" transform="translate(80,360) scale(.55)"  fill="#C9B8E8" opacity=".8"/>
+<use href="#h2" transform="translate(115,360) scale(.55)" fill="#C9B8E8" opacity=".8"/>
+<use href="#h2" transform="translate(150,355) scale(.68)" fill="#EDD98A" opacity=".9"/>
+<use href="#h2" transform="translate(185,360) scale(.55)" fill="#C9B8E8" opacity=".8"/>
+<use href="#h2" transform="translate(220,360) scale(.55)" fill="#C9B8E8" opacity=".8"/>
+<text x="150" y="398" text-anchor="middle" dominant-baseline="middle"
+      font-family="Jost,sans-serif" font-size="6.5" letter-spacing="4.5" fill="#EDD98A" opacity=".75">♦ TAP TO REVEAL ♦</text>
+</svg>
+<div class="label">2 · The Gold Mine</div>
+<div class="desc">Deep antique gold · 8-heart mandala ring · Lavender-gold DnA</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     3 · THE JUBILEE
+     Bright celebration gold — large central heart
+     blooms outward — DnA shining from within
+════════════════════════════════════════════════ -->
+<div class="card-wrap">
+<svg class="card-svg" viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <path id="h3" d="M0,20 C-1,8 -26,4 -26,-12 C-26,-28 -14,-36 0,-22 C14,-36 26,-28 26,-12 C26,4 1,8 0,20Z"/>
+
+  <linearGradient id="cardBg3" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#E8A820"/>
+    <stop offset="50%"  stop-color="#D49418"/>
+    <stop offset="100%" stop-color="#C08010"/>
+  </linearGradient>
+  <linearGradient id="topBan3" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%"   stop-color="#8B5C08"/>
+    <stop offset="40%"  stop-color="#B07810"/>
+    <stop offset="100%" stop-color="#8B5C08"/>
+  </linearGradient>
+  <!-- Bright lavender glow for center heart cluster -->
+  <radialGradient id="heartGlow3" cx="50%" cy="52%" r="48%">
+    <stop offset="0%"   stop-color="#E8DCFF" stop-opacity=".55"/>
+    <stop offset="55%"  stop-color="#C9B8E8" stop-opacity=".18"/>
+    <stop offset="100%" stop-color="#D49418" stop-opacity="0"/>
+  </radialGradient>
+  <!-- DnA shine -->
+  <radialGradient id="dnaShine3" cx="50%" cy="50%" r="45%">
+    <stop offset="0%"   stop-color="#FFFFFF" stop-opacity=".35"/>
+    <stop offset="50%"  stop-color="#C9B8E8" stop-opacity=".25"/>
+    <stop offset="100%" stop-color="#C9B8E8" stop-opacity="0"/>
+  </radialGradient>
+  <!-- Subtle crosshatch on gold -->
+  <pattern id="xhatch3" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
+    <path d="M0,7 L14,7 M7,0 L7,14" stroke="#8B5C08" stroke-width=".3" opacity=".2"/>
+  </pattern>
+</defs>
+
+<!-- Card base — bright jubilant gold -->
+<rect width="300" height="420" rx="20" fill="url(#cardBg3)"/>
+<rect width="300" height="420" rx="20" fill="url(#xhatch3)"/>
+
+<!-- Heavy dark-gold border rim -->
+<rect width="300" height="420" rx="20" fill="none" stroke="#7A4E06" stroke-width="18"/>
+
+<!-- Double gold inner border -->
+<rect x="9" y="9" width="282" height="402" rx="14" fill="none" stroke="#EDD98A" stroke-width="1.8"/>
+<rect x="14" y="14" width="272" height="392" rx="11" fill="none" stroke="#FFF2B0" stroke-width=".5" opacity=".55"/>
+
+<!-- Top dark banner -->
+<path d="M0,18 Q0,0 18,0 L282,0 Q300,0 300,18 L300,88 L0,88Z" fill="url(#topBan3)"/>
+<!-- Bottom dark banner -->
+<path d="M0,332 L300,332 L300,402 Q300,420 282,420 L18,420 Q0,420 0,402Z" fill="url(#topBan3)"/>
+<line x1="9" y1="88"  x2="291" y2="88"  stroke="#EDD98A" stroke-width="1.6"/>
+<line x1="9" y1="332" x2="291" y2="332" stroke="#EDD98A" stroke-width="1.6"/>
+
+<!-- Corner ornaments — more elaborate, Art Deco -->
+<path d="M9,40 L9,9 L40,9" fill="none" stroke="#EDD98A" stroke-width="3.2" stroke-linecap="square"/>
+<path d="M260,9 L291,9 L291,40" fill="none" stroke="#EDD98A" stroke-width="3.2" stroke-linecap="square"/>
+<path d="M9,380 L9,411 L40,411" fill="none" stroke="#EDD98A" stroke-width="3.2" stroke-linecap="square"/>
+<path d="M260,411 L291,411 L291,380" fill="none" stroke="#EDD98A" stroke-width="3.2" stroke-linecap="square"/>
+<!-- Corner diamond fills -->
+<polygon points="9,9 17,17 9,25 1,17" fill="#EDD98A"/>
+<polygon points="291,9 299,17 291,25 283,17" fill="#EDD98A"/>
+<polygon points="9,411 17,419 9,427 1,419" fill="#EDD98A"/>
+<polygon points="291,411 299,419 291,427 283,419" fill="#EDD98A"/>
+
+<!-- Top banner -->
+<use href="#h3" transform="translate(32,44) scale(.58)" fill="#C9B8E8" opacity=".95"/>
+<use href="#h3" transform="translate(268,44) scale(.58)" fill="#C9B8E8" opacity=".95"/>
+<!-- Mid-banner hearts -->
+<use href="#h3" transform="translate(70,44) scale(.42)" fill="#C9B8E8" opacity=".65"/>
+<use href="#h3" transform="translate(230,44) scale(.42)" fill="#C9B8E8" opacity=".65"/>
+<text x="150" y="38" text-anchor="middle" dominant-baseline="middle"
+      font-family="Cormorant Garamond,serif" font-size="20" font-weight="600" letter-spacing="6" fill="#FFF2B0">LOVE</text>
+<text x="150" y="66" text-anchor="middle" dominant-baseline="middle"
+      font-family="Jost,sans-serif" font-size="6.5" letter-spacing="4" fill="#EDD98A" opacity=".8">WEDDING RESOURCE CARD</text>
+
+<!-- Lavender glow cloud over illustration area -->
+<rect x="18" y="93" width="264" height="234" rx="6" fill="url(#heartGlow3)"/>
+
+<!-- Large central HEART bloom (big hero heart) -->
+<use href="#h3" transform="translate(150,215) scale(2.6)" fill="#C9B8E8" opacity=".65"/>
+<use href="#h3" transform="translate(150,212) scale(2.6)" fill="#8B73BC" opacity=".22"/>
+
+<!-- Medium hearts orbiting -->
+<use href="#h3" transform="translate(88,168) scale(1.1) rotate(-22)" fill="#BFB0E0" opacity=".82"/>
+<use href="#h3" transform="translate(215,165) scale(1.05) rotate(18)" fill="#C9B8E8" opacity=".8"/>
+<use href="#h3" transform="translate(72,250) scale(.88) rotate(-30)" fill="#BFB0E0" opacity=".72"/>
+<use href="#h3" transform="translate(232,248) scale(.9) rotate(25)" fill="#C9B8E8" opacity=".72"/>
+<use href="#h3" transform="translate(120,300) scale(.75) rotate(-10)" fill="#BFB0E0" opacity=".68"/>
+<use href="#h3" transform="translate(184,300) scale(.72) rotate(10)" fill="#C9B8E8" opacity=".68"/>
+
+<!-- Tiny accent hearts (top area of field) -->
+<use href="#h3" transform="translate(46,138) scale(.48) rotate(-38)" fill="#C9B8E8" opacity=".55"/>
+<use href="#h3" transform="translate(256,138) scale(.46) rotate(32)" fill="#C9B8E8" opacity=".5"/>
+<use href="#h3" transform="translate(148,108) scale(.5)" fill="#C9B8E8" opacity=".55"/>
+
+<!-- DnA shine circle -->
+<ellipse cx="150" cy="212" rx="65" ry="58" fill="url(#dnaShine3)"/>
+
+<!-- DnA Monogram — shining, glowing -->
+<!-- Gold glow layer -->
+<text x="100" y="208" text-anchor="middle" dominant-baseline="middle"
+      font-family="Cormorant Garamond,serif" font-size="78" font-weight="300" fill="#FFF2B0" opacity=".32">D</text>
+<text x="200" y="208" text-anchor="middle" dominant-baseline="middle"
+      font-family="Cormorant Garamond,serif" font-size="78" font-weight="300" fill="#FFF2B0" opacity=".32">A</text>
+<!-- Lavender layer -->
+<text x="100" y="205" text-anchor="middle" dominant-baseline="middle"
+      font-family="Cormorant Garamond,serif" font-size="78" font-weight="300" fill="#E8DCFF">D</text>
+<text x="150" y="213" text-anchor="middle" dominant-baseline="middle"
+      font-family="Cormorant Garamond,serif" font-size="52" font-style="italic" font-weight="400" fill="#EDD98A">n</text>
+<text x="200" y="205" text-anchor="middle" dominant-baseline="middle"
+      font-family="Cormorant Garamond,serif" font-size="78" font-weight="300" fill="#E8DCFF">A</text>
+
+<!-- Bottom resource count -->
+<use href="#h3" transform="translate(70,358) scale(.52)"  fill="#C9B8E8" opacity=".85"/>
+<use href="#h3" transform="translate(105,358) scale(.52)" fill="#C9B8E8" opacity=".85"/>
+<use href="#h3" transform="translate(150,353) scale(.65)" fill="#EDD98A" opacity=".95"/>
+<use href="#h3" transform="translate(195,358) scale(.52)" fill="#C9B8E8" opacity=".85"/>
+<use href="#h3" transform="translate(230,358) scale(.52)" fill="#C9B8E8" opacity=".85"/>
+<text x="150" y="397" text-anchor="middle" dominant-baseline="middle"
+      font-family="Jost,sans-serif" font-size="6.5" letter-spacing="4.5" fill="#EDD98A" opacity=".75">♦ TAP TO REVEAL ♦</text>
+</svg>
+<div class="label">3 · The Jubilee</div>
+<div class="desc">Bright celebration gold · Hero heart bloom · Shining DnA</div>
+</div>
+
+</div><!-- /grid -->
+
+<p class="note">Tell me which one (1 / 2 / 3) and I'll swap it into the HTML — or mix elements between them.</p>
+
+</body>
+</html>
