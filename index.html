@@ -1367,8 +1367,11 @@ document.getElementById('rsvp-form').addEventListener('submit', async function(e
   btn.disabled = true; btn.textContent = 'Sending…';
 
   try {
-    const res = await fetch(SCRIPT_URL, {
+    // Google Apps Script redirects cross-origin — use no-cors so the request
+    // goes through. Response will be opaque (unreadable) but data saves fine.
+    await fetch(SCRIPT_URL, {
       method: 'POST',
+      mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         name: name.value.trim(), phone: phone.value.trim(),
@@ -1376,7 +1379,6 @@ document.getElementById('rsvp-form').addEventListener('submit', async function(e
         timestamp: new Date().toISOString()
       })
     });
-    if (!res.ok) throw new Error();
     document.getElementById('rsvp-form-wrap').classList.remove('open');
     open('success');
   } catch {
