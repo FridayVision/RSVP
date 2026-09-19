@@ -1169,7 +1169,7 @@
       </div>
       <div class="field">
         <label class="field-label" for="f-phone">Phone Number</label>
-        <input class="field-input" type="tel" id="f-phone" placeholder="+65 or +91 …" required />
+        <input class="field-input" type="tel" id="f-phone" placeholder="+65 or +91 …" required inputmode="numeric" pattern="[+]?[\d\s\-]{7,15}" />
         <span class="field-err">Please enter a valid phone number.</span>
       </div>
       <div class="field">
@@ -1334,13 +1334,22 @@ function retryForm() {
 
 /* ── Validation ─────────────────────────────────────────────── */
 function validate(el) {
-  const ok = el.value.trim() !== '' && el.checkValidity();
+  let ok = el.value.trim() !== '' && el.checkValidity();
+  if (el.id === 'f-phone') {
+    ok = ok && /^[+]?[\d\s\-]{7,15}$/.test(el.value.trim());
+  }
   el.classList.toggle('err', !ok);
   return ok;
 }
 ['f-name','f-phone','f-email'].forEach(id => {
   const el = document.getElementById(id);
   el.addEventListener('blur', () => validate(el));
+});
+// Strip any non-phone characters as the user types
+document.getElementById('f-phone').addEventListener('input', function() {
+  const pos = this.selectionStart;
+  const cleaned = this.value.replace(/[^\d\s+\-]/g, '');
+  if (cleaned !== this.value) { this.value = cleaned; this.setSelectionRange(pos, pos); }
 });
 
 /* ── Form submit ─────────────────────────────────────────────── */
