@@ -171,10 +171,20 @@
       animation: fadeUp 1.2s 0.6s ease both;
     }
     .hero-date-line { width: 50px; height: 1px; background: var(--gold); }
+    .hero-date-block {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+    }
     .hero-date {
       font-family: 'Jost', sans-serif; font-weight: 300;
       font-size: 0.78rem; letter-spacing: 0.3em; text-transform: uppercase;
       color: var(--gold-deep);
+    }
+    .hero-date-amp {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1rem; line-height: 1;
+      background: linear-gradient(135deg, var(--lavender-deep), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .hero-scroll-hint {
@@ -317,6 +327,7 @@
     }
 
     .photo-frame {
+      position: relative;
       aspect-ratio: 3/4; border-radius: 55% 45% 50% 50% / 50% 50% 55% 45%;
       overflow: hidden;
       background: linear-gradient(135deg, var(--pearl-2), var(--lavender-pale));
@@ -324,6 +335,22 @@
       transition: transform 0.6s ease;
     }
     .photo-frame:hover { transform: scale(1.02); }
+
+    /* Slideshow slides */
+    .photo-slide {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center top;
+      opacity: 0; z-index: 0;
+      transition: opacity 0.6s ease;
+    }
+    .photo-slide.active {
+      opacity: 1; z-index: 1;
+      animation: kenBurns 1.6s ease-out forwards;
+    }
+    @keyframes kenBurns {
+      from { transform: scale(1); }
+      to   { transform: scale(1.12); }
+    }
 
     .photo-initials-block { text-align: center; }
     .photo-initials {
@@ -776,8 +803,11 @@
     <p class="hero-tagline">Two souls, one story</p>
     <div class="hero-date-row">
       <span class="hero-date-line"></span>
-      <!-- TODO: Replace with actual wedding date -->
-      <span class="hero-date">07 · February · 2027</span>
+      <div class="hero-date-block">
+        <span class="hero-date">07 · February · 2027</span>
+        <span class="hero-date-amp">&amp;</span>
+        <span class="hero-date">08 · February · 2027</span>
+      </div>
       <span class="hero-date-line"></span>
     </div>
     <div class="divider-v"></div>
@@ -850,8 +880,10 @@
     <div class="story-visual reveal-left">
       <div class="photo-wrap">
         <div class="photo-ring"></div>
-        <div class="photo-frame has-photo" id="couple-photo"
-             style="background-image:url('DnA.png');background-size:cover;background-position:center top;">
+        <div class="photo-frame has-photo" id="couple-photo">
+          <div class="photo-slide" style="background-image:url('DnA.png')"></div>
+          <div class="photo-slide" style="background-image:url('DnA_2.png')"></div>
+          <div class="photo-slide" style="background-image:url('DnA_3.png')"></div>
           <div class="photo-initials-block">
             <div class="photo-initials">D&amp;A</div>
             <span class="photo-amp">always &amp; forever</span>
@@ -1461,6 +1493,29 @@ document.getElementById('rsvp-form').addEventListener('submit', async function(e
   window.addEventListener('resize', resize);
   init(); loop();
 })();
+
+/* ── Story photo slideshow ───────────────────────────────────── */
+(function () {
+  const slides = Array.from(document.querySelectorAll('#couple-photo .photo-slide'));
+  if (!slides.length) return;
+  let idx = 0;
+
+  function activate(i) {
+    slides[i].style.animation = 'none';
+    slides[i].offsetWidth; // force reflow — restarts kenBurns on each cycle
+    slides[i].style.animation = '';
+    slides[i].classList.add('active');
+  }
+
+  activate(0);
+
+  setInterval(() => {
+    const prev = idx;
+    idx = (idx + 1) % slides.length;
+    activate(idx);
+    setTimeout(() => slides[prev].classList.remove('active'), 600); // after crossfade
+  }, 1600); // 1 s display + 0.6 s crossfade
+}());
 
 /* ── Audio player ────────────────────────────────────────────── */
 (function () {
