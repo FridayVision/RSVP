@@ -14,3 +14,7 @@ skills-lock.json
 # Env / secrets
 .env
 .env.*
+
+.impeccable/
+
+fonts/
