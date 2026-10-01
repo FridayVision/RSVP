@@ -6,6 +6,8 @@
 # Agent / skills tooling (local only)
 .agents/
 skills-lock.json
+.claude
+.codex
 
 # Editor
 .vscode/
