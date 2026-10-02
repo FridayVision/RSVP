@@ -6,12 +6,12 @@
   <title>DnA — Derin & Akshita</title>
   <meta name="description" content="Derin & Akshita are getting married. 7 & 8 February 2027." />
   <meta name="theme-color" content="#FBFBF8" />
-  <link rel="preload" href="fonts/BodoniModa-normal.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="fonts/TenorSans-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/BodoniModa-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/TenorSans-normal.woff2" as="font" type="font/woff2" crossorigin />
   <style>
-    @font-face { font-family: 'Bodoni Moda'; font-style: normal; font-weight: 400 500; font-display: swap; src: url(fonts/BodoniModa-normal.woff2) format('woff2'); }
-    @font-face { font-family: 'Bodoni Moda'; font-style: italic; font-weight: 400 500; font-display: swap; src: url(fonts/BodoniModa-italic.woff2) format('woff2'); }
-    @font-face { font-family: 'Tenor Sans'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/TenorSans-normal.woff2) format('woff2'); }
+    @font-face { font-family: 'Bodoni Moda'; font-style: normal; font-weight: 400 500; font-display: swap; src: url(assets/fonts/BodoniModa-normal.woff2) format('woff2'); }
+    @font-face { font-family: 'Bodoni Moda'; font-style: italic; font-weight: 400 500; font-display: swap; src: url(assets/fonts/BodoniModa-italic.woff2) format('woff2'); }
+    @font-face { font-family: 'Tenor Sans'; font-style: normal; font-weight: 400; font-display: swap; src: url(assets/fonts/TenorSans-normal.woff2) format('woff2'); }
 
     /* ── Tokens: the Silk Canopy ────────────────────────────── */
     :root {
@@ -392,11 +392,11 @@
     .cd-layout { display: grid; justify-items: center; }
     .cd-ornament { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 0 auto 20px; }
     .cd-ornament span { width: min(72px, 14vw); height: 1px; background: var(--silk-red); opacity: .35; }
-    .cd-ornament img { width: clamp(48px, 6vw, 68px); height: auto; filter: var(--engrave-ink); }
+    .cd-ornament img { width: clamp(72px, 8.5vw, 100px); height: auto; filter: var(--engrave-ink); }
     .cd-title { font-family: var(--display); font-style: italic; font-weight: 400; font-size: clamp(2.1rem, 3.8vw, 3.2rem); line-height: 1.06; color: var(--ink); }
     .cd-sub { color: var(--silk-red); margin: 10px 0 0; }
     /* Full-bleed black cummerbund band */
-    .cd-band { background: linear-gradient(rgba(17,17,17,.68), rgba(17,17,17,.68)), url('banner.png') left center / 50% auto repeat-x; background-color: var(--silk-black); margin-top: clamp(32px, 4vw, 52px); position: relative; }
+    .cd-band { background: linear-gradient(rgba(17,17,17,.68), rgba(17,17,17,.68)), url('assets/images/banner.png') left center / 50% auto repeat-x; background-color: var(--silk-black); margin-top: clamp(32px, 4vw, 52px); position: relative; }
     .cd-band::before, .cd-band::after { content: ''; position: absolute; left: 0; right: 0; height: 3px; background: var(--silk-marigold); pointer-events: none; }
     .cd-band::before { top: 0; } .cd-band::after { bottom: 0; }
     .cd-grid { display: flex; justify-content: center; align-items: flex-start; gap: clamp(10px, 2.8vw, 30px); padding-block: clamp(36px, 5vw, 56px); margin: 0; }
@@ -526,7 +526,7 @@
   </style>
 </head>
 <body>
-  <audio id="bg-audio" src="song.mp3" loop preload="auto"></audio>
+  <audio id="bg-audio" src="assets/audio/song.mp3" loop preload="auto"></audio>
 
   <!-- ═══ COVER ═══ -->
   <header id="intro">
@@ -565,9 +565,9 @@
       <div class="wrap">
         <div class="story split">
           <figure class="photos">
-            <div class="slide"><img src="DnA_3.png" alt="Engraved portrait of Derin and Akshita" /></div>
-            <div class="slide"><img src="DnA_2.png" alt="Engraved portrait of Derin and Akshita under a flowering tree" /></div>
-            <div class="slide"><img src="DnA.png" alt="Engraved portrait of Derin and Akshita by the sea" /></div>
+            <div class="slide"><img src="assets/images/DnA_3.png" alt="Engraved portrait of Derin and Akshita" /></div>
+            <div class="slide"><img src="assets/images/DnA_2.png" alt="Engraved portrait of Derin and Akshita under a flowering tree" /></div>
+            <div class="slide"><img src="assets/images/DnA.png" alt="Engraved portrait of Derin and Akshita by the sea" /></div>
           </figure>
           <div class="tell">
             <svg class="rule-diamond" viewBox="0 0 240 16" aria-hidden="true"><path d="M0 8 H106 M134 8 H240" stroke="#C8921E" stroke-width="1"/><path d="M120 1 L127 8 L120 15 L113 8 Z" fill="#C8921E"/></svg>
@@ -589,12 +589,12 @@
         <h2 class="h-display">Two days, <em>one celebration</em></h2>
         <p class="lede">From the shores of Besant Nagar to the Singapore skyline, we would love you with us for both.</p>
       </div>
-      <img class="skyline" src="skyline-gold.png" alt="" aria-hidden="true" width="1903" height="679" />
+      <img class="skyline" src="assets/images/skyline-gold.png" alt="" aria-hidden="true" width="1903" height="679" />
       <div class="stage" id="band" aria-hidden="true"></div>
       <div class="wrap">
         <div class="ceremonies">
           <div class="cer" data-lanes="ring">
-            <div class="cer-mark"><img src="rings-gold.png" alt="" aria-hidden="true" width="520" height="396" /></div>
+            <div class="cer-mark"><img src="assets/images/rings.png" alt="" aria-hidden="true" width="587" height="378" /></div>
             <h3>Ring Exchange <em>&amp; Reception</em></h3>
             <button type="button" class="text-link" aria-expanded="false" aria-controls="more-ring">Ceremony details</button>
             <div class="more" id="more-ring" inert>
@@ -637,7 +637,7 @@
     <!-- ═══ COUNTDOWN ═══ -->
     <section id="countdown" class="section">
       <div class="wrap cd-layout">
-        <div class="cd-ornament" aria-hidden="true"><span></span><img src="rings-gold.png" alt="" width="520" height="396" /><span></span></div>
+        <div class="cd-ornament" aria-hidden="true"><span></span><img src="assets/images/rings.png" alt="" width="587" height="378" /><span></span></div>
         <h2 class="cd-title">Until we say forever</h2>
         <p class="cd-sub caps">7 February 2027 &middot; 6 pm</p>
       </div>

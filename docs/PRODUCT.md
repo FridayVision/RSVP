@@ -20,7 +20,7 @@ A wedding invitation and RSVP website for the marriage of Derin and Akshita, tak
 
 ## Operating Context
 
-Single static page deployed on Vercel. No build step, no framework — plain HTML with inline CSS and JS. RSVP form posts to a Google Apps Script endpoint that writes to Google Sheets. Background audio (song.mp3) auto-plays with a toggle. Three couple photos cycle in a Ken Burns slideshow. Event details are presented as two side-by-side cards: The Ring Ceremony (Western reception, Feb 7) and The Thaali Ceremony (South Indian tradition, Feb 8). The site is the only touchpoint — there is no companion app, admin panel, or email flow beyond what the couple manages manually from the sheet.
+Single static page deployed on Vercel. No build step, no framework — plain HTML with inline CSS and JS. RSVP form posts to a Google Apps Script endpoint that writes to Google Sheets. Background audio (assets/audio/song.mp3) auto-plays with a toggle. Three couple photos cycle in a Ken Burns slideshow. Event details are presented as two side-by-side cards: The Ring Ceremony (Western reception, Feb 7) and The Thaali Ceremony (South Indian tradition, Feb 8). The site is the only touchpoint — there is no companion app, admin panel, or email flow beyond what the couple manages manually from the sheet.
 
 ## Capabilities and Constraints
 
@@ -47,10 +47,14 @@ Single static page deployed on Vercel. No build step, no framework — plain HTM
 
 ## Evidence on Hand
 
-- `DnA.png`, `DnA_2.png`, `DnA_3.png` — couple photos (used in story slideshow)
-- `ring.png` — wedding rings illustration (available but not currently referenced)
-- `bessy&sg.png` — Besant Nagar / beach photo (countdown background)
-- `song.mp3` — background audio track
+- `assets/images/DnA.png`, `DnA_2.png`, `DnA_3.png` — engraved couple portraits (story section)
+- `assets/images/rings.png` — engraved wedding rings in gold line art (ceremonies and countdown)
+- `assets/images/skyline-gold.png` — gold stencil of Chennai to Singapore with the home church (ceremonies)
+- `assets/images/banner.png` — countdown band background
+- `assets/images/photo_selfie.jpg` — couple selfie (not currently used)
+- `assets/source/` — source artwork the stencils are made from (`bessy&sg.png`, `skyline-church.png`)
+- `assets/audio/song.mp3` — background audio track
+- `assets/fonts/` — self-hosted Bodoni Moda and Tenor Sans
 - No testimonials, no vendor credits beyond Friday Vision. Future work must not fabricate venue details, guest quotes, or event specifics not provided by the couple.
 
 ## Product Principles
