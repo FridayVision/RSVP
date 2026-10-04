@@ -6,6 +6,21 @@
   <title>DnA — Derin & Akshita</title>
   <meta name="description" content="Derin & Akshita are getting married. 7 & 8 February 2027." />
   <meta name="theme-color" content="#FBFBF8" />
+  <!-- Link previews (WhatsApp, iMessage, Instagram, Facebook, X). Crawlers need an absolute image URL:
+       replace the domain in og:url and og:image once the live address is final. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="DnA — Derin &amp; Akshita" />
+  <meta property="og:title" content="Derin &amp; Akshita are getting married" />
+  <meta property="og:description" content="Two souls, one story. Ring Exchange &amp; Reception on 7 February, Wedding on 8 February 2027. We would love you there." />
+  <meta property="og:url" content="https://dna-wedding.vercel.app/" />
+  <meta property="og:image" content="https://dna-wedding.vercel.app/assets/images/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="DnA monogram under crossed silk, with the two wedding dates" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Derin &amp; Akshita are getting married" />
+  <meta name="twitter:description" content="Ring Exchange &amp; Reception on 7 February, Wedding on 8 February 2027." />
+  <meta name="twitter:image" content="https://dna-wedding.vercel.app/assets/images/og-image.jpg" />
   <link rel="preload" href="assets/fonts/BodoniModa-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="assets/fonts/TenorSans-normal.woff2" as="font" type="font/woff2" crossorigin />
   <style>
@@ -391,25 +406,32 @@
     #countdown { background: var(--ground); color: var(--ink); text-align: center; position: relative; isolation: isolate; }
     .cd-layout { display: grid; justify-items: center; }
     .cd-ornament { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 0 auto 20px; }
-    .cd-ornament span { width: min(72px, 14vw); height: 1px; background: var(--silk-red); opacity: .35; }
-    .cd-ornament img { width: clamp(72px, 8.5vw, 100px); height: auto; filter: var(--engrave-ink); }
+    .cd-ornament span { width: min(96px, 16vw); height: 1px; background: linear-gradient(90deg, transparent, #C8921E); }
+    .cd-ornament span:last-child { background: linear-gradient(270deg, transparent, #C8921E); }
+    .cd-ornament img { width: clamp(88px, 10vw, 124px); height: auto; filter: brightness(.82) saturate(1.15); } /* the rings in gold, deepened a touch to hold on ivory */
     .cd-title { font-family: var(--display); font-style: italic; font-weight: 400; font-size: clamp(2.1rem, 3.8vw, 3.2rem); line-height: 1.06; color: var(--ink); }
     .cd-sub { color: var(--silk-red); margin: 10px 0 0; }
     /* Full-bleed black cummerbund band */
-    .cd-band { background: linear-gradient(rgba(17,17,17,.68), rgba(17,17,17,.68)), url('assets/images/banner.png') left center / 50% auto repeat-x; background-color: var(--silk-black); margin-top: clamp(32px, 4vw, 52px); position: relative; }
-    .cd-band::before, .cd-band::after { content: ''; position: absolute; left: 0; right: 0; height: 3px; background: var(--silk-marigold); pointer-events: none; }
+    /* The band: the engraved portraits printed through Kanjeevaram red, gold zari edges, a gold glow behind the numbers */
+    .cd-band { background:
+        radial-gradient(ellipse 42% 66% at 50% 50%, rgba(251,246,234,.9), rgba(251,246,234,0) 78%),
+        linear-gradient(rgba(246,238,221,.72), rgba(246,238,221,.72)),
+        url('assets/images/banner.png') left center / 50% auto repeat-x;
+      background-color: #F6EEDD; margin-top: clamp(28px, 3.4vw, 44px); position: relative; }
+    .cd-band::before, .cd-band::after { content: ''; position: absolute; left: 0; right: 0; height: 7px; pointer-events: none;
+      background: linear-gradient(var(--silk-marigold), var(--silk-marigold)) top / 100% 2px no-repeat, linear-gradient(var(--silk-marigold), var(--silk-marigold)) bottom / 100% 2px no-repeat, repeating-linear-gradient(90deg, var(--silk-marigold) 0 4px, transparent 4px 9px) center / 100% 1px no-repeat; }
     .cd-band::before { top: 0; } .cd-band::after { bottom: 0; }
     .cd-grid { display: flex; justify-content: center; align-items: flex-start; gap: clamp(10px, 2.8vw, 30px); padding-block: clamp(36px, 5vw, 56px); margin: 0; }
     .cd-unit { display: grid; gap: 10px; justify-items: center; }
-    .cd-num { font-family: var(--display); font-weight: 500; font-size: clamp(3.2rem, 7.5vw, 6rem); line-height: 1; white-space: nowrap; color: var(--on-black); }
+    .cd-num { font-family: var(--display); font-weight: 500; font-size: clamp(3.2rem, 7.5vw, 6rem); line-height: 1; white-space: nowrap; color: var(--silk-red); }
     .dg { display: inline-block; width: .64em; text-align: center; }
-    .cd-label { font-family: var(--display); font-style: italic; font-size: 1.05rem; color: var(--on-black); }
+    .cd-label { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 1.1rem; color: var(--ink); }
     .cd-sep { width: 7px; height: 7px; background: var(--silk-marigold); transform: rotate(45deg); align-self: center; margin-top: -34px; flex: none; }
     #cd-hem { display: none; }
 
     /* ── RSVP ───────────────────────────────────────────────── */
     #rsvp { text-align: center; }
-    #countdown { padding-top: clamp(72px, 9vw, 120px); padding-bottom: clamp(72px, 9vw, 120px); }
+    #countdown { padding-top: clamp(56px, 7vw, 96px); padding-bottom: clamp(56px, 7vw, 96px); }
     .card { max-width: 580px; margin: 44px auto 0; text-align: left; background: #fff; border: 1px solid var(--ink); padding: clamp(32px, 6vw, 56px); position: relative; }
     .card::before { content: ''; position: absolute; inset: 6px; border: 1px solid var(--ink); pointer-events: none; }
     .choice { display: grid; gap: 14px; justify-items: center; text-align: center; }
@@ -1433,22 +1455,30 @@
       }
       var btn = $('#btn-submit');
       btn.disabled = true; btn.textContent = 'Sending…';
+      // Confirmed save: send as text/plain (a "simple" request, so no CORS preflight), then read the
+      // script's JSON reply. Only show "You're locked in" once the sheet has actually written the row.
+      var ctrl = new AbortController(), timer = setTimeout(function () { ctrl.abort(); }, 20000);
       try {
-        await fetch(SCRIPT_URL, {
+        var res = await fetch(SCRIPT_URL, {
           method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify({
+            attending: 'yes',
             name: name.value.trim(), phone: phone.value.trim(),
             email: email.value.trim(), plusOne: plus ? plus.value : 'no',
             accommodation: accom ? accom.value : '',
             timestamp: new Date().toISOString()
-          })
+          }),
+          signal: ctrl.signal
         });
+        var reply = await res.json();
+        if (!reply || reply.ok !== true) throw new Error((reply && reply.error) || 'not saved');
         hide(formWrap); show($('#state-success')); petals(160);
       } catch (_) {
         btn.disabled = false; btn.textContent = 'Confirm attendance';
         hide(formWrap); show($('#state-error'));
+      } finally {
+        clearTimeout(timer);
       }
     });
 
