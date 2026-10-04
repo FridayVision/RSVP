@@ -14,7 +14,12 @@
  *   Settings must stay: Execute as "Me", Who has access "Anyone".
  */
 
-var SHEET_NAME = 'RSVPs';  // tab the rows go to; created with headers if it does not exist
+// Where RSVPs are written.
+//   SPREADSHEET_ID: leave '' to use the sheet this script is attached to, or paste the ID of any other
+//   Google Sheet (the long code in its URL: docs.google.com/spreadsheets/d/<THIS PART>/edit).
+//   SHEET_NAME: the tab inside that spreadsheet; created with headers if it does not exist.
+var SPREADSHEET_ID = '';
+var SHEET_NAME = 'RSVPs';
 var COLUMNS = ['Received', 'Attending', 'Name', 'Phone', 'Email', 'Plus one', 'Accommodation', 'Client time'];
 
 function doPost(e) {
@@ -53,7 +58,7 @@ function doGet() {
 }
 
 function sheet_() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = SPREADSHEET_ID ? SpreadsheetApp.openById(SPREADSHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
   var sh = ss.getSheetByName(SHEET_NAME);
   if (!sh) {
     sh = ss.insertSheet(SHEET_NAME);
