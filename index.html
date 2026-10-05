@@ -64,7 +64,7 @@
       font-family: var(--text); font-size: 16px; line-height: 1.7;
       -webkit-font-smoothing: antialiased; overflow-x: hidden;
     }
-    img { max-width: 100%; display: block; }
+    img { max-width: 100%; display: block; -webkit-user-drag: none; user-select: none; }
     ::selection { background: rgba(224,165,38,.42); color: var(--silk-black); }
     :focus-visible { outline: 2px solid var(--silk-red); outline-offset: 4px; }
     ::-webkit-scrollbar { width: 8px; }
@@ -293,9 +293,9 @@
     .ceremonies { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0 clamp(24px, 5vw, 72px); margin-top: clamp(40px, 6vw, 64px); }
     .ceremonies .seam { background: var(--ink); }
     .cer { display: grid; justify-items: center; align-content: start; gap: 10px; padding: 8px 0; }
-    .cer-mark { height: 120px; width: auto; display: flex; align-items: center; justify-content: center; overflow: visible; }
-    .cer-mark img { height: 120px; width: auto; max-width: 220px; filter: var(--engrave-ink); mix-blend-mode: multiply; }
-    .cer-mark svg { height: 88px; width: auto; }
+    .cer-mark { height: 180px; width: auto; display: flex; align-items: center; justify-content: center; overflow: visible; }
+    .cer-mark img { height: 180px; width: auto; max-width: 320px; filter: var(--engrave-ink); mix-blend-mode: multiply; }
+    .cer-mark svg { height: 148px; width: auto; }
     .cer h3 { margin: 24px 0 0; font-family: var(--display); font-weight: 400; font-size: clamp(3rem, 6vw, 5rem); line-height: 0.95; letter-spacing: -.03em; min-height: 0; text-align: center; text-wrap: balance; }
     .cer h3 em { font-style: italic; color: var(--silk-red); }
     .cer .time { font-family: var(--display); font-style: italic; font-size: 1.2rem; color: var(--muted); }
@@ -1386,6 +1386,10 @@
       cells('cd-secs',  String(Math.floor((d % 6e4) / 1e3)).padStart(2, '0'));
     }
     tick(); setInterval(tick, 1000);
+
+    /* ── Protect images: block right-click and drag-to-save ──── */
+    document.addEventListener('contextmenu', function (e) { if (e.target.tagName === 'IMG') e.preventDefault(); });
+    document.addEventListener('dragstart',   function (e) { if (e.target.tagName === 'IMG') e.preventDefault(); });
 
     /* Ceremonies headings: reveal on scroll (watch the parent; a hidden heading may never report itself visible) */
     (function () {
