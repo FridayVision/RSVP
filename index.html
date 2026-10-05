@@ -400,7 +400,7 @@
     #rsvp .chip span:hover { background: #F6EEDD; }
     #rsvp .chip input:checked + span { background: var(--silk-red); border-color: var(--silk-red); color: var(--ivory-on-red); }
     #rsvp .state h3 { color: var(--silk-red); }
-    .petals { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 90; }
+    .petals { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 90; }
 
     /* ── Countdown: White Tie — ivory ground · black band · crimson ── */
     #countdown { background: var(--ground); color: var(--ink); text-align: center; position: relative; isolation: isolate; }
@@ -1333,33 +1333,58 @@
     }
     function petals(count) {
       if (reduce) return;
-      var cv = document.createElement('canvas'); cv.className = 'petals'; document.body.appendChild(cv);
-      var dpr = Math.min(window.devicePixelRatio || 1, 2), W = window.innerWidth, H = window.innerHeight;
+      var host = $('#intro') || document.body;
+      var cv = document.createElement('canvas'); cv.className = 'petals'; host.appendChild(cv);
+      var dpr = Math.min(window.devicePixelRatio || 1, 2), W = host.offsetWidth, H = host.offsetHeight;
       cv.width = W * dpr; cv.height = H * dpr;
       var c = cv.getContext('2d'); c.scale(dpr, dpr);
-      var cols = ['#E0A526', '#EE7B1A', '#C4213F', '#FFFFFF', '#E8577A'], P = [];
-      for (var i = 0; i < count; i++) P.push({ x: Math.random() * W, y: -20 - Math.random() * H * .6, vy: 50 + Math.random() * 70, sw: Math.random() * 6, sp: .8 + Math.random() * 1.4,
-        r: Math.random() * 6.28, vr: (Math.random() - .5) * 3, s: 5 + Math.random() * 6, col: cols[i % cols.length] });
-      // Every fifth piece is a whole marigold head, heavier, so it falls a little faster and turns slowly
-      P.forEach(function (p, i) { if (i % 5 === 2) { p.bloom = true; p.bloomIdx = Math.floor(Math.random() * MARIGOLDS.length); p.s = 12 + Math.random() * 6; p.vy *= 1.15; p.vr *= .4; } });
-      var last = performance.now(), t0 = last;
+      var wCols = ['rgba(255,255,255,.92)', 'rgba(238,235,250,.87)', 'rgba(250,247,255,.89)'];
+      var rCols = ['rgba(158,27,50,.84)',   'rgba(140,18,38,.80)',   'rgba(176,38,62,.82)'];
+      var P = [];
+      for (var i = 0; i < count; i++) {
+        var red = Math.random() < .42;
+        var spin = (Math.random() < .5 ? 1 : -1) * (.55 + Math.random() * .85);
+        P.push({ x: Math.random() * W, y: -10 - Math.random() * H * .55,
+          vx: (Math.random() - .5) * 6, vy: 14 + Math.random() * 20,
+          r: Math.random() * 6.28, vr: spin,
+          s: 2.6 + Math.random() * 2.8,
+          col: (red ? rCols : wCols)[i % 3], red: red,
+          type: Math.random() < .55 ? 'narrow' : 'wide' });
+      }
+      var last = performance.now();
       (function frame(now) {
-        var dt = Math.min(.05, (now - last) / 1000), alive = 0; last = now;
+        var dt = Math.min(.032, (now - last) / 1000), alive = 0; last = now;
         c.clearRect(0, 0, W, H);
         P.forEach(function (p) {
-          p.y += p.vy * dt; p.x += Math.sin((now - t0) / 1000 * p.sp + p.sw) * 30 * dt; p.r += p.vr * dt;
+          p.vy  += (62 - p.vy) * 1.1 * dt;
+          var tilt = Math.sin(p.r) * Math.cos(p.r) * p.vy * .55;
+          p.vx  += (tilt - p.vx) * 3.2 * dt;
+          p.vr  *= (1 - .18 * dt);
+          if (Math.random() < .004) { p.vx += (Math.random() - .5) * 26; p.vr += (Math.random() - .5) * .6; }
+          p.x += p.vx * dt; p.y += p.vy * dt; p.r += p.vr * dt;
           if (p.y > H + 20) return; alive++;
-          c.save(); c.translate(p.x, p.y); c.rotate(p.r); c.scale(1, p.bloom ? .88 + .12 * Math.sin(now / 500 + p.sw) : .55 + .45 * Math.sin(now / 300 + p.sw));
-          if (p.bloom) bloomAt(c, p); else {
-            c.beginPath(); c.ellipse(0, 0, p.s, p.s * .55, 0, 0, 6.283); c.fillStyle = p.col; c.fill();
-            if (p.col === '#FFFFFF') { c.lineWidth = .6; c.strokeStyle = 'rgba(20,20,20,.35)'; c.stroke(); }
+          var faceAlpha = .35 + Math.abs(Math.cos(p.r)) * .65;
+          c.save(); c.globalAlpha = faceAlpha; c.translate(p.x, p.y); c.rotate(p.r); c.fillStyle = p.col;
+          var s = p.s;
+          if (p.type === 'narrow') {
+            c.beginPath(); c.moveTo(0, -s);
+            c.bezierCurveTo( s * .60, -s * .66,  s * .70,  s * .26, 0,  s * .84);
+            c.bezierCurveTo(-s * .70,  s * .26, -s * .60, -s * .66, 0, -s);
+            c.fill();
+            if (!p.red) { c.beginPath(); c.moveTo(0, -s * .72); c.lineTo(0, s * .62); c.strokeStyle = 'rgba(130,110,165,.18)'; c.lineWidth = .38; c.stroke(); }
+          } else {
+            c.beginPath(); c.moveTo(0, -s * .45);
+            c.bezierCurveTo( s * .94, -s * .84,  s * 1.04,  s * .38, 0,  s * .92);
+            c.bezierCurveTo(-s * 1.04,  s * .38, -s * .94, -s * .84, 0, -s * .45);
+            c.fill();
+            if (!p.red) { c.beginPath(); c.moveTo(0, -s * .3); c.lineTo(0, s * .7); c.strokeStyle = 'rgba(130,110,165,.16)'; c.lineWidth = .38; c.stroke(); }
           }
           c.restore();
         });
         if (alive) requestAnimationFrame(frame); else cv.remove();
       }(last));
     }
-    setTimeout(function () { petals(window.innerWidth < 600 ? 45 : 80); }, 900);
+    setTimeout(function () { petals(window.innerWidth < 600 ? 90 : 160); }, 900);
 
     /* ── Ceremony details: inline, under each ceremony ─────── */
     $$('[aria-controls^="more-"]').forEach(function (b) {
