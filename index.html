@@ -168,6 +168,12 @@
     .banana .lf { transform-box: view-box; transform-origin: var(--lo); animation: leaf-sway 7s ease-in-out var(--ld) infinite alternate; }
     @keyframes leaf-sway { from { transform: rotate(calc(var(--la) * -1)); } to { transform: rotate(var(--la)); } }
     @media (prefers-reduced-motion: reduce) { .banana .lf { animation: none; } }
+    .banana .mote { animation: mote-float var(--md, 5s) var(--mde, 0s) ease-in-out infinite alternate; }
+    @keyframes mote-float {
+      from { transform: translate(0, 0); opacity: var(--mo, .4); }
+      to   { transform: translate(var(--mx, 4px), var(--my, -16px)); opacity: calc(var(--mo, .4) * .18); }
+    }
+    @media (prefers-reduced-motion: reduce) { .banana .mote { animation: none; opacity: 0; } }
     .cover {
       position: relative; z-index: 2; display: grid; justify-items: center;
       padding: calc(var(--cz) + 8px) 16px calc(40px + env(safe-area-inset-bottom, 0px));
@@ -468,6 +474,112 @@
     .state p { margin: 0; }
     .link { color: var(--silk-red); background: none; border: 0; font: inherit; text-decoration: underline; text-underline-offset: 5px; cursor: pointer; justify-self: center; }
 
+    /* ── RSVP Ticket ─────────────────────────────────────────── */
+    #state-success:not([hidden]) {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      min-height: 80vh; gap: 0;
+    }
+    .tc-scene {
+      display: flex; justify-content: center; align-items: center;
+      padding: 52px 48px 40px;
+      background:
+        linear-gradient(rgba(251,246,238,.72), rgba(251,246,238,.72)),
+        url('/assets/images/DnA_2.png') center / cover no-repeat;
+      border-radius: 3px;
+    }
+    .tc-stub-stack {
+      display: flex; justify-content: center;
+      opacity: 0; visibility: hidden;
+    }
+    .tc-stub-stack.show {
+      opacity: 1; visibility: visible;
+      animation: stubReveal .5s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes stubReveal {
+      from { transform: scale(.88) translateY(20px); opacity: 0; }
+      to   { transform: none; opacity: 1; }
+    }
+    /* Wrapper carries the drop-shadow and the 3D tilt */
+    .stub-wrap {
+      position: relative; display: inline-block;
+      filter: drop-shadow(0 22px 50px rgba(17,17,17,.28)) drop-shadow(0 5px 16px rgba(17,17,17,.14));
+      will-change: transform;
+    }
+    /* Scalloped stub card — semicircular notches along left and right long edges */
+    .stub-card {
+      --sc: 7px;
+      width: min(300px, 90vw);
+      background:
+        linear-gradient(rgba(22,4,3,.74), rgba(22,4,3,.74)),
+        url('assets/images/texture.png') center / cover no-repeat;
+      position: relative;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 38px calc(var(--sc) + 28px) 34px; text-align: center;
+      -webkit-mask:
+        radial-gradient(circle at 0% 50%, transparent var(--sc), #000 calc(var(--sc) + 0.5px))
+          0 0 / var(--sc) calc(var(--sc) * 2) repeat-y,
+        radial-gradient(circle at 100% 50%, transparent var(--sc), #000 calc(var(--sc) + 0.5px))
+          100% 0 / var(--sc) calc(var(--sc) * 2) repeat-y,
+        linear-gradient(#000 0 0) var(--sc) 0 / calc(100% - var(--sc) * 2) 100% no-repeat;
+      mask:
+        radial-gradient(circle at 0% 50%, transparent var(--sc), #000 calc(var(--sc) + 0.5px))
+          0 0 / var(--sc) calc(var(--sc) * 2) repeat-y,
+        radial-gradient(circle at 100% 50%, transparent var(--sc), #000 calc(var(--sc) + 0.5px))
+          100% 0 / var(--sc) calc(var(--sc) * 2) repeat-y,
+        linear-gradient(#000 0 0) var(--sc) 0 / calc(100% - var(--sc) * 2) 100% no-repeat;
+    }
+    .stub-card::before {
+      content: ''; position: absolute; pointer-events: none; z-index: 0;
+      top: 12px; bottom: 12px;
+      left: calc(var(--sc) + 8px); right: calc(var(--sc) + 8px);
+      border: 1.5px solid rgba(230,217,191,.22);
+    }
+    /* Edge vignette — darker near scalloped edges makes the cuts pop on red */
+    .stub-card::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 3;
+      background:
+        linear-gradient(to right,  rgba(0,0,0,.22) 0px, transparent 16px),
+        linear-gradient(to left,   rgba(0,0,0,.22) 0px, transparent 16px),
+        linear-gradient(to right,  rgba(255,255,255,.1) 0px, transparent 7px),
+        linear-gradient(to left,   rgba(255,255,255,.1) 0px, transparent 7px),
+        linear-gradient(to bottom, rgba(255,255,255,.14) 0px, transparent 12px),
+        linear-gradient(to top,    rgba(0,0,0,.14) 0px, transparent 10px);
+    }
+    .stub-admit {
+      font-size: 12.5px; letter-spacing: .46em; text-transform: uppercase;
+      color: rgba(230,217,191,.88); margin: 0 0 20px; position: relative; z-index: 1;
+    }
+    .stub-title {
+      font-family: var(--display); font-size: 3.2rem; line-height: .88;
+      letter-spacing: -.02em; font-weight: 700; color: var(--silk-marigold); margin: 0; position: relative; z-index: 1;
+    }
+    .stub-subtitle {
+      font-family: var(--display); font-style: italic; font-size: 1.5rem;
+      color: #fff; margin: 8px 0 0; position: relative; z-index: 1;
+    }
+    .stub-rule { width: 70%; height: 1px; background: rgba(230,217,191,.30); margin: 24px 0; position: relative; z-index: 1; }
+    .stub-field-row {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      width: 100%; margin-bottom: 22px; position: relative; z-index: 1;
+    }
+    .stub-field-row:last-of-type { margin-bottom: 0; }
+    .stub-lbl { font-size: 12px; letter-spacing: .42em; text-transform: uppercase; color: rgba(230,217,191,.90); }
+    .stub-val { font-family: var(--display); font-size: 1.45rem; font-weight: 700; color: #fff; line-height: 1.25; }
+    .stub-val em { display: block; font-style: italic; font-weight: 400; color: rgba(240,228,205,.92); font-size: 1.15rem; }
+    .stub-bow { position: absolute; top: -74px; left: -50px; width: 99px; height: auto; transform: rotate(135deg); transform-origin: center; z-index: 10; }
+    .stub-barcode { display: flex; align-items: stretch; gap: 0; height: 36px; margin-top: 14px; position: relative; z-index: 1; justify-content: center; }
+    .stub-barcode span { display: block; flex: none; height: 100%; background: rgba(230,217,191,.85); }
+    /* Moving glare highlight — updated via JS on mousemove */
+    .stub-glare {
+      position: absolute; inset: 0; z-index: 4; pointer-events: none;
+      border-radius: inherit; opacity: 0;
+      transition: opacity .2s;
+      background: radial-gradient(circle at 50% 30%, rgba(255,255,255,.22), transparent 65%);
+    }
+    .stub-wrap:hover .stub-glare { opacity: 1; }
+    .ticket-tagline { font-family: var(--display); font-style: italic; font-size: 1rem; color: var(--muted); margin: 16px 0 0; text-align: center; }
+
     /* ── Footer ─────────────────────────────────────────────── */
     footer { background: var(--ground); color: var(--silk-red); text-align: center; padding: 28px 16px calc(28px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid rgba(158,27,50,.15); }
     .f-credit { margin: 0 auto; color: var(--silk-red); font-size: 11px; max-width: 60ch; text-wrap: balance; }
@@ -732,8 +844,38 @@
           </div>
 
           <div class="state" id="state-success" hidden>
-            <h3>You're locked in.</h3>
-            <p>We can't wait to celebrate with you.</p>
+            <div class="tc-scene" id="tc-scene">
+
+              <div class="tc-stub-stack" id="tc-stub-stack">
+                <div class="stub-wrap">
+                  <div class="stub-card">
+                    <p class="stub-admit" id="tc-admit-final">ADMIT ONE</p>
+                    <p class="stub-title">DnA</p>
+                    <p class="stub-subtitle">Wedding '27</p>
+                    <div class="stub-rule"></div>
+                    <div class="stub-field-row">
+                      <span class="stub-lbl">Reception</span>
+                      <span class="stub-val">7 Feb 2027<em>Sunday · 6 PM</em></span>
+                    </div>
+                    <div class="stub-field-row">
+                      <span class="stub-lbl">Wedding</span>
+                      <span class="stub-val">8 Feb 2027<em>Monday · Morning</em></span>
+                    </div>
+                    <div class="stub-field-row">
+                      <span class="stub-lbl">Venue</span>
+                      <span class="stub-val">Coimbatore</span>
+                    </div>
+                    <div class="stub-rule"></div>
+                    <div class="stub-barcode" id="stub-barcode" aria-hidden="true"></div>
+                  </div>
+                  <div class="stub-glare" aria-hidden="true"></div>
+                  <img class="stub-bow" src="assets/images/black_bow.png" alt="" aria-hidden="true">
+
+                </div>
+              </div>
+
+            </div>
+            <p class="ticket-tagline">We can't wait to celebrate with you.</p>
           </div>
           <div class="state" id="state-error" hidden>
             <h3>That didn't go through</h3>
@@ -1124,6 +1266,14 @@
       return leaf;
     }
     $$('.banana').forEach(function (svg, pi) {
+      // Warm ambient glow: layered halos behind the plant body so it feels lit from within
+      var bg = el('g', {}, svg);
+      el('ellipse', { cx: 152, cy: 475, rx: 148, ry: 72, fill: 'rgba(196,142,18,.10)', filter: 'url(#soft)' }, bg);
+      el('ellipse', { cx: 152, cy: 370, rx: 118, ry: 92, fill: 'rgba(224,165,38,.07)', filter: 'url(#soft)' }, bg);
+      el('ellipse', { cx: 152, cy: 275, rx: 86,  ry: 68, fill: 'rgba(210,138,22,.05)', filter: 'url(#soft)' }, bg);
+      // Ground warmth: a shallow gold spill where the stem meets the earth
+      el('ellipse', { cx: 152, cy: 548, rx: 96, ry: 22, fill: 'rgba(200,155,30,.13)', filter: 'url(#soft)' }, bg);
+
       var R = rng(41 + pi * 7), g = el('g', { 'stroke-linejoin': 'round' }, svg), top = { x: 150, y: 300 };
       var leaf = bananaPlant(svg, g, R, top, 1);
       // Old leaves first: dried and hanging along the stem
@@ -1165,6 +1315,14 @@
       el('path', { d: 'M56 560 C58 530 60 508 62 488 L68 488 C70 508 72 530 76 560 Z', fill: 'url(#stem)', stroke: 'rgba(40,70,30,.5)', 'stroke-width': .6 }, sg);
       [[-48, 230, 40, -50, 'mgM', false, .3], [40, 240, 40, 50, 'mgD', 'big', .25], [-6, 260, 42, -12, 'mgL', false, .08]]
         .forEach(function (Lf, i) { sl(Lf, i); });
+      // Golden motes: pollen/dust catching the warm light — rendered last so they float in front of leaves
+      var mg = el('g', {}, svg);
+      [[88,395,.44,4.2], [118,308,.30,5.4], [170,338,.36,4.8], [198,448,.22,3.8], [140,252,.20,6.1], [76,478,.18,4.6], [205,372,.28,5.9], [58,340,.16,3.4]].forEach(function(m) {
+        var xj = f(m[0] + (R()-0.5)*10), yj = f(m[1] + (R()-0.5)*10);
+        el('circle', { class: 'mote', cx: xj, cy: yj, r: f(1.1 + R()*.9),
+          fill: R()<.3 ? 'rgba(224,185,60,'+m[2]+')' : 'rgba(200,148,20,'+m[2]+')',
+          style: '--md:'+m[3]+'s;--mde:-'+f(R()*m[3])+'s;--mx:'+f((R()-.5)*9)+'px;--my:-'+f(10+R()*10)+'px;--mo:'+m[2] }, mg);
+      });
     });
 
 
@@ -1283,6 +1441,64 @@
         if (i % 6 === 3) tuberose(flowers, x, yAt(x) + 4, 70 + R() * 26);
       }
     });
+
+    /* ── Celebration burst: particles explode from the ticket ── */
+    function burst() {
+      if (reduce) return;
+      var card = document.getElementById('tc-stub-stack');
+      var rect = card ? card.getBoundingClientRect() : { left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0, height: 0 };
+      var cx = rect.left + rect.width / 2, cy = rect.top + rect.height / 2;
+      var cv = document.createElement('canvas');
+      cv.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:100;';
+      document.body.appendChild(cv);
+      var dpr = Math.min(window.devicePixelRatio || 1, 2), W = window.innerWidth, H = window.innerHeight;
+      cv.width = W * dpr; cv.height = H * dpr;
+      var c = cv.getContext('2d'); c.scale(dpr, dpr);
+      /* Minimal red & white — simple rectangles, fast enough to reach all edges */
+      var bCols = ['#9E1B32', '#FFFFFF', '#C4293F', '#FFFFFF', '#FF3248', '#FFFFFF'];
+      var P = [];
+      for (var i = 0; i < 110; i++) {
+        var a = (i / 110) * Math.PI * 2 + (Math.random() - .5) * .35;
+        var spd = 220 + Math.random() * 580;
+        P.push({ x: cx, y: cy, vx: Math.cos(a) * spd, vy: Math.sin(a) * spd - 90,
+          r: 2.4 + Math.random() * 2.8,
+          col: bCols[i % bCols.length],
+          life: 1, decay: .44 + Math.random() * .44,
+          rot: Math.random() * 6.28, vrot: (Math.random() - .5) * 14,
+          wide: Math.random() < .45 });
+      }
+      var last = performance.now();
+      (function frame(now) {
+        var dt = Math.min(.05, (now - last) / 1000); last = now;
+        c.clearRect(0, 0, W, H); var alive = 0;
+        P.forEach(function (p) {
+          p.vy += 310 * dt; p.x += p.vx * dt; p.y += p.vy * dt;
+          p.vx *= .99; p.rot += p.vrot * dt; p.life -= p.decay * dt;
+          if (p.life <= 0) return; alive++;
+          c.save(); c.globalAlpha = Math.max(0, p.life * p.life);
+          c.translate(p.x, p.y); c.rotate(p.rot); c.fillStyle = p.col;
+          var s = p.r, w = p.wide ? s * 1.7 : s * .65;
+          c.fillRect(-w, -s, w * 2, s * 2);
+          c.restore();
+        });
+        c.globalAlpha = 1;
+        if (alive) requestAnimationFrame(frame); else cv.remove();
+      }(last));
+    }
+
+    /* ── Ticket barcode: decorative bars ─────────────────────── */
+    function drawBarcode() {
+      // Code-128-style: alternating [bar, space, bar, space …] module counts (1 module = 2px)
+      // Even indices = black bars (ivory on red), odd indices = white spaces (transparent)
+      var pattern = [2,1,1,3,1,1,2,1,2,1,1,3,1,1,2,2,1,1,3,1,1,2,1,1,2,3,1,2,1,1,3,1,2,2,1,1,2,1,1,3,2,1,1,2];
+      var markup = pattern.map(function (w, i) {
+        var px = w * 2;
+        return i % 2 === 0
+          ? '<span style="width:' + px + 'px"></span>'
+          : '<span style="width:' + px + 'px;background:transparent"></span>';
+      }).join('');
+      var bc = document.getElementById('stub-barcode'); if (bc) bc.innerHTML = markup;
+    }
 
     /* ── Petal shower: marigold, rose and jasmine drifting down ─ */
     /* A marigold head seen from above: dense frilled petals packed outer to inner,
@@ -1484,32 +1700,73 @@
       }
       var btn = $('#btn-submit');
       btn.disabled = true; btn.textContent = 'Sending…';
-      // Confirmed save: send as text/plain (a "simple" request, so no CORS preflight), then read the
-      // script's JSON reply. Only show "You're locked in" once the sheet has actually written the row.
-      var ctrl = new AbortController(), timer = setTimeout(function () { ctrl.abort(); }, 20000);
       try {
-        var res = await fetch(SCRIPT_URL, {
+        await fetch(SCRIPT_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             attending: 'yes',
             name: name.value.trim(), phone: phone.value.trim(),
             email: email.value.trim(), plusOne: plus ? plus.value : 'no',
             accommodation: accom ? accom.value : '',
             timestamp: new Date().toISOString()
-          }),
-          signal: ctrl.signal
+          })
         });
-        var reply = await res.json();
-        if (!reply || reply.ok !== true) throw new Error((reply && reply.error) || 'not saved');
-        hide(formWrap); show($('#state-success')); petals(160);
+        var isPlus = plus && plus.value === 'yes';
+        var admitFinal = document.getElementById('tc-admit-final');
+        if (admitFinal) admitFinal.textContent = isPlus ? 'ADMIT TWO' : 'ADMIT ONE';
+        drawBarcode();
+        hide(formWrap); show($('#state-success'));
+        var tcStack = document.getElementById('tc-stub-stack');
+        if (tcStack) tcStack.classList.add('show');
+        burst();
+        setTimeout(function () { petals(160); }, 320);
       } catch (_) {
         btn.disabled = false; btn.textContent = 'Confirm attendance';
         hide(formWrap); show($('#state-error'));
-      } finally {
-        clearTimeout(timer);
       }
     });
+
+
+    /* ── Stub card: fluid 3D tilt — tracks pointer anywhere in the success state ── */
+    (function () {
+      var scene = document.getElementById('state-success');
+      if (!scene || reduce) return;
+      var wrap = null, glare = null;
+      var tx = 0, ty = 0, cx = 0, cy = 0, cs = 1.0, rafId = null, active = false;
+      function getEls() {
+        if (!wrap) { wrap = scene.querySelector('.stub-wrap'); glare = scene.querySelector('.stub-glare'); }
+      }
+      function tick() {
+        var lf = active ? 0.07 : 0.055;   // ease in a touch faster than ease out
+        cx += (tx - cx) * lf;
+        cy += (ty - cy) * lf;
+        var ts = active ? 1.015 : 1.0;    // subtle lift while hovering
+        cs += (ts - cs) * 0.05;           // scale lerps independently so it never snaps
+        if (wrap) {
+          wrap.style.transform = 'perspective(900px) rotateX(' + (-cy * 11).toFixed(3) + 'deg) rotateY(' + (cx * 11).toFixed(3) + 'deg) scale(' + cs.toFixed(4) + ')';
+        }
+        if (glare) {
+          glare.style.background = 'radial-gradient(circle at ' + ((cx + .5) * 100).toFixed(1) + '% ' + ((cy + .5) * 100).toFixed(1) + '%, rgba(255,255,255,.22), transparent 62%)';
+        }
+        var settled = !active && Math.abs(cx) < 0.0006 && Math.abs(cy) < 0.0006 && Math.abs(cs - 1.0) < 0.0003;
+        if (!settled) { rafId = requestAnimationFrame(tick); }
+        else { rafId = null; if (wrap) wrap.style.transform = ''; if (glare) glare.style.background = ''; }
+      }
+      function start() { if (!rafId) rafId = requestAnimationFrame(tick); }
+      scene.addEventListener('pointermove', function (e) {
+        getEls(); if (!wrap) return;
+        var r = scene.getBoundingClientRect();
+        tx = Math.max(-.5, Math.min(.5, (e.clientX - r.left) / r.width  - 0.5));
+        ty = Math.max(-.5, Math.min(.5, (e.clientY - r.top)  / r.height - 0.5));
+        active = true;
+        start();
+      });
+      scene.addEventListener('pointerleave', function () {
+        active = false; tx = 0; ty = 0; start();
+      });
+    }());
 
     /* ── Audio ─────────────────────────────────────────────── */
     var audio = $('#bg-audio');
