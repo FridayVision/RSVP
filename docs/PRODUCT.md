@@ -47,10 +47,10 @@ Single static page deployed on Vercel. No build step, no framework — plain HTM
 
 ## Evidence on Hand
 
-- `assets/images/DnA.png`, `DnA_2.png`, `DnA_3.png` — engraved couple portraits (story section)
-- `assets/images/rings.png` — engraved wedding rings in gold line art (ceremonies and countdown)
-- `assets/images/skyline-gold.png` — gold stencil of Chennai to Singapore with the home church (ceremonies)
-- `assets/images/banner.png` — countdown band background
+- `assets/images/DnA.webp`, `DnA_2.webp`, `DnA_3.webp` — engraved couple portraits (story section)
+- `assets/images/rings.webp` — engraved wedding rings in gold line art (ceremonies and countdown)
+- `assets/images/skyline-gold.webp` — gold stencil of Chennai to Singapore with the home church (ceremonies)
+- `assets/images/banner.webp` — countdown band background
 - `assets/images/photo_selfie.jpg` — couple selfie (not currently used)
 - `assets/source/` — source artwork the stencils are made from (`bessy&sg.png`, `skyline-church.png`)
 - `assets/audio/song.mp3` — background audio track
