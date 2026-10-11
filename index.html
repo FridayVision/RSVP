@@ -869,7 +869,6 @@
                     <div class="stub-barcode" id="stub-barcode" aria-hidden="true"></div>
                   </div>
                   <div class="stub-glare" aria-hidden="true"></div>
-                  <img class="stub-bow" data-src="assets/images/black-bow.webp" width="640" height="954" alt="" aria-hidden="true">
 
                 </div>
               </div>
@@ -1728,7 +1727,11 @@
         if (admitFinal) admitFinal.textContent = isPlus ? 'ADMIT TWO' : 'ADMIT ONE';
         // Fetch the ticket's texture and bow only now
         var stubCard = $('.stub-card'); if (stubCard) stubCard.classList.add('ready');
-        var bow = $('.stub-bow'); if (bow && bow.dataset.src) bow.src = bow.dataset.src;
+        var wrapEl = $('.stub-wrap');
+        if (wrapEl && !$('.stub-bow')) {   // the bow image is created only now, so nothing loads before a ticket exists
+          var bow = new Image(); bow.className = 'stub-bow'; bow.src = 'assets/images/black-bow.webp'; bow.width = 640; bow.height = 954; bow.alt = ''; bow.setAttribute('aria-hidden', 'true');
+          wrapEl.appendChild(bow);
+        }
         drawBarcode();
         hide(formWrap); show($('#state-success'));
         var tcStack = document.getElementById('tc-stub-stack');
