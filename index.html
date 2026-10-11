@@ -237,11 +237,14 @@
       -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent), linear-gradient(180deg, transparent, #000 16%, #000 84%, transparent);
       mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent), linear-gradient(180deg, transparent, #000 16%, #000 84%, transparent);
       -webkit-mask-composite: source-in; mask-composite: intersect; }
-    .photos .slide { position: absolute; inset: 0; opacity: 0; animation: story-fade 21s infinite; }
-    .photos .slide:nth-child(2) { animation-delay: 7s; }
-    .photos .slide:nth-child(3) { animation-delay: 14s; }
-    .photos .slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; filter: var(--engrave-ink); mix-blend-mode: multiply; }
-    @keyframes story-fade { 0% { opacity: 0; } 5% { opacity: 1; } 33% { opacity: 1; } 38% { opacity: 0; } 100% { opacity: 0; } }
+    .photos .slide { position: absolute; inset: 0; opacity: 0; animation: story-fade 30s infinite; }
+    .photos .slide:nth-child(2) { animation-delay: 6s; }
+    .photos .slide:nth-child(3) { animation-delay: 12s; }
+    .photos .slide:nth-child(4) { animation-delay: 18s; }
+    .photos .slide:nth-child(5) { animation-delay: 24s; }
+    .photos .slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; mix-blend-mode: multiply; }  /* graphite sketches, already toned to match the countdown banner */
+    .photos .slide:nth-child(2) img { object-fit: contain; object-position: 50% 50%; }  /* the tall ink panel shows whole rather than cropped and enlarged */
+    @keyframes story-fade { 0% { opacity: 0; } 4% { opacity: 1; } 20% { opacity: 1; } 24% { opacity: 0; } 100% { opacity: 0; } }
     @media (prefers-reduced-motion: reduce) { .photos .slide { animation: none; } .photos .slide:first-child { opacity: 1; } }
     .story.split { grid-template-columns: 1fr; row-gap: 32px; justify-items: stretch; text-align: left; }
     .story .tell { display: grid; justify-items: start; }
@@ -264,7 +267,7 @@
         -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,.35), #000 22%, #000 56%, transparent 92%), linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent);
         mask-image: linear-gradient(90deg, rgba(0,0,0,.35), #000 22%, #000 56%, transparent 92%), linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent);
         -webkit-mask-composite: source-in; mask-composite: intersect; }
-      .photos .slide img { object-position: 60% 22%; }
+      .photos .slide img { object-position: 50% 25%; }
       .story.split > .tell { grid-column: 2; padding-left: clamp(24px, 4vw, 72px); }  /* breathing room from the portrait */
       .story .tell { align-content: center; }
       .story .h-display em { white-space: nowrap; }
@@ -701,9 +704,11 @@
       <div class="wrap">
         <div class="story split">
           <figure class="photos">
-            <div class="slide"><img src="assets/images/DnA_3.webp" loading="lazy" decoding="async" alt="Engraved portrait of Derin and Akshita" /></div>
-            <div class="slide"><img src="assets/images/DnA_2.webp" loading="lazy" decoding="async" alt="Engraved portrait of Derin and Akshita under a flowering tree" /></div>
-            <div class="slide"><img src="assets/images/DnA.webp" loading="lazy" decoding="async" alt="Engraved portrait of Derin and Akshita by the sea" /></div>
+            <div class="slide"><img src="assets/images/story-1.webp" loading="lazy" decoding="async" alt="Pencil sketch of Derin and Akshita by the Marina Bay waterfront" /></div>
+            <div class="slide"><img src="assets/images/story-2.webp" loading="lazy" decoding="async" alt="Pencil sketch of Derin and Akshita under a tree, looking at each other" /></div>
+            <div class="slide"><img src="assets/images/story-3.webp" loading="lazy" decoding="async" alt="Pencil sketch of Derin and Akshita in a saree and veshti" /></div>
+            <div class="slide"><img src="assets/images/story-4.webp" loading="lazy" decoding="async" alt="Pencil sketch of Derin and Akshita hugging and smiling" /></div>
+            <div class="slide"><img src="assets/images/story-5.webp" loading="lazy" decoding="async" alt="Pencil sketch of Derin and Akshita holding a Friendship Goals sign" /></div>
           </figure>
           <div class="tell">
             <svg class="rule-diamond" viewBox="0 0 240 16" aria-hidden="true"><path d="M0 8 H106 M134 8 H240" stroke="#C8921E" stroke-width="1"/><path d="M120 1 L127 8 L120 15 L113 8 Z" fill="#C8921E"/></svg>
