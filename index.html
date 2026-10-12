@@ -11,7 +11,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="DnA — Derin &amp; Akshita" />
   <meta property="og:title" content="Derin &amp; Akshita are getting married" />
-  <meta property="og:description" content="Two souls, one story. Ring Exchange &amp; Reception on 7 February, Wedding on 8 February 2027. We would love you there." />
+  <meta property="og:description" content="Two souls, one story. Ring Exchange &amp; Gala on 7 February, Wedding on 8 February 2027. We would love you there." />
   <meta property="og:url" content="https://dna-wedding.vercel.app/" />
   <meta property="og:image" content="https://dna-wedding.vercel.app/assets/images/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
@@ -19,7 +19,7 @@
   <meta property="og:image:alt" content="DnA monogram under crossed silk, with the two wedding dates" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Derin &amp; Akshita are getting married" />
-  <meta name="twitter:description" content="Ring Exchange &amp; Reception on 7 February, Wedding on 8 February 2027." />
+  <meta name="twitter:description" content="Ring Exchange &amp; Gala on 7 February, Wedding on 8 February 2027." />
   <meta name="twitter:image" content="https://dna-wedding.vercel.app/assets/images/og-image.jpg" />
   <link rel="preload" href="assets/fonts/BodoniModa-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="assets/fonts/TenorSans-normal.woff2" as="font" type="font/woff2" crossorigin />
@@ -148,6 +148,15 @@
     #intro { position: relative; min-height: 100svh; overflow: hidden; text-align: center; isolation: isolate; }
     .mono i { font-style: italic; }
     #canopy { position: absolute; top: 0; left: 0; right: 0; height: var(--cz); z-index: 0; overflow: visible; }
+    /* Small DNA with florals above the monogram */
+    /* Floral DNA above the monogram: a horizontal gold double helix turning in 3D, flower clusters riding its strands */
+    .dna-flora { display: block; width: clamp(170px, 17vw, 238px); aspect-ratio: 5 / 2; margin: 0 auto 4px; }
+    /* Cover plants: the watercolour banana plant with brass urns of tuberose, mirrored on the left */
+    .leafart { position: absolute; bottom: 0; z-index: 1; height: min(78svh, 760px); width: auto; pointer-events: none;
+      -webkit-mask-image: linear-gradient(to bottom, transparent, #000 16%); mask-image: linear-gradient(to bottom, transparent, #000 16%); }  /* the painting's top edge dissolves into the cream */
+    .leafart.r { right: 0; }
+    .leafart.l { left: 0; transform: scaleX(-1); }
+    @media (max-width: 560px) { .leafart { height: 34svh; } .leafart.l { left: -40px; } .leafart.r { right: -40px; } }
     .banana { position: absolute; bottom: 0; z-index: 1; width: clamp(150px, 22vw, 330px); height: auto; pointer-events: none; overflow: visible; shape-rendering: geometricPrecision; }
     .banana.l { left: clamp(-90px, -4vw, -20px); }
     .banana.r { right: clamp(-90px, -4vw, -20px); transform: scaleX(-1); }
@@ -309,6 +318,17 @@
       .cer-art { opacity: 0; transform: translateY(14px) scale(.97); transition: opacity .6s var(--ease) .2s, transform .8s var(--ease) .2s; }
       .more.open .cer-art { opacity: 1; transform: none; }
     }
+    /* Style guide in the ceremony details: suggested colours as fabric swatches, then the wardrobe cart */
+    .style-guide { margin-top: 26px; padding-top: 22px; border-top: 1px solid rgba(244,194,78,.4); text-align: center; }
+    #events .facts b { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 1.1rem; letter-spacing: 0; text-transform: none; color: var(--marigold-on-red); }
+    .sg-title { margin: 0 0 14px; font-family: var(--display); font-style: italic; font-weight: 500; font-size: 1.45rem; color: var(--marigold-on-red); }
+    .sg-palette { list-style: none; margin: 0 auto; padding: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+    /* Each colour is a pinked-edge fabric swatch, cut like a tailor's sample, with the cloth's own finish */
+    .sg-palette .sw { width: 30px; height: 30px; background: var(--f) center / 100% auto; clip-path: polygon(0.0% 0.0%, 8.3% 5.0%, 16.7% 0.0%, 25.0% 5.0%, 33.3% 0.0%, 41.7% 5.0%, 50.0% 0.0%, 58.3% 5.0%, 66.7% 0.0%, 75.0% 5.0%, 83.3% 0.0%, 91.7% 5.0%, 100.0% 0.0%, 95.0% 8.3%, 100.0% 16.7%, 95.0% 25.0%, 100.0% 33.3%, 95.0% 41.7%, 100.0% 50.0%, 95.0% 58.3%, 100.0% 66.7%, 95.0% 75.0%, 100.0% 83.3%, 95.0% 91.7%, 100.0% 100.0%, 91.7% 95.0%, 83.3% 100.0%, 75.0% 95.0%, 66.7% 100.0%, 58.3% 95.0%, 50.0% 100.0%, 41.7% 95.0%, 33.3% 100.0%, 25.0% 95.0%, 16.7% 100.0%, 8.3% 95.0%, 0.0% 100.0%, 5.0% 91.7%, 0.0% 83.3%, 5.0% 75.0%, 0.0% 66.7%, 5.0% 58.3%, 0.0% 50.0%, 5.0% 41.7%, 0.0% 33.3%, 5.0% 25.0%, 0.0% 16.7%, 5.0% 8.3%);
+      filter: drop-shadow(0 2px 2px rgba(40,4,12,.45)); transition: transform .3s var(--ease); }
+    .sg-palette .sw:hover { transform: translateY(-2px) rotate(-4deg); }
+    .more-body .sg-tagline { margin: 14px auto 0; max-width: 30ch; font-family: var(--display); font-style: italic; font-size: .98rem; line-height: 1.5; color: var(--ivory-on-red); opacity: .9; }
+    .sg-wardrobe { display: block; width: min(250px, 78%); height: auto; margin: 20px auto 0; filter: drop-shadow(0 10px 14px rgba(40,4,12,.35)); }
     .more-body p { font-size: 15.5px; line-height: 1.8; margin: 18px 0 0; }
     .more-body p.todo { font-size: 14px; color: var(--muted); font-family: var(--display); font-style: italic; }
     .join { margin-top: clamp(64px, 8vw, 96px); display: grid; gap: 22px; justify-items: center; }
@@ -367,7 +387,7 @@
     #events { position: relative; background: var(--silk-red); color: var(--ivory-on-red); padding-top: clamp(150px, 16vw, 220px); }
     #events .h-display { color: var(--ivory-on-red); }
     #events .h-display em, #events .cer h3 em { color: var(--marigold-on-red); }
-    #events .lede, #events .cer .time, #events .facts b, #events .more-body p.todo { color: var(--muted-on-red); }
+    #events .lede, #events .cer .time, #events .more-body p.todo { color: var(--muted-on-red); }
     /* A short gold separator with a diamond, centred between the two ceremonies */
     #events .ceremonies .seam { position: relative; background: linear-gradient(transparent, #D4AF55 22%, #D4AF55 78%, transparent); }
     #events .ceremonies .seam::after { content: ''; position: absolute; left: 50%; top: 50%; width: 9px; height: 9px; background: #D4AF55; transform: translate(-50%, -50%) rotate(45deg); }
@@ -670,15 +690,16 @@
   <!-- ═══ COVER ═══ -->
   <header id="intro">
     <div class="stage" id="canopy" aria-hidden="true"></div>
-    <svg class="banana l" viewBox="-70 -120 440 680" aria-hidden="true"></svg>
-    <svg class="banana r" viewBox="-70 -120 440 680" aria-hidden="true"></svg>
+    <img class="leafart l" src="assets/images/banana-leaf.webp" alt="" aria-hidden="true" width="372" height="827" decoding="async" />
+    <img class="leafart r" src="assets/images/banana-leaf.webp" alt="" aria-hidden="true" width="372" height="827" decoding="async" />
     <div class="cover">
+      <canvas class="dna-flora" aria-hidden="true"></canvas>
       <h1 class="mono" aria-label="DnA: Derin and Akshita">D<i>n</i>A</h1>
       <p class="names">Derin<span class="amp">&amp;</span>Akshita</p>
       <p class="tag">Two souls, one story.</p>
       <div class="ceremony-tags">
         <div class="ctag">
-          <b class="caps">Ring Exchange &amp; Reception</b>
+          <b class="caps">Ring Exchange &amp; Gala</b>
           <span>Sunday, 7 February 2027</span>
         </div>
         <div class="rule" aria-hidden="true"></div>
@@ -734,18 +755,23 @@
         <div class="ceremonies">
           <div class="cer" data-lanes="ring">
             <div class="cer-mark"><img src="assets/images/rings.webp" alt="" aria-hidden="true" width="587" height="378" /></div>
-            <h3>Ring Exchange <em>&amp; Reception</em></h3>
+            <h3>Ring Exchange <em>&amp; Gala</em></h3>
             <button type="button" class="text-link" aria-expanded="false" aria-controls="more-ring">Ceremony details</button>
             <div class="more" id="more-ring" inert>
               <div class="more-in"><div class="more-body">
                 <img class="cer-art dance" src="assets/images/western-dance.webp" alt="Illustration of the couple sharing a first dance, she in a white gown and he in a black tuxedo" width="912" height="1180" loading="lazy" decoding="async" />
                 <ul class="facts">
                   <li><b class="caps">Date</b><span>Sunday, 7 February 2027</span></li>
-                  <li><b class="caps">Time</b><span>Evening, from 6 pm</span></li>
+                  <li><b class="caps">Time</b><span>Evening, from 5:45 pm onwards</span></li>
                   <li><b class="caps">Location</b><span>Coimbatore</span></li>
                 </ul>
                 <p>From childhood whispers to forever vows, join us for a night of dancing, dining, and the beginning of our next chapter.</p>
-                <p class="todo">Dress code and schedule to be added.</p>
+                <div class="style-guide">
+                  <h4 class="sg-title">Style guide</h4>
+                  <ul class="sg-palette" aria-label="Suggested colours to wear"><li class="sw" style="--f:url('assets/images/fabric/champagne.webp')" title="Champagne sequin" aria-label="Champagne sequin"></li><li class="sw" style="--f:url('assets/images/fabric/emerald-satin.webp')" title="Emerald satin" aria-label="Emerald satin"></li><li class="sw" style="--f:url('assets/images/fabric/sage.webp')" title="Sage satin" aria-label="Sage satin"></li><li class="sw" style="--f:url('assets/images/fabric/charcoal.webp')" title="Charcoal suiting" aria-label="Charcoal suiting"></li><li class="sw" style="--f:url('assets/images/fabric/black.webp')" title="Black sequin" aria-label="Black sequin"></li><li class="sw" style="--f:url('assets/images/fabric/maroon.webp')" title="Maroon satin" aria-label="Maroon satin"></li></ul>
+                  <p class="sg-tagline">Think classy, sparkly and effortlessly glamorous: ready for every beat.</p>
+                  <img class="sg-wardrobe" src="assets/images/wardrobe-ring.webp" alt="Wardrobe ideas for the Ring Exchange and Gala: a champagne gown, an emerald velvet tuxedo, a sage satin dress and a charcoal three-piece suit" width="264" height="320" loading="lazy" decoding="async" />
+                </div>
               </div></div>
             </div>
           </div>
@@ -759,11 +785,16 @@
                 <img class="cer-art tamil" src="assets/images/tamil-wedding.webp" alt="Illustration of the couple in a kanjeevaram saree and veshti, playfully tugging a marigold-tied rope" width="1008" height="854" loading="lazy" decoding="async" />
                 <ul class="facts">
                   <li><b class="caps">Date</b><span>Monday, 8 February 2027</span></li>
-                  <li><b class="caps">Time</b><span>Morning</span></li>
+                  <li><b class="caps">Time</b><span>Morning, from 8:30 am onwards</span></li>
                   <li><b class="caps">Location</b><span>Coimbatore</span></li>
                 </ul>
                 <p>A South Indian ceremony with a twist and lots of games. Jasmine in the air, kolam at the door, and everyone we love in one room.</p>
-                <p class="todo">Time and schedule to be added.</p>
+                <div class="style-guide">
+                  <h4 class="sg-title">Style guide</h4>
+                  <ul class="sg-palette" aria-label="Suggested colours to wear"><li class="sw" style="--f:url('assets/images/fabric/teal.webp')" title="Teal silk" aria-label="Teal silk"></li><li class="sw" style="--f:url('assets/images/fabric/peacock.webp')" title="Peacock blue silk" aria-label="Peacock blue silk"></li><li class="sw" style="--f:url('assets/images/fabric/ivory.webp')" title="Ivory silk" aria-label="Ivory silk"></li><li class="sw" style="--f:url('assets/images/fabric/emerald-silk.webp')" title="Emerald silk" aria-label="Emerald silk"></li><li class="sw" style="--f:url('assets/images/fabric/kumkum.webp')" title="Kumkum red silk" aria-label="Kumkum red silk"></li><li class="sw" style="--f:url('assets/images/fabric/gold.webp')" title="Temple gold silk" aria-label="Temple gold silk"></li></ul>
+                  <p class="sg-tagline">Think vintage elegance, traditional silks and timeless grace that take you back to olden times.</p>
+                  <img class="sg-wardrobe" src="assets/images/wardrobe-wedding.webp" alt="Wardrobe ideas for the Wedding: a teal silk saree, an ivory veshti and shirt, a marigold saree, an emerald kurta and a red-and-gold pavadai" width="264" height="320" loading="lazy" decoding="async" />
+                </div>
               </div></div>
             </div>
           </div>
@@ -856,12 +887,12 @@
                     <p class="stub-subtitle">Wedding '27</p>
                     <div class="stub-rule"></div>
                     <div class="stub-field-row">
-                      <span class="stub-lbl">Reception</span>
-                      <span class="stub-val">7 Feb 2027<em>Sunday · 6 PM</em></span>
+                      <span class="stub-lbl">Gala</span>
+                      <span class="stub-val">7 Feb 2027<em>Sunday · 5:45 PM</em></span>
                     </div>
                     <div class="stub-field-row">
                       <span class="stub-lbl">Wedding</span>
-                      <span class="stub-val">8 Feb 2027<em>Monday · Morning</em></span>
+                      <span class="stub-val">8 Feb 2027<em>Monday · 8:30 AM</em></span>
                     </div>
                     <div class="stub-field-row">
                       <span class="stub-lbl">Venue</span>
@@ -1644,6 +1675,59 @@
       if (!('IntersectionObserver' in window)) return;
       var io = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle('offscreen', !e.isIntersecting); }); }, { rootMargin: '120px 0px' });
       $$('#intro, main > section').forEach(function (sec) { io.observe(sec); });
+    }());
+
+    /* ── Floral DNA: a horizontal double helix rotating about its long axis ──
+       Drawn every frame in 3D (perspective, depth-sorted, back strand dimmer), with the flower clusters
+       from the floral DNA artwork (gold lifted out) riding the front strand and turning with it. */
+    (function () {
+      var cv = $('.dna-flora'); if (!cv || !cv.getContext) return;
+      var ctx = cv.getContext('2d'), sprites = [], W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+      function size() { W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+      size(); window.addEventListener('resize', function () { size(); draw(last); });
+      var src = new Image(); src.src = 'assets/images/dna-floral.webp';
+      src.onload = function () {
+        // crop the three flower clusters and lift the gold helix out of them
+        [[78, 52, 92, 92], [52, 196, 150, 196], [228, 372, 120, 112]].forEach(function (r) {
+          var c = document.createElement('canvas'); c.width = r[2]; c.height = r[3]; var x = c.getContext('2d');
+          x.drawImage(src, r[0], r[1], r[2], r[3], 0, 0, r[2], r[3]);
+          var id = x.getImageData(0, 0, r[2], r[3]), d = id.data;
+          for (var k = 0; k < d.length; k += 4) {
+            var R = d[k], G = d[k + 1], B = d[k + 2], mx = Math.max(R, G, B), mn = Math.min(R, G, B);
+            var hue = mx === mn ? 0 : (mx === R ? (60 * (G - B) / (mx - mn) + 360) % 360 : mx === G ? 60 * (B - R) / (mx - mn) + 120 : 60 * (R - G) / (mx - mn) + 240);
+            if (hue > 36 && hue < 64 && (mx - mn) / mx > .32) d[k + 3] = 0;   // gold helix pieces out; marigold (hue < 36) stays
+          }
+          x.putImageData(id, 0, 0); sprites.push(c);
+        });
+        draw(last);
+      };
+      var GOLD = [[138, 96, 22], [214, 168, 62], [255, 226, 140]];
+      function gold(z) { var t = (z + 1) / 2; var a = t < .5 ? GOLD[0] : GOLD[1], b = t < .5 ? GOLD[1] : GOLD[2], u = t < .5 ? t * 2 : (t - .5) * 2;
+        return 'rgb(' + [0, 1, 2].map(function (c) { return Math.round(a[c] + (b[c] - a[c]) * u); }).join(',') + ')'; }
+      function draw(t) {
+        if (!W) return; ctx.clearRect(0, 0, W, H);
+        var L = W * .78, x0 = (W - L) / 2, cy = H / 2, R = H * .24, turns = 2, f = 140, N = 120, items = [];
+        function pt(u, ph) { var th = u * turns * 6.283 + t + ph, z = Math.cos(th), s = f / (f - z * R); return { x: x0 + u * L, y: cy + Math.sin(th) * R * s, z: z, s: s }; }
+        [0, Math.PI].forEach(function (ph) {
+          for (var i = 0; i < N; i++) { var a = pt(i / N, ph), b = pt((i + 1) / N, ph); items.push({ z: (a.z + b.z) / 2, k: 'seg', a: a, b: b }); }
+        });
+        for (var j = 1; j < 24; j++) { var u = j / 24, a = pt(u, 0), b = pt(u, Math.PI); items.push({ z: (a.z + b.z) / 2 - .05, k: 'rung', a: a, b: b }); }
+        [.2, .5, .82].forEach(function (u, q) { var p = pt(u, 0); items.push({ z: p.z + .02, k: 'flower', p: p, q: q }); });
+        items.sort(function (m, n) { return m.z - n.z; });
+        items.forEach(function (it) {
+          var depth = (it.z + 1) / 2;
+          if (it.k === 'seg') { ctx.strokeStyle = gold(it.z); ctx.lineWidth = 3.2 * it.a.s; ctx.lineCap = 'round'; ctx.globalAlpha = .55 + .45 * depth;
+            ctx.beginPath(); ctx.moveTo(it.a.x, it.a.y); ctx.lineTo(it.b.x, it.b.y); ctx.stroke(); }
+          else if (it.k === 'rung') { ctx.strokeStyle = gold(it.z - .3); ctx.lineWidth = 1.6; ctx.globalAlpha = .35 + .4 * depth;
+            ctx.beginPath(); ctx.moveTo(it.a.x, it.a.y); ctx.lineTo(it.b.x, it.b.y); ctx.stroke(); }
+          else if (sprites[it.q]) { var sp = sprites[it.q], h = H * (it.q === 1 ? .5 : .38) * (.72 + .28 * depth) * it.p.s, w = h * sp.width / sp.height;
+            ctx.globalAlpha = .45 + .55 * depth; ctx.drawImage(sp, it.p.x - w / 2, it.p.y - h / 2, w, h); }
+        });
+        ctx.globalAlpha = 1;
+      }
+      var last = .6, t0 = null;
+      function frame(ts) { if (t0 === null) t0 = ts; last = .6 + (ts - t0) / 1000 * .55; draw(last); requestAnimationFrame(frame); }
+      if (reduce) draw(last); else requestAnimationFrame(frame);
     }());
 
     /* ── RSVP flow ─────────────────────────────────────────── */
