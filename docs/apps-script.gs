@@ -5,8 +5,11 @@
  * truth: edit here, then paste into the Apps Script editor and redeploy (see "Deploying" below).
  *
  * The page POSTs a JSON body sent as text/plain (so the browser makes no CORS preflight) and reads
- * this script's JSON reply. It only shows "You're locked in" when the reply is { ok: true }, so a
+ * this script's JSON reply. It only shows the RSVP ticket when the reply is { ok: true }, so a
  * failed save surfaces to the guest instead of being silently lost.
+ *
+ * Column layout matches the original script, so existing rows stay aligned:
+ *   A Timestamp | B Name | C Phone | D Email | E Plus one | F Accommodation | G Attending
  *
  * Deploying (keeps the same /exec URL the site already uses):
  *   Deploy > Manage deployments > select the existing web app > Edit (pencil) >
@@ -17,10 +20,11 @@
 // Where RSVPs are written.
 //   SPREADSHEET_ID: leave '' to use the sheet this script is attached to, or paste the ID of any other
 //   Google Sheet (the long code in its URL: docs.google.com/spreadsheets/d/<THIS PART>/edit).
-//   SHEET_NAME: the tab inside that spreadsheet; created with headers if it does not exist.
+//   SHEET_NAME: leave '' to use the first tab (where the original script wrote), or name a tab;
+//   a named tab is created with headers if it does not exist.
 var SPREADSHEET_ID = '';
 var SHEET_NAME = 'RSVPs';
-var COLUMNS = ['Received', 'Attending', 'Name', 'Phone', 'Email', 'Plus one', 'Accommodation', 'Client time'];
+var COLUMNS = ['Timestamp', 'Name', 'Phone', 'Email', 'Plus one', 'Accommodation', 'Attending'];
 
 function doPost(e) {
   var lock = LockService.getScriptLock();
@@ -34,14 +38,13 @@ function doPost(e) {
 
     var sheet = sheet_();
     sheet.appendRow([
-      new Date(),
-      clean_(data.attending || 'yes'),
+      clean_(data.timestamp || new Date().toISOString()),
       clean_(name),
       clean_(phone),
       clean_(data.email),
-      clean_(data.plusOne),
-      clean_(data.accommodation),
-      clean_(data.timestamp)
+      data.plusOne === 'yes' ? 'Yes' : 'No',
+      data.accommodation === 'yes' ? 'Yes' : 'No',
+      data.attending === 'no' ? 'No' : 'Yes'
     ]);
     SpreadsheetApp.flush();  // make sure the row is committed before we say it is
     return reply_({ ok: true, row: sheet.getLastRow() });
@@ -59,6 +62,7 @@ function doGet() {
 
 function sheet_() {
   var ss = SPREADSHEET_ID ? SpreadsheetApp.openById(SPREADSHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
+  if (!SHEET_NAME) return ss.getSheets()[0];
   var sh = ss.getSheetByName(SHEET_NAME);
   if (!sh) {
     sh = ss.insertSheet(SHEET_NAME);
