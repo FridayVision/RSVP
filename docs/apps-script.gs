@@ -4,6 +4,9 @@
  * Lives in the Google Apps Script project bound to the RSVP Google Sheet. This file is the source of
  * truth: edit here, then paste into the Apps Script editor and redeploy (see "Deploying" below).
  *
+ * A number that has already replied is not added again: the reply is { ok: false, duplicate: true }
+ * and the page tells the guest they are already registered.
+ *
  * The page POSTs a JSON body sent as text/plain (so the browser makes no CORS preflight) and reads
  * this script's JSON reply. It only shows the RSVP ticket when the reply is { ok: true }, so a
  * failed save surfaces to the guest instead of being silently lost.
@@ -37,6 +40,15 @@ function doPost(e) {
     if (!name || !phone) return reply_({ ok: false, error: 'Name and phone are required.' });
 
     var sheet = sheet_();
+    // One reply per WhatsApp number: compare digits only, so "+65 9123 4567" and "+6591234567" match
+    var digits = phone.replace(/\D/g, '');
+    var last = sheet.getLastRow();
+    if (digits && last > 1) {
+      var existing = sheet.getRange(2, 3, last - 1, 1).getValues();
+      for (var i = 0; i < existing.length; i++) {
+        if (String(existing[i][0]).replace(/\D/g, '') === digits) return reply_({ ok: false, duplicate: true });
+      }
+    }
     sheet.appendRow([
       clean_(data.timestamp || new Date().toISOString()),
       clean_(name),
