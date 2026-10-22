@@ -161,7 +161,10 @@
     .banana.l { left: clamp(-90px, -4vw, -20px); }
     .banana.r { right: clamp(-90px, -4vw, -20px); transform: scaleX(-1); }
     /* Loops pause while their section is off screen (set by an IntersectionObserver), so only what you can see costs frames */
-    .offscreen .sway, .offscreen .lf, .offscreen .lb { animation-play-state: paused !important; }
+    .offscreen .sway, .offscreen .lf, .offscreen .lb, .offscreen .slide, .offscreen .scroll-hint { animation-play-state: paused !important; }
+    /* While the page is moving, the ambient loops hold still: 140-odd garland leaves are SVG animations the browser
+       restyles and repaints on the main thread every frame, which is exactly the work scrolling needs. They resume on stop. */
+    .is-scrolling :is(.sway, .lf, .lb, .lights-sway, .lights-layer, .lights-chase, .photos .slide, .scroll-hint) { animation-play-state: paused !important; }
     .banana .lf { transform-box: view-box; transform-origin: var(--lo); animation: leaf-sway 7s ease-in-out var(--ld) infinite alternate; }
     @keyframes leaf-sway { from { transform: rotate(calc(var(--la) * -1)); } to { transform: rotate(var(--la)); } }
     @media (prefers-reduced-motion: reduce) { .banana .lf { animation: none; } }
@@ -1730,6 +1733,16 @@
       hs.forEach(function (h) { h.parentElement.__h = h; io.observe(h.parentElement); });
     }());
 
+    /* Flag scrolling on the root so the ambient loops (and the floral DNA) pause until the page settles */
+    var scrolling = false;
+    (function () {
+      var root = document.documentElement, t = 0;
+      window.addEventListener('scroll', function () {
+        if (!scrolling) { scrolling = true; root.classList.add('is-scrolling'); }
+        clearTimeout(t); t = setTimeout(function () { scrolling = false; root.classList.remove('is-scrolling'); }, 200);
+      }, { passive: true });
+    }());
+
     /* Pause every looping animation in a section while it is off screen */
     (function () {
       if (!('IntersectionObserver' in window)) return;
@@ -1789,7 +1802,7 @@
       }
       var last = .6, t0 = null;
       var seen = true, raf = 0, base = .6;
-      function frame(ts) { if (t0 === null) t0 = ts; last = base + (ts - t0) / 1000 * .55; draw(last); raf = requestAnimationFrame(frame); }
+      function frame(ts) { if (t0 === null) t0 = ts; if (scrolling) { t0 = null; base = last; } else { last = base + (ts - t0) / 1000 * .55; draw(last); } raf = requestAnimationFrame(frame); }
       function run() { var on = seen && !document.hidden; if (on && !raf) { t0 = null; base = last; raf = requestAnimationFrame(frame); } else if (!on && raf) { cancelAnimationFrame(raf); raf = 0; } }
       if (reduce) draw(last);
       else {
