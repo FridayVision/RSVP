@@ -693,6 +693,24 @@
       .js #events :is(.h-display, .cer h3).in, .js #events :is(.h-display, .cer h3).in em { opacity: 1; transform: none; }
     }
 
+    /* ── Legibility pass ──
+       Reading text gets Bodoni's sturdier small-size cut (lower opsz = thicker hairlines) and a touch more weight,
+       so long lines and text on red stop shimmering. Display type keeps the finer site-wide cut. */
+    .cover .ctag b { font-size: 14px; letter-spacing: .2em; color: var(--red-on-marigold); }
+    @media (max-width: 560px) { .cover .ctag b { font-size: 12.5px; letter-spacing: .16em; } }
+    .story .story-body { font-weight: 450; font-variation-settings: "opsz" 11; line-height: 1.75; color: #1C1B19; }
+    .story .close-b { font-weight: 480; color: var(--silk-red); }
+    .story .close-b .lead { color: #3F3D38; font-weight: 450; }
+    #events .lede { color: var(--ivory-on-red); font-weight: 450; font-variation-settings: "opsz" 11; font-size: clamp(1.2rem, 2vw, 1.5rem); max-width: 40ch; }
+    #events .text-link { font-size: 14px; letter-spacing: .18em; padding: 16px 26px 16px 28px; background: var(--marigold-on-red); border-color: var(--marigold-on-red); color: var(--red-on-marigold); }
+    #events .text-link:hover { background: transparent; color: var(--marigold-on-red); }
+    #rsvp .choice .btn { color: var(--ivory-on-red); font-variation-settings: "opsz" 11; }
+    .f-credit { font-size: 12.5px; }
+
+    /* Countdown labels: upright Tenor capitals read at any size, italic Bodoni at 12px did not */
+    .cd-label { font-family: var(--text); font-style: normal; font-weight: 400; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: var(--ink); }
+    @media (max-width: 500px) { .cd-label { font-size: 11px; letter-spacing: .1em; } }
+
   </style>
 </head>
 <body>
@@ -1685,7 +1703,7 @@
     });
 
     /* ── Countdown: every figure in a fixed-width cell ─────── */
-    var TARGET = new Date('2027-02-07T18:00:00+08:00').getTime();
+    var TARGET = new Date('2027-02-07T17:45:00+05:30').getTime();
     function cells(id, str) {
       $('#' + id).innerHTML = str.split('').map(function (ch) { return '<span class="dg">' + ch + '</span>'; }).join('');
     }

@@ -1,239 +1,262 @@
 ---
 name: DnA — Derin & Akshita
-description: A three-ink risograph keepsake for a wedding that joins Chennai, Singapore and Malaysia.
+description: A Kanjeevaram-red and zari-gold wedding invitation under a silk canopy, set in Bodoni.
 colors:
-  saree-teal: "#00838A"
-  saree-teal-deep: "#005F66"
-  silk-maroon: "#7A1B2E"
-  zari-gold: "#B8941F"
-  warm-cream: "#FDF6EC"
-  print-white: "#FFFCF7"
-  night-stock: "#0E1E26"
-  gold-on-stock: "#CDAE4F"
-  rose-on-stock: "#C4707E"
-  teal-on-stock: "#3AA3A9"
-  ink-text: "#1F3A3C"
-  ink-muted: "#5A6B6C"
+  silk-red: "#9E1B32"
+  red-deep: "#7A1227"
+  silk-marigold: "#E0A526"
+  marigold-on-red: "#F4C24E"
+  zari-rule: "#B8892A"
+  zari-hairline: "#C8921E"
+  ivory-on-red: "#F6EEDD"
+  blush-on-red: "#F2CFD2"
+  courtyard-white: "#FBFBF8"
+  card-cream: "#FFFDF8"
+  canopy-cream: "#F4E3C2"
+  silk-ivory: "#E6D9BF"
+  ink: "#141414"
+  ink-muted: "#5B5954"
+  silk-black: "#111111"
+  on-black: "#F2EEE6"
 typography:
   display:
-    fontFamily: "Cormorant Garamond, Georgia, serif"
-    fontSize: "clamp(2.5rem, 9.5vw, 6rem)"
-    fontWeight: 600
-    lineHeight: 1.08
-    letterSpacing: "-0.015em"
+    fontFamily: "Bodoni Moda, Didot, Georgia, serif"
+    fontSize: "clamp(2.5rem, 6.4vw, 5rem)"
+    fontWeight: 500
+    lineHeight: 1.02
+    letterSpacing: "-0.02em"
+    fontVariation: "\"opsz\" 18"
   headline:
-    fontFamily: "Cormorant Garamond, Georgia, serif"
-    fontSize: "clamp(1.8rem, 3.6vw, 2.4rem)"
-    fontWeight: 600
-    lineHeight: 1.15
+    fontFamily: "Bodoni Moda, Didot, Georgia, serif"
+    fontSize: "2.1rem"
+    fontWeight: 400
+    lineHeight: 1.1
   lede:
-    fontFamily: "Cormorant Garamond, Georgia, serif"
-    fontSize: "clamp(1.15rem, 2.4vw, 1.45rem)"
+    fontFamily: "Bodoni Moda, Didot, Georgia, serif"
+    fontSize: "clamp(1.15rem, 2.2vw, 1.4rem)"
     fontWeight: 400
     lineHeight: 1.45
-  title:
-    fontFamily: "Cormorant Garamond, Georgia, serif"
-    fontSize: "1.6rem"
-    fontWeight: 600
-    lineHeight: 1.2
   body:
-    fontFamily: "Jost, system-ui, sans-serif"
-    fontSize: "15.5px"
-    fontWeight: 300
+    fontFamily: "Bodoni Moda, Didot, Georgia, serif"
+    fontSize: "clamp(1.15rem, 1.5vw, 1.35rem)"
+    fontWeight: 450
     lineHeight: 1.75
+    fontVariation: "\"opsz\" 11"
   label:
-    fontFamily: "Jost, system-ui, sans-serif"
+    fontFamily: "Tenor Sans, Gill Sans, system-ui, sans-serif"
     fontSize: "12px"
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: "0.26em"
+  input:
+    fontFamily: "Tenor Sans, Gill Sans, system-ui, sans-serif"
+    fontSize: "17px"
+    fontWeight: 400
+    lineHeight: 1.3
+  numeral:
+    fontFamily: "Bodoni Moda, Didot, Georgia, serif"
+    fontSize: "clamp(3.2rem, 7.5vw, 6rem)"
     fontWeight: 500
-    letterSpacing: "0.16em"
+    lineHeight: 1
 rounded:
   none: "0px"
-  photo: "4px"
-  pill: "999px"
 spacing:
-  xs: "8px"
-  sm: "16px"
-  md: "24px"
-  lg: "40px"
-  xl: "64px"
-  2xl: "104px"
+  gutter: "16px"
+  group: "10px"
+  field: "28px"
+  section: "clamp(96px, 12vw, 168px)"
+  container: "1120px"
 components:
   button-primary:
-    backgroundColor: "{colors.saree-teal-deep}"
-    textColor: "{colors.warm-cream}"
+    backgroundColor: "{colors.silk-black}"
+    textColor: "{colors.on-black}"
     typography: "{typography.label}"
-    rounded: "{rounded.pill}"
-    padding: "16px 34px"
-  chip-choice:
-    backgroundColor: "{colors.warm-cream}"
-    textColor: "{colors.saree-teal-deep}"
-    rounded: "{rounded.pill}"
-    padding: "10px 22px"
-  chip-choice-selected:
-    backgroundColor: "{colors.saree-teal-deep}"
-    textColor: "{colors.warm-cream}"
-    rounded: "{rounded.pill}"
-    padding: "10px 22px"
+    rounded: "{rounded.none}"
+    padding: "19px 34px 18px"
+  button-primary-hover:
+    backgroundColor: "{colors.silk-red}"
+    textColor: "{colors.on-black}"
+  button-rsvp-yes:
+    backgroundColor: "{colors.silk-red}"
+    textColor: "{colors.ivory-on-red}"
+    rounded: "{rounded.none}"
+    padding: "18px 26px"
+  button-rsvp-yes-hover:
+    backgroundColor: "{colors.red-deep}"
+  button-ghost:
+    backgroundColor: "transparent"
+    textColor: "{colors.ink}"
+    typography: "{typography.label}"
+    rounded: "{rounded.none}"
+    padding: "19px 30px 18px"
+  button-details:
+    backgroundColor: "{colors.marigold-on-red}"
+    textColor: "{colors.red-deep}"
+    typography: "{typography.label}"
+    rounded: "{rounded.none}"
+    padding: "16px 26px 16px 28px"
+  chip:
+    backgroundColor: "{colors.card-cream}"
+    textColor: "{colors.ink}"
+    typography: "{typography.label}"
+    rounded: "{rounded.none}"
+    padding: "13px 26px"
+  chip-selected:
+    backgroundColor: "{colors.silk-red}"
+    textColor: "{colors.ivory-on-red}"
   input-line:
     backgroundColor: "transparent"
-    textColor: "{colors.ink-text}"
+    textColor: "{colors.ink}"
+    typography: "{typography.input}"
     rounded: "{rounded.none}"
-    padding: "10px 2px"
-  photo-print:
-    backgroundColor: "{colors.print-white}"
+    padding: "10px 1px"
+  reply-card:
+    backgroundColor: "{colors.card-cream}"
     rounded: "{rounded.none}"
-    padding: "12px 12px 40px"
+    padding: "clamp(32px, 6vw, 56px)"
 ---
 
 # Design System: DnA — Derin & Akshita
 
 ## Overview
 
-**Creative North Star: "The Three-Pass Print"**
+**Creative North Star: "The Silk Canopy"**
 
-The site is a risograph keepsake. Every surface behaves as if it came off a riso drum in three passes of spot ink on warm cream stock: teal, maroon and gold. Colour is never mixed on screen; it is overprinted, so overlaps produce new tones (teal over gold reads palm green, maroon over gold reads sunset). The plates sit a hair out of register, and that drift is the signature, not a flaw.
+The page is a wedding courtyard seen from beneath its canopy. Lengths of saree silk in Kanjeevaram red, marigold, ivory and black cross overhead on the cover, drift behind the reply card, and return as a band across the ceremonies. Under them sits a courtyard-white ground woven with tiny gold DNA buttas, warming to a canopy cream where the story begins. Everything decorative is either cloth, flowers or gold line art: a mango-leaf and jasmine toran over the ceremonies, a curtain of fairy lights over the RSVP, watercolour banana plants with brass urns of tuberose framing the cover.
 
-The inks are taken from the couple themselves: the teal of Akshita's silk saree, the zari gold of Derin's veshti border, the maroon of a shared everyday tee. Illustration is flat, shape-built and slightly naive, drawn from three places: Chennai (Besant Nagar shore, lighthouse, coconut palms, the auto), Singapore (shophouse rows with five-foot-way arches, the Marina Bay skyline, a Supertree) and Malaysia (kampung house on stilts, hibiscus). Their story, best friends from school who became partners, is carried by two paper-plane trails that braid into a double helix: DnA.
+The two ceremonies set the two moods and the page alternates between them. **Courtyard white** (cover, story, countdown, RSVP) is the black-tie evening: Bodoni in black ink, a single red italic accent, gold hairlines. **Kanjeevaram red** (the ceremonies section) is the silk morning: the whole section printed on red, ivory roman type, marigold italics, gold zari borders top and bottom. The swing between the two grounds is the page's rhythm.
 
-Density is airy and editorial. One composed scene per view, generous cream margins, a single-column reading line. The Western and South Indian ceremony pages are the same print run with a different lead ink, never a different design system.
-
-The page alternates two paper stocks, like an invitation suite. **Night stock** (deep saree-navy) carries the cover, the countdown and the footer: modern-classic and quiet, with gold and cream inks, a DnA monogram, engraved rings and printer's registration marks. **Warm cream stock** carries the story, the riso scene, the gatefold invitation and the RSVP card. The contrast between the two is the page's rhythm; type sizes swing hard between them (a 13rem monogram, 9.5rem door initials, 0.34em-tracked small caps, 4rem headings).
+Type is a Didone in the high-fashion invitation register. Headings pair an upright roman line with an italic line in the accent colour ("We are / *getting married!*", "Will you *join us?*"). The DnA monogram fills the cover. Density is generous: one idea per screen on phones, wide margins, nothing boxed except the reply card and the ticket.
 
 **Key Characteristics:**
-- Three spot inks plus paper, blended with `multiply`, never gradients.
-- Deliberate misregistration: 1–3px offsets between plates on type, illustration and photos.
-- Paper grain over everything; halftone dots for tone.
-- Brand serif (Cormorant Garamond) for voice, Jost for labels and forms.
-- One authored motion moment per view: plates sliding into register.
-- No religious symbols anywhere.
+- Two grounds only: courtyard white and Kanjeevaram red. Gold is the thread between them.
+- Bodoni Moda for every voice that speaks; Tenor Sans only for labels, small capitals and form fields.
+- Split headings: roman line, then italic line in red (on white) or marigold (on red).
+- Square corners everywhere. Hairline gold double rules instead of shadows and boxes.
+- Silk lanes, florals and gold line art carry the decoration. Real couple artwork (graphite sketches, gold line drawings, the DNA tattoo) is used as given, never redrawn.
+- Motion is ambient and slow (silk breathing, lights twinkling, a helix turning) and pauses off screen; `prefers-reduced-motion` stops it.
 
 ## Colors
 
-Three riso inks on warm cream; every colour on the page is one of these or an overprint of them.
+Kanjeevaram red and zari gold on courtyard white, with black ink for type.
 
 ### Primary
-- **Saree Teal** (`saree-teal`): the key plate. Illustration outlines, sea, palms, the display names, one strand of the helix. Also the lead ink of the Ring Ceremony page.
-- **Saree Teal Deep** (`saree-teal-deep`): teal printed at full density. Body-size teal text, the primary button, selected choices. Use this, not base teal, wherever text must pass 4.5:1.
+- **Kanjeevaram Red** (`silk-red`): the ceremonies ground, the italic accent line of every heading on white, the "n" of DnA, the RSVP yes button, selected chips, errors and focus rings, countdown numerals.
+- **Deep Kumkum** (`red-deep`): pressed and hover state of red buttons; text on marigold (the "Ceremony details" buttons).
 
 ### Secondary
-- **Silk Maroon** (`silk-maroon`): the second pass. Misregistered shadow behind the names, roofs, hibiscus, halftone on the sun, the other helix strand, small-caps labels. Lead ink of the Thaali Ceremony page. Printed as a screen (40–70% opacity) on large areas so it never goes muddy.
-
-### Tertiary
-- **Zari Gold** (`zari-gold`): the warm pass. The sun, the helix rungs, the auto, the gold halftone screen on photos, the offset shadow under buttons. Never used for text.
+- **Marigold** (`silk-marigold`): zari borders, the diamond separators, selection highlight, silk lanes. Decorative, never text on white.
+- **Marigold on Red** (`marigold-on-red`): the italic accent line of headings on the red ground; fill of the "Ceremony details" buttons.
+- **Zari Rule** (`zari-rule`) and **Zari Hairline** (`zari-hairline`): the gold double rule around the reply card, form underlines, the rule above the story's closing line, short separators.
 
 ### Neutral
-- **Warm Cream** (`warm-cream`): the paper stock and page background. Also text on teal buttons.
-- **Print White** (`print-white`): photo print borders only, so prints read as separate paper on the cream stock.
-- **Ink Text** (`ink-text`): running body copy.
-- **Ink Muted** (`ink-muted`): captions and helper text.
-
-### Night stock
-- **Night Stock** (`night-stock`): dark paper for cover, countdown and footer. On it, inks print opaque (normal blend, not multiply).
-- **Gold on Stock** (`gold-on-stock`): monogram D and A, tagline, countdown title and labels, registration marks.
-- **Rose on Stock** (`rose-on-stock`): maroon ink lifted for dark paper. The italic "n" of DnA, ampersands, countdown plate offset. Replaces the old terracotta "n".
-- **Teal on Stock** (`teal-on-stock`): the misregistered plate behind the monogram (`text-shadow` 4px 3px at 38%).
+- **Courtyard White** (`courtyard-white`): the page ground.
+- **Card Cream** (`card-cream`): the reply card and chips, a half-step warmer than the ground so the card reads as paper.
+- **Canopy Cream** (`canopy-cream`): the warm foot of the cover, blending into the story.
+- **Silk Ivory** (`silk-ivory`): the ivory silk lane; ticket hairlines.
+- **Ivory on Red** (`ivory-on-red`): all reading text and roman headings on the red ground.
+- **Blush on Red** (`blush-on-red`): secondary notes on red only (times, placeholders in details). Not for paragraphs.
+- **Ink** (`ink`): headings and body on white. **Ink Muted** (`ink-muted`): ledes, helper text, the opening clause of the story's closing line.
+- **Silk Black** (`silk-black`) and **On Black** (`on-black`): the default button and the black silk lane.
 
 ### Named Rules
-**The Overprint Rule.** Colour is mixed only by `mix-blend-mode: multiply` of two ink layers. No CSS gradients between inks, no gradient text, no tints invented outside the three inks.
+**The Two Grounds Rule.** A section sits on courtyard white or on Kanjeevaram red, never on a third colour. Cream steps (card, canopy) are paper tones of white, not new grounds.
 
-**The Three Ink Rule.** No fourth ink. A new colour need is solved by overprinting or by screening an existing ink (opacity or halftone), never by adding a hue.
+**The Accent Line Rule.** Red on white and marigold on red are reserved for the italic half of a heading and for actions. A paragraph is never set in the accent colour, except the story's single closing promise.
 
 ## Typography
 
-**Display Font:** Cormorant Garamond (with Georgia, serif)
-**Body Font:** Jost (with system-ui, sans-serif)
+**Display and reading font:** Bodoni Moda (with Didot, Georgia, serif), self-hosted, weights 400–500, roman and italic.
+**Label and form font:** Tenor Sans (with Gill Sans, system-ui), self-hosted, one weight.
 
-**Character:** Cormorant carries the invitation voice: italic and heavy for names, upright for headings. Jost is the letterpress-style label and form face, light for reading, medium for small caps.
+**Character:** A fashion-house Didone carrying both the grand headings and the story itself, like a printed invitation booklet. Tenor Sans is the engraved small-capital voice for labels, buttons and the form; widely tracked, always uppercase except inside fields.
 
 ### Hierarchy
-- **Display** (600 italic, `clamp(2.5rem, 9.5vw, 6rem)`, 1.08): the couple's names only. Printed in teal with a maroon plate offset 3px/2px at 40% behind. Never wraps (`white-space: nowrap`).
-- **Headline** (600, `clamp(1.8rem, 3.6vw, 2.4rem)`, 1.15): section headings. Balanced wrap.
-- **Lede** (400, `clamp(1.15rem, 2.4vw, 1.45rem)`, 1.45): tagline and short introductions, max 34ch.
-- **Title** (600, 1.6rem): event dates, card titles.
-- **Body** (300, 15.5px, 1.75): running text, max 62ch.
-- **Label** (500, 12px, 0.16em tracking, uppercase): ceremony names under dates, button text, form labels. Printed in maroon or teal-deep.
-
-- **Monogram** (Cormorant 400, `clamp(7rem, 24vw, 13rem)`, 0.95): DnA on the cover only; "n" italic at 0.74em in rose. A logo, not a heading, so it sits outside the 6rem display cap.
-- **Spaced names** (Cormorant 400, `clamp(1.5rem, 4vw, 2.5rem)`, 0.16em tracking): "Derin & Akshita" under the monogram.
-- **Split heading** (Cormorant 400 upright line + 500 italic maroon line, `clamp(2.4rem, 5.4vw, 4rem)`): story, ceremonies and RSVP headings ("Felt in Our Hearts, / Encoded in Our DnA").
-- **Countdown numerals** (Cormorant 300, `clamp(2.8rem, 8vw, 5.2rem)`, lining tabular figures, rose plate offset).
+- **Monogram** (Bodoni 500, `clamp(5.5rem, 15vw, 8.5rem)`, 0.92): DnA on the cover only, "n" italic in red at 0.8em. A logo, not a heading.
+- **Display** (Bodoni 500, `clamp(2.5rem, 6.4vw, 5rem)`, 1.02, -0.02em): section headings, as a roman line plus an italic accent line. Balanced wrap; keep phrases together with `&nbsp;` where a break would split them ("black tie").
+- **Headline** (Bodoni 400 italic, ~2.1rem): card and state headings ("RSVP", "We'll miss you"), the countdown title.
+- **Lede** (Bodoni 400 italic, `clamp(1.15rem, 2.2vw, 1.4rem)`, 1.45, max 36–40ch): one-line introductions under headings.
+- **Body** (Bodoni 450, `clamp(1.15rem, 1.5vw, 1.35rem)`, 1.75, max 62ch, ragged right): the story. Set at the sturdier `opsz 11` cut.
+- **Numerals** (Bodoni 500, `clamp(3.2rem, 7.5vw, 6rem)`, each digit in a fixed-width cell so the countdown never jitters).
+- **Label** (Tenor Sans 400, 11–14px, 0.16–0.26em tracking, uppercase): event names on the cover, form labels, countdown units, buttons, the footer credit.
 
 ### Named Rules
-**The No Kicker Rule.** No category label above a heading. Dates and ceremony names sit below what they describe. The cover's "The wedding of" is invitation wording that reads into the monogram, and is the one allowed exception.
+**The Optical Size Rule.** Bodoni's optical-size axis is pinned, not automatic: `opsz 18` site-wide so display hairlines survive on red, and `opsz 11` for anything read as a paragraph or set on red at lede size. Auto optical sizing gives display sizes the finest cut and the hairlines vanish.
+
+**The Upright Small Size Rule.** Below 14px, text is upright Tenor capitals, never Bodoni italic. Italic Didone hairlines at 12px are unreadable over imagery.
+
+**The No Kicker Rule.** No category label above a heading. Event names sit with their dates, not above a headline.
 
 ## Layout
 
-Single column, centred, max width 1120px, side gutter never below 16px. Hero is sized to content, not to the viewport. Sections separate with large cream space (`2xl`, roughly 104–136px) rather than rules or boxes. Inside a section, groups stay tight (`xs` to `md`).
+Single centred column, max width 1120px, side gutter 16px. Sections breathe with `clamp(96px, 12vw, 168px)` of vertical padding; the countdown is tighter (`clamp(56px, 7vw, 96px)`). Groups inside a section stay tight (10–28px).
 
-Section order: cover (night, full viewport) → story (cream, photo print left, split heading right) → ceremonies (cream, riso scene full-bleed, then the gatefold invitation) → countdown (night, riso photo prints flanking the numbers) → RSVP (cream, reply card) → footer (night). Ceremony details open as a modal overlay on top of the page (bottom sheet on phones), never a separate page.
+Section order: cover (full viewport, canopy overhead, banana plants at the sides, DnA and both dates) → story (graphite portrait dissolving into the cream on the left half, text on the right; stacked on phones) → ceremonies (red ground, toran at the top, heading, gold skyline line art edge to edge, a silk band, then the two ceremonies side by side split by a gold seam with a diamond; stacked on phones) → countdown (title with the gold DNA ornament, then the sketch band) → RSVP (fairy-light curtain, heading, deadline, silk lanes crossing behind the reply card) → footer.
 
-The illustrated scene is a 1200×560 SVG viewBox with a 720px minimum width; on phones it is centre-cropped so the Singapore centre stays in view. Two-column layouts (notes and prints) collapse to one column below 760px (640px for photo prints).
+Ceremony details open inline beneath each ceremony (a grid-rows expand, 0.7s), not as a modal. Below 560px the cover dates stack, buttons go full width, and the two-column story collapses.
 
 ## Elevation & Depth
 
-Depth comes from paper, not light. Surfaces are flat ink on cream; the only lifted objects are photo prints, which sit on the stock as separate sheets with a soft maroon-tinted shadow and a slight rotation. Buttons use a hard gold offset plate (a misregistered pass), not a shadow.
+Depth comes from cloth and paper layering, not shadows. Silk lanes are canvases blended with `multiply` (on light) so their crossings darken like real overlapping sheer silk. Panels are flat; their edge is a gold double rule (a 1px border plus an inset or offset second rule).
 
 ### Shadow Vocabulary
-- **Print on stock** (`box-shadow: 0 2px 4px rgba(122,27,46,.06), 0 14px 32px rgba(122,27,46,.10)`): photo prints and the RSVP reply card.
-- **Gold plate** (`box-shadow: 4px 3px 0 -1px #B8941F`): primary buttons; grows to 6px 5px on hover, shrinks to 2px 1px on press.
+- **Card lift** (`box-shadow: 0 2px 4px rgba(120,60,10,.1)`): the reply card, barely off the ground.
+- **Button press** (`box-shadow: 0 10px 22px -14px rgba(122,18,39,.7)`): under the red RSVP yes button only.
+- **Ticket** (`filter: drop-shadow(0 22px 50px rgba(17,17,17,.28)) drop-shadow(0 5px 16px rgba(17,17,17,.14))`): the issued RSVP ticket, the one object that truly floats.
 
 ### Named Rules
-**The Paper Not Light Rule.** No glows, no glass, no blur. If something needs to stand forward, print it on a separate sheet.
+**The Gold Rule Not Glow Rule.** A surface that needs an edge gets a gold hairline double rule, not a wider shadow, glow or blur.
 
 ## Shapes
 
-Printed matter has square corners: prints, cards and fields are `none`. Buttons and choice chips are full pills, like rubber-stamped tags. Photos inside prints may take a 4px radius. Illustration is built from plain geometric shapes (rects, arches, circles, simple quadratic curves) with round line caps, drawn in a consistent 3–5px stroke at viewBox scale.
+Square corners throughout (0px): buttons, chips, cards, fields, the ticket body. The only curves are organic (silk lanes, leaves, flowers) and the ticket's scalloped edges, cut with radial-gradient masks. Separators are short gold rules with a rotated-square diamond at the centre. Frames are double: an outer 1px line and an inner line inset 5–6px.
 
 ## Components
 
 ### Buttons
-Tactile and stamped.
-- **Shape:** full pill (999px).
-- **Primary:** teal-deep fill, warm cream label in Jost 500 uppercase, 0.12em tracking, 16px 34px padding, gold plate offset behind.
-- **Hover / Focus:** lifts 1px/2px while the gold plate grows. Focus ring is 2px maroon at 4px offset.
-- **Active:** presses 1px/1px, plate shrinks.
+Engraved and exact.
+- **Shape:** square (0px).
+- **Primary:** silk black fill, on-black label in Tenor capitals 12px at 0.28em; hover turns Kanjeevaram red; press nudges down 1px.
+- **Ghost:** transparent with a 1px ink outline; hover fills black.
+- **RSVP answers:** Bodoni 500 italic 1.2rem, no capitals. Yes: red fill, ivory text, soft red press shadow. Regrets: transparent with a zari outline and a second gold rule inset 5px.
+- **Ceremony details:** marigold-filled tab on the red ground, deep kumkum Tenor capitals 14px, a 1px marigold outline offset 3px, and a chevron that turns when open; hover empties to an outline.
+- **Focus:** 2px red outline at 4px offset (marigold on the red ground).
 
-### Chips (choice)
-Used for RSVP yes/no questions instead of native radios.
-- **Style:** cream fill, 1.5px teal-deep outline, pill, teal-deep label.
-- **Selected:** teal-deep fill, cream label, gold plate offset.
+### Chips
+Yes/No choices in the form, replacing radios. Card-cream square tiles with a zari outline, Tenor capitals; selected fills red with ivory text.
 
 ### Cards / Containers
-Only three containers exist, and all are paper: the **photo print** (print-white sheet, 12px 12px 40px padding, print-on-stock shadow, rotated -1.6° or 1.2°), the **gatefold invitation** (see below) and the **reply card** (same sheet treatment, unrotated, with a gold hairline frame inset 10px). Nothing else gets a box.
+Only the **reply card**: card cream, 1px zari border, an inner zari rule inset 6px, card-lift shadow, padding `clamp(32px, 6vw, 56px)` (24px 20px on phones). Nothing else is boxed.
 
 ### Inputs / Fields
-Fill-in-the-blank lines, like a printed RSVP card.
-- **Style:** transparent, no box, 1.5px teal-deep bottom rule, Jost 400 16px text, label above in Label style.
-- **Focus:** rule thickens to 2px and turns maroon; caret is maroon.
-- **Error:** rule and message in maroon, message names the fix ("Enter a WhatsApp number with country code").
+Fill-in-the-blank lines. Transparent, 1px zari bottom rule, Tenor 17px, red caret. Focus and error thicken the rule to 2px red. Error messages reserve their line even when hidden so nothing shifts under a guest's finger. The phone field pairs a country-code select (custom chevron) with a digits-only number. Required fields carry a red asterisk.
 
-### Photo print (signature)
-A photo reprinted in three passes: a gold halftone screen (4px dot mask) for warmth, a maroon plate for skin and shadow offset 3px/-2px, and a teal plate for the deepest darks. Implemented as three stacked copies of one image with SVG `feComponentTransfer` filters and `multiply`.
+### Countdown band (signature)
+The couple's five graphite sketch panels repeat edge to edge between gold zari borders, under a light cream wash with a soft cream glow behind the centre. The red Bodoni numerals sit directly on the band, divided by small marigold diamonds; the unit labels are upright Tenor capitals (13px, 11px on phones) so they hold over the sketches. Counts down to the Gala, 5:45 pm India time on 7 February 2027.
 
-### Gatefold invitation (signature)
-The ceremonies reveal. A print-white card closed by two doors meeting at a centre seam, each door framed in a gold hairline. The left door carries a light Cormorant **D** (9.5rem, gold, teal plate offset) and "Seventh February"; the right door **A** and "Eighth February". A double gold thread runs across both doors and is held at the seam by a maroon clasp bearing an italic gold **n**, so the closed card reads D · n · A. On hover the doors part 7°. On tap the clasp lifts away and the doors swing outward to 114° (1.3s, `cubic-bezier(.65,0,.35,1)`), showing maroon liners with a gold dot screen. Inside: the Ring Ceremony and the Thaali Ceremony side by side (stacked on phones) split by a gold hairline, each with a small riso mark, date, time and a "Ceremony details" link that opens the overlay; below, "Will you join us?" with **Joyfully accept** (opens the RSVP form) and **Regretfully decline** (decline state). Keyboard: a full-size invisible button opens it; the inside is `inert` until open, and focus moves inside only for keyboard opens.
+### RSVP ticket (signature)
+The confirmation is an admission stub: a near-black red card with scalloped long edges, an ivory hairline inset frame, silk texture loaded only when issued, a decorative barcode, a 3D tilt that follows the pointer, a glare highlight, and a red-and-white particle burst plus a petal shower on issue.
 
-### Ceremony page (overlay)
-Full-screen sheet on the same cream stock. Same inks, different lead plate:
-- **The Ring Ceremony (7 Feb):** teal leads, gold second, maroon only as accent. Motifs: two interlocked rings, tall candles, draped curtains.
-- **The Thaali Ceremony (8 Feb):** maroon leads, gold second, teal only as accent. Motifs: kolam dot grid, jasmine strings, banana leaves.
+### Silk lanes (signature)
+Canvas-drawn lengths of sheer silk (red, marigold, ivory, black) with woven texture and zari edges. They enter with a slide, then breathe slowly. Used on the cover canopy, the ceremonies band (each pair soloes when its ceremony is hovered or focused) and behind the reply card.
 
-### Motion
-One moment per view. Cover: the monogram's teal plate slides into register while the rings and registration marks settle (1.8s). Scene: when it scrolls into view, the three plates slide from 8–16px out of register to their resting 1px drift (1.6s, `cubic-bezier(.16,1,.3,1)`) while the helix strands draw in. Ceremony overlays repeat the registration move on open. Story photos cross-fade with a slow Ken Burns push. Motion uses transforms only; never animate `height` or `top`. Everything is visible at rest; `prefers-reduced-motion` removes the motion entirely.
+### Garlands and lights
+A mango-leaf toran with tuberose strands over the ceremonies; a curtain of fairy lights that drops and twinkles over the RSVP. Both pause off screen.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** build every colour from teal, maroon and gold on warm cream, overprinted with `multiply`.
-- **Do** keep a visible 1–3px registration drift between plates.
-- **Do** put paper grain over the whole page and use halftone dots for tone.
-- **Do** screen maroon (40–70%) on large areas.
-- **Do** use teal-deep for any teal text below 24px.
-- **Do** draw illustration from Chennai, Singapore and Malaysia everyday landmarks.
+- **Do** keep every section on courtyard white or Kanjeevaram red.
+- **Do** write headings as a roman line plus an italic accent line, red on white and marigold on red.
+- **Do** set reading text in Bodoni at `opsz 11` and weight 450 or more; ivory, never blush, for paragraphs on red.
+- **Do** use the couple's own artwork exactly as supplied, scaled and tinted only.
+- **Do** frame with gold double hairlines and keep corners square.
+- **Do** keep small text off busy imagery, or set it upright and in Tenor capitals where it must overlap.
 
 ### Don't:
-- **Don't** add a fourth ink, a gradient, gradient text, glass or glow.
-- **Don't** use temple, church, mosque or deity imagery, or any religious symbol.
+- **Don't** add a third ground colour, gradient text, glass or glow.
+- **Don't** set text below 14px in Bodoni italic.
+- **Don't** use religious symbols or deity imagery.
 - **Don't** put a kicker or eyebrow label above a heading.
-- **Don't** box content in cards; only prints and the reply card are sheets.
-- **Don't** scatter animation: one registration moment per view, no looping shimmer.
+- **Don't** box content in cards; the reply card and the ticket are the only containers.
+- **Don't** let a looping animation run while its section is off screen.
