@@ -951,12 +951,13 @@
           </div>
           <div class="state" id="state-registered" hidden>
             <h3>You're already on our list</h3>
-            <p>This number has already RSVP'd, so there's no need to reply again. If you'd like to change your reply, please contact Derin or Akshita.</p>
+            <p>This number has already RSVP'd, so there's no need to reply again. If you'd like to update your reply, please contact Derin or Akshita.</p>
             <button class="link" type="button" id="btn-registered-back">&larr; Back</button>
           </div>
           <div class="state" id="state-decline" hidden>
             <h3>We'll miss you</h3>
             <p>Thank you for letting us know. You'll be in our thoughts on the day.</p>
+            <button class="link" type="button" id="btn-decline-back">&larr; Back</button>
           </div>
         </div>
       </div>
@@ -1783,6 +1784,7 @@
     function backToChoice() { hide(formWrap); hide($('#state-registered')); hide($('#state-decline')); show(choice); choice.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' }); }
     $('#btn-back').addEventListener('click', backToChoice);
     $('#btn-registered-back').addEventListener('click', backToChoice);
+    $('#btn-decline-back').addEventListener('click', backToChoice);
 
     $$('[data-rsvp]').forEach(function (b) {
       b.addEventListener('click', function () {
