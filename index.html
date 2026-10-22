@@ -714,7 +714,7 @@
   </style>
 </head>
 <body>
-  <audio id="bg-audio" src="assets/audio/song.mp3" loop preload="auto"></audio>
+  <audio id="bg-audio" src="assets/audio/song.mp3" loop preload="none"></audio>
 
   <!-- ═══ COVER ═══ -->
   <header id="intro">
@@ -753,9 +753,9 @@
         <div class="story split">
           <figure class="photos">
             <div class="slide"><img src="assets/images/story-1.webp" loading="lazy" decoding="async" alt="Pencil sketch of Derin and Akshita by the Marina Bay waterfront" /></div>
-            <div class="slide"><img src="assets/images/story-3.webp" loading="lazy" decoding="async" alt="Pencil sketch of Derin and Akshita in a saree and veshti" /></div>
-            <div class="slide"><img src="assets/images/story-4.webp" loading="lazy" decoding="async" alt="Pencil sketch of Derin and Akshita hugging and smiling" /></div>
-            <div class="slide"><img src="assets/images/story-5.webp" loading="lazy" decoding="async" alt="Pencil sketch of Derin and Akshita holding a Friendship Goals sign" /></div>
+            <div class="slide"><img data-src="assets/images/story-3.webp" loading="lazy" decoding="async" alt="Pencil sketch of Derin and Akshita in a saree and veshti" /></div>
+            <div class="slide"><img data-src="assets/images/story-4.webp" loading="lazy" decoding="async" alt="Pencil sketch of Derin and Akshita hugging and smiling" /></div>
+            <div class="slide"><img data-src="assets/images/story-5.webp" loading="lazy" decoding="async" alt="Pencil sketch of Derin and Akshita holding a Friendship Goals sign" /></div>
           </figure>
           <div class="tell">
             <svg class="rule-diamond" viewBox="0 0 240 16" aria-hidden="true"><path d="M0 8 H106 M134 8 H240" stroke="#C8921E" stroke-width="1"/><path d="M120 1 L127 8 L120 15 L113 8 Z" fill="#C8921E"/></svg>
@@ -806,12 +806,12 @@
           </div>
           <div class="seam" aria-hidden="true"></div>
           <div class="cer" data-lanes="thaali">
-            <div class="cer-mark"><img class="elai" src="assets/images/elai-sapadu.webp" alt="Gold line drawing of a wedding feast served on a banana leaf" width="1155" height="889" decoding="async" /></div>
+            <div class="cer-mark"><img class="elai" src="assets/images/elai-sapadu.webp" alt="Gold line drawing of a wedding feast served on a banana leaf" width="500" height="385" loading="lazy" decoding="async" /></div>
             <h3><em>Wedding</em></h3>
             <button type="button" class="text-link" aria-expanded="false" aria-controls="more-thaali">Ceremony details</button>
             <div class="more" id="more-thaali" inert>
               <div class="more-in"><div class="more-body">
-                <img class="cer-art tamil" src="assets/images/tamil-wedding.webp" alt="Illustration of the couple in a kanjeevaram saree and veshti, playfully tugging a marigold-tied rope" width="1008" height="854" loading="lazy" decoding="async" />
+                <img class="cer-art tamil" src="assets/images/tamil-wedding.webp" alt="Illustration of the couple in a kanjeevaram saree and veshti, playfully tugging a marigold-tied rope" width="870" height="737" loading="lazy" decoding="async" />
                 <ul class="facts">
                   <li><b class="caps">Date</b><span>Monday, 8 February 2027</span></li>
                   <li><b class="caps">Time</b><span>Morning, from 8:30 am onwards</span></li>
@@ -1201,8 +1201,9 @@
         });
         host.classList.add('live');
       }
-      var t; window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(render, 150); });
-      render();
+      var t, ready = !opts.lazy; window.addEventListener('resize', function () { if (!ready) return; clearTimeout(t); t = setTimeout(render, 150); });
+      if (ready || !('IntersectionObserver' in window)) { ready = true; render(); }
+      else { var io = new IntersectionObserver(function (es) { if (!es[0].isIntersecting) return; io.disconnect(); ready = true; render(); }, { rootMargin: '600px 0px' }); io.observe(host); }
       return { lanes: function () { return lanesEls; } };
     }
 
@@ -1253,7 +1254,7 @@
       { c: 'marigold', group: 'thaali', y0: 44,  yc: 128, y1: 184, w: 56, seed: 22, sheen: .6 },
       { c: 'red',      group: 'thaali', y0: 164, yc: 92,  y1: 64,  w: 46, seed: 23, sheen: .45 },
       { c: 'black',    group: 'ring',   y0: 60,  yc: 122, y1: 160, w: 48, seed: 24, sheen: .7 }
-    ] } }, { noShade: true });
+    ] } }, { noShade: true, lazy: true });
     $$('.cer[data-lanes]').forEach(function (c) {
       var on = function () { bandHost.setAttribute('data-solo', c.dataset.lanes); };
       var off = function () { bandHost.removeAttribute('data-solo'); };
@@ -1265,7 +1266,7 @@
     Stage($('#rsvp-silk'), { wide: { w: 1440, h: 300, align: 'mid', lanes: [
       { c: 'marigold', y0: 60, yc: 150, y1: 250, w: 110, seed: 41, sheen: .3 },
       { c: 'red', y0: 250, yc: 160, y1: 70, w: 92, seed: 42, sheen: .65 }
-    ] } });
+    ] } }, { lazy: true });
 
     /* Countdown hem: red and marigold crossing at the foot of the black silk */
     Stage($('#cd-hem'), { wide: { w: 1440, h: 110, align: 'mid', lanes: [
@@ -1761,11 +1762,13 @@
         draw(last);
       };
       var GOLD = [[138, 96, 22], [214, 168, 62], [255, 226, 140]];
-      function gold(z) { var t = (z + 1) / 2; var a = t < .5 ? GOLD[0] : GOLD[1], b = t < .5 ? GOLD[1] : GOLD[2], u = t < .5 ? t * 2 : (t - .5) * 2;
-        return 'rgb(' + [0, 1, 2].map(function (c) { return Math.round(a[c] + (b[c] - a[c]) * u); }).join(',') + ')'; }
+      // gold ramp built once; a frame only looks colours up
+      var RAMP = []; for (var g = 0; g <= 64; g++) { var t = g / 64, a = t < .5 ? GOLD[0] : GOLD[1], b = t < .5 ? GOLD[1] : GOLD[2], u = t < .5 ? t * 2 : (t - .5) * 2;
+        RAMP.push('rgb(' + [0, 1, 2].map(function (c) { return Math.round(a[c] + (b[c] - a[c]) * u); }).join(',') + ')'); }
+      function gold(z) { return RAMP[Math.max(0, Math.min(64, Math.round((z + 1) * 32)))]; }
       function draw(t) {
         if (!W) return; ctx.clearRect(0, 0, W, H);
-        var L = W * .78, x0 = (W - L) / 2, cy = H / 2, R = H * .24, turns = 2, f = 140, N = 120, items = [];
+        var L = W * .78, x0 = (W - L) / 2, cy = H / 2, R = H * .24, turns = 2, f = 140, N = 72, items = [];
         function pt(u, ph) { var th = u * turns * 6.283 + t + ph, z = Math.cos(th), s = f / (f - z * R); return { x: x0 + u * L, y: cy + Math.sin(th) * R * s, z: z, s: s }; }
         [0, Math.PI].forEach(function (ph) {
           for (var i = 0; i < N; i++) { var a = pt(i / N, ph), b = pt((i + 1) / N, ph); items.push({ z: (a.z + b.z) / 2, k: 'seg', a: a, b: b }); }
@@ -1785,8 +1788,14 @@
         ctx.globalAlpha = 1;
       }
       var last = .6, t0 = null;
-      function frame(ts) { if (t0 === null) t0 = ts; last = .6 + (ts - t0) / 1000 * .55; draw(last); requestAnimationFrame(frame); }
-      if (reduce) draw(last); else requestAnimationFrame(frame);
+      var seen = true, raf = 0, base = .6;
+      function frame(ts) { if (t0 === null) t0 = ts; last = base + (ts - t0) / 1000 * .55; draw(last); raf = requestAnimationFrame(frame); }
+      function run() { var on = seen && !document.hidden; if (on && !raf) { t0 = null; base = last; raf = requestAnimationFrame(frame); } else if (!on && raf) { cancelAnimationFrame(raf); raf = 0; } }
+      if (reduce) draw(last);
+      else {
+        if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { seen = es[0].isIntersecting; run(); }).observe(cv);
+        document.addEventListener('visibilitychange', run); run();
+      }
     }());
 
     /* ── RSVP flow ─────────────────────────────────────────── */
@@ -1940,6 +1949,15 @@
       scene.addEventListener('pointerleave', function () {
         active = false; tx = 0; ty = 0; start();
       });
+    }());
+
+    /* ── Story slides: the first sketch loads with the page, the rest once the story is near or the page has settled ── */
+    (function () {
+      var rest = $$('.photos img[data-src]'); if (!rest.length) return;
+      var done = false;
+      function go() { if (done) return; done = true; rest.forEach(function (i) { i.src = i.dataset.src; i.removeAttribute('data-src'); }); }
+      if ('IntersectionObserver' in window) { var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); go(); } }, { rootMargin: '800px 0px' }); io.observe($('.photos')); }
+      window.addEventListener('load', function () { setTimeout(go, 3000); });
     }());
 
     /* ── Audio ─────────────────────────────────────────────── */
