@@ -770,7 +770,7 @@
   </style>
 </head>
 <body>
-  <audio id="bg-audio" src="assets/audio/song.mp3" loop preload="none"></audio>
+  <audio id="bg-audio" src="assets/audio/song.mp3" preload="none"></audio>
   <button class="music" id="music-toggle" type="button" aria-pressed="false" aria-label="Play music" title="Play music">
     <svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="w1" d="M15.5 9.2a4 4 0 0 1 0 5.6"/><path class="w2" d="M18 6.8a7.5 7.5 0 0 1 0 10.4"/></svg>
     <svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></svg>
@@ -1982,14 +1982,14 @@
 
     /* ── Audio ─────────────────────────────────────────────── */
     var audio = $('#bg-audio'), musicBtn = $('#music-toggle');
-    audio.volume = 0.65;
+    audio.volume = 0.65;   // (iOS ignores this; elsewhere it softens the song a touch)
+    // The song is a 26-second piece: it plays three times through (about 80 s) and stops at its own ending,
+    // rather than looping forever. The toggle starts another round.
+    var PLAYS = 3, plays = 0, resumeOnReturn = false;
     // A guest who turned the music off keeps it off on their next visit
     var musicOff = false; try { musicOff = localStorage.getItem('dna-music') === 'off'; } catch (_) {}
-    function startAudio() {
-      if (musicOff) return;
-      audio.muted = false;
-      audio.play().catch(function () {});
-    }
+    function play() { audio.muted = false; audio.play().catch(function () {}); }
+    function startAudio() { if (!musicOff && plays < PLAYS) play(); }
     function syncMusic() {
       var on = !audio.paused;
       musicBtn.setAttribute('aria-pressed', String(on));
@@ -1997,10 +1997,32 @@
       musicBtn.title = on ? 'Turn music off' : 'Play music';
     }
     audio.addEventListener('play', syncMusic); audio.addEventListener('pause', syncMusic);
+    audio.addEventListener('ended', function () {
+      plays++;
+      if (plays < PLAYS && !musicOff && !document.hidden) { audio.currentTime = 0; play(); } else syncMusic();
+    });
     musicBtn.addEventListener('click', function () {
-      if (audio.paused) { musicOff = false; audio.muted = false; audio.play().catch(function () {}); }
-      else { musicOff = true; audio.pause(); }
+      if (audio.paused) { musicOff = false; plays = 0; play(); }
+      else { musicOff = true; resumeOnReturn = false; audio.pause(); }
       try { localStorage.setItem('dna-music', musicOff ? 'off' : 'on'); } catch (_) {}
+    });
+    // Never play from a page that is out of sight: pause when the tab or app goes to the background
+    // (switching apps, opening the venue map or the calendar file) and pick up again on return.
+    // Before this, a hidden copy of the page kept playing and its toggle was out of reach.
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { if (!audio.paused) { resumeOnReturn = true; audio.pause(); } }
+      else if (resumeOnReturn) { resumeOnReturn = false; if (!musicOff) play(); }
+    });
+    window.addEventListener('pagehide', function () { audio.pause(); });
+    // Only one copy of the site plays at a time: starting the song in one tab stops it in the others,
+    // and turning it off anywhere turns it off everywhere
+    var bc = null; try { bc = new BroadcastChannel('dna-music'); } catch (_) {}
+    if (bc) {
+      audio.addEventListener('play', function () { bc.postMessage('playing'); });
+      bc.onmessage = function (e) { if (e.data === 'playing' && !audio.paused) { resumeOnReturn = false; audio.pause(); } };
+    }
+    window.addEventListener('storage', function (e) {
+      if (e.key === 'dna-music' && e.newValue === 'off') { musicOff = true; resumeOnReturn = false; audio.pause(); }
     });
     startAudio();
     function onFirstGesture(e) {
