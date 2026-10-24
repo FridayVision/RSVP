@@ -542,17 +542,20 @@
     .tc-stub-stack.show {
       opacity: 1; visibility: visible;
       animation: stubReveal .5s cubic-bezier(.22,1,.36,1) both;
+      will-change: transform, opacity;   /* the reveal scales one composited layer instead of repainting the stub */
     }
     @keyframes stubReveal {
       from { transform: scale(.88) translateY(20px); opacity: 0; }
       to   { transform: none; opacity: 1; }
     }
-    /* Wrapper carries the drop-shadow and the 3D tilt */
-    .stub-wrap {
-      position: relative; display: inline-block;
-      filter: drop-shadow(0 22px 50px rgba(17,17,17,.28)) drop-shadow(0 5px 16px rgba(17,17,17,.14));
-      will-change: transform;
-    }
+    /* Wrapper carries the 3D tilt (mouse only). The shadow is a plain box-shadow on a layer behind the card,
+       painted once: a CSS drop-shadow filter here made phones (Safari above all) re-render the whole masked,
+       textured stub on every frame of the reveal, which is what read as frame-by-frame loading. */
+    .stub-wrap { position: relative; display: inline-block; isolation: isolate; }
+    .stub-wrap::before { content: ''; position: absolute; inset: 10px 8px 4px; z-index: -1; pointer-events: none;
+      box-shadow: 0 22px 50px rgba(17,17,17,.28), 0 5px 16px rgba(17,17,17,.14); }
+    @media (hover: hover) and (pointer: fine) { .stub-wrap { will-change: transform; } }
+    @media (hover: none) { .stub-glare { display: none; } .stub-wrap, .stub-card { -webkit-tap-highlight-color: transparent; } }
     /* The silk texture is only fetched once a ticket is issued (.ready), so it costs nothing on page load */
     .stub-card.ready { background: linear-gradient(rgba(22,4,3,.74), rgba(22,4,3,.74)), url('assets/images/texture.webp') center / cover no-repeat, #3A0A12; }
     /* Scalloped stub card — semicircular notches along left and right long edges */
@@ -1577,8 +1580,9 @@
       /* Minimal red & white — simple rectangles, fast enough to reach all edges */
       var bCols = ['#9E1B32', '#FFFFFF', '#C4293F', '#FFFFFF', '#FF3248', '#FFFFFF'];
       var P = [];
-      for (var i = 0; i < 110; i++) {
-        var a = (i / 110) * Math.PI * 2 + (Math.random() - .5) * .35;
+      var N = window.innerWidth < 600 ? 56 : 110;
+      for (var i = 0; i < N; i++) {
+        var a = (i / N) * Math.PI * 2 + (Math.random() - .5) * .35;
         var spd = 220 + Math.random() * 580;
         P.push({ x: cx, y: cy, vx: Math.cos(a) * spd, vy: Math.sin(a) * spd - 90,
           r: 2.4 + Math.random() * 2.8,
@@ -1912,7 +1916,8 @@
         var tcStack = document.getElementById('tc-stub-stack');
         if (tcStack) tcStack.classList.add('show');
         burst();
-        setTimeout(function () { petals(window.innerWidth < 600 ? 60 : 90); }, 320);
+        var small = window.innerWidth < 600;
+        setTimeout(function () { petals(small ? 36 : 90); }, small ? 1100 : 320);
       } catch (_) {
         btn.disabled = false; btn.textContent = 'Confirm attendance'; btn.classList.remove('sending'); btn.removeAttribute('aria-busy');
         hide(formWrap); show($('#state-error'));
@@ -1924,7 +1929,7 @@
     /* ── Stub card: fluid 3D tilt — tracks pointer anywhere in the success state ── */
     (function () {
       var scene = document.getElementById('state-success');
-      if (!scene || reduce) return;
+      if (!scene || reduce || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
       var wrap = null, glare = null;
       var tx = 0, ty = 0, cx = 0, cy = 0, cs = 1.0, rafId = null, active = false;
       function getEls() {
@@ -1948,6 +1953,7 @@
       }
       function start() { if (!rafId) rafId = requestAnimationFrame(tick); }
       scene.addEventListener('pointermove', function (e) {
+        if (e.pointerType !== 'mouse') return;
         getEls(); if (!wrap) return;
         var r = scene.getBoundingClientRect();
         tx = Math.max(-.5, Math.min(.5, (e.clientX - r.left) / r.width  - 0.5));
