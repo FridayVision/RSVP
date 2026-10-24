@@ -232,13 +232,16 @@ Only the **reply card**: card cream, 1px zari border, an inner zari rule inset 6
 Fill-in-the-blank lines. Transparent, 1px zari bottom rule, Tenor 17px, red caret. Focus and error thicken the rule to 2px red. Error messages reserve their line even when hidden so nothing shifts under a guest's finger. The phone field pairs a country-code select (custom chevron) with a digits-only number. Required fields carry a red asterisk.
 
 ### Countdown band (signature)
-The couple's five graphite sketch panels repeat edge to edge between gold zari borders, under a light cream wash with a soft cream glow behind the centre. The red Bodoni numerals sit directly on the band, divided by small marigold diamonds; the unit labels are upright Tenor capitals (13px, 11px on phones) so they hold over the sketches. Counts down to the Gala, 5:45 pm India time on 7 February 2027.
+The couple's five graphite sketch panels repeat edge to edge between gold zari borders, under a light cream wash with a soft cream glow behind the centre. The section stops early and a marigold glow pools at its foot, continuing into the RSVP's own top glow so the two read as one lit space. The red Bodoni numerals sit directly on the band, divided by small marigold diamonds; the unit labels are upright Tenor capitals (13px, 11px on phones) so they hold over the sketches. Counts down to the Gala, 5:45 pm India time on 7 February 2027.
 
 ### RSVP ticket (signature)
-The confirmation is an admission stub: a near-black red card with scalloped long edges, an ivory hairline inset frame, silk texture loaded only when issued, a decorative barcode, a 3D tilt that follows the pointer, a glare highlight, and a red-and-white particle burst plus a petal shower on issue.
+The confirmation is an admission stub: a near-black red card with scalloped long edges, an ivory hairline inset frame, silk texture prefetched while the form is open, a 3D tilt that follows the pointer, a glare highlight, and a red-and-white particle burst plus a petal rain on issue. It reads "You're in!!" in Bodoni italic, lists both dates, names the venue with a map pin and a gold "Link to the venue", and ends with a marigold **Add to calendar** button that downloads `dna-wedding.ics` (both celebrations, venue and map link inside).
 
 ### Silk lanes (signature)
 Canvas-drawn lengths of sheer silk (red, marigold, ivory, black) with woven texture and zari edges. They enter with a slide, then breathe slowly. Used on the cover canopy, the ceremonies band (each pair soloes when its ceremony is hovered or focused) and behind the reply card.
+
+### Petal rain
+Loose marigold, orange, rose and pink petals, jasmine buds and five-petal jasmine flowers, 12–20px, falling slowly at three depths (far pieces smaller, fainter, slower), fading in at the top and out before the bottom. Light on load, fuller after a confirmed RSVP. Never whole flower heads.
 
 ### Fairy lights
 A curtain of fairy lights that drops and twinkles over the RSVP; it pauses off screen and while scrolling.
@@ -247,6 +250,7 @@ A curtain of fairy lights that drops and twinkles over the RSVP; it pauses off s
 
 ### Do:
 - **Do** keep every section on courtyard white or Kanjeevaram red.
+- **Do** keep side-by-side columns on shared row heights (equal art boxes, reserved line space) so their rules line up.
 - **Do** write headings as a roman line plus an italic accent line, red on white and marigold on red.
 - **Do** set reading text in Bodoni at `opsz 11` and weight 450 or more; ivory, never blush, for paragraphs on red.
 - **Do** use the couple's own artwork exactly as supplied, scaled and tinted only.

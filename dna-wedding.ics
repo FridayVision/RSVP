@@ -1,0 +1,48 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//DnA Wedding//Save the dates//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Derin & Akshita's Wedding
+X-WR-TIMEZONE:Asia/Kolkata
+BEGIN:VEVENT
+UID:gala-2027-02-07@dna-wedding.vercel.app
+DTSTAMP:20261024T000000Z
+DTSTART:20270207T121500Z
+DTEND:20270207T163000Z
+SUMMARY:Derin & Akshita · Ring Exchange & Gala
+LOCATION:Aarav Wedding Hall\, 8/24\, Pudhu Thottam\, Ramasamy Nagar Extensi
+ on II\, Urumandampalayam\, Gounder Mills\, Coimbatore\, Tamil Nadu 641029\
+ , India
+DESCRIPTION:From childhood whispers to forever vows\, join us for a night o
+ f dancing\, dining\, and the beginning of our next chapter.\n\nSunday\, 7 
+ February 2027 · 5:45 pm – 10:00 pm\n\nVenue: Aarav Wedding Hall\, 8/24\
+ , Pudhu Thottam\, Ramasamy Nagar Extension II\, Urumandampalayam\, Gounder
+  Mills\, Coimbatore\, Tamil Nadu 641029\, India\nMap: https://www.google.c
+ om/maps/place//data=!4m2!3m1!1s0x3ba8590000ab0821:0x78efe8be455c979f\n\nht
+ tps://dna-wedding.vercel.app/
+URL:https://dna-wedding.vercel.app/
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+UID:wedding-2027-02-08@dna-wedding.vercel.app
+DTSTAMP:20261024T000000Z
+DTSTART:20270208T030000Z
+DTEND:20270208T060000Z
+SUMMARY:Derin & Akshita · Wedding
+LOCATION:Aarav Wedding Hall\, 8/24\, Pudhu Thottam\, Ramasamy Nagar Extensi
+ on II\, Urumandampalayam\, Gounder Mills\, Coimbatore\, Tamil Nadu 641029\
+ , India
+DESCRIPTION:A South Indian ceremony with a twist and lots of games. Jasmine
+  in the air\, kolam at the entrance\, and everyone we love in one room.\n\
+ nMonday\, 8 February 2027 · 8:30 am – 11:30 am\n\nVenue: Aarav Wedding 
+ Hall\, 8/24\, Pudhu Thottam\, Ramasamy Nagar Extension II\, Urumandampalay
+ am\, Gounder Mills\, Coimbatore\, Tamil Nadu 641029\, India\nMap: https://
+ www.google.com/maps/place//data=!4m2!3m1!1s0x3ba8590000ab0821:0x78efe8be45
+ 5c979f\n\nhttps://dna-wedding.vercel.app/
+URL:https://dna-wedding.vercel.app/
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR

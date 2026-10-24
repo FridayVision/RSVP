@@ -315,8 +315,8 @@
     .facts span { font-family: var(--display); font-size: 1.25rem; }
     /* Ceremony illustrations: revealed with the details, the couple dressed for each day */
     .cer-art { display: block; height: auto; margin: 4px auto 22px; filter: drop-shadow(0 12px 16px rgba(40,4,12,.35)); }
-    .cer-art.dance { width: min(220px, 62%); }
-    .cer-art.tamil { width: min(290px, 82%); }
+    /* Both illustrations sit in the same 285px-tall box, so the two columns' rules and style guides line up side by side */
+    .cer-art.dance, .cer-art.tamil { width: auto; height: 285px; max-width: 92%; object-fit: contain; }
     @media (prefers-reduced-motion: no-preference) {
       .cer-art { opacity: 0; transform: translateY(14px) scale(.97); transition: opacity .6s var(--ease) .2s, transform .8s var(--ease) .2s; }
       .more.open .cer-art { opacity: 1; transform: none; }
@@ -330,7 +330,8 @@
     .sg-palette .sw { width: 30px; height: 30px; background: var(--f) center / 100% auto; clip-path: polygon(0.0% 0.0%, 8.3% 5.0%, 16.7% 0.0%, 25.0% 5.0%, 33.3% 0.0%, 41.7% 5.0%, 50.0% 0.0%, 58.3% 5.0%, 66.7% 0.0%, 75.0% 5.0%, 83.3% 0.0%, 91.7% 5.0%, 100.0% 0.0%, 95.0% 8.3%, 100.0% 16.7%, 95.0% 25.0%, 100.0% 33.3%, 95.0% 41.7%, 100.0% 50.0%, 95.0% 58.3%, 100.0% 66.7%, 95.0% 75.0%, 100.0% 83.3%, 95.0% 91.7%, 100.0% 100.0%, 91.7% 95.0%, 83.3% 100.0%, 75.0% 95.0%, 66.7% 100.0%, 58.3% 95.0%, 50.0% 100.0%, 41.7% 95.0%, 33.3% 100.0%, 25.0% 95.0%, 16.7% 100.0%, 8.3% 95.0%, 0.0% 100.0%, 5.0% 91.7%, 0.0% 83.3%, 5.0% 75.0%, 0.0% 66.7%, 5.0% 58.3%, 0.0% 50.0%, 5.0% 41.7%, 0.0% 33.3%, 5.0% 25.0%, 0.0% 16.7%, 5.0% 8.3%);
       filter: drop-shadow(0 2px 2px rgba(40,4,12,.45)); transition: transform .3s var(--ease); }
     .sg-palette .sw:hover { transform: translateY(-2px) rotate(-4deg); }
-    .more-body .sg-tagline { margin: 14px auto 0; max-width: 30ch; font-family: var(--display); font-style: italic; font-size: .98rem; line-height: 1.5; color: var(--ivory-on-red); opacity: .9; }
+    .more-body .sg-note { margin: 8px auto 0; max-width: 34ch; font-family: var(--text); font-size: 12px; line-height: 1.5; letter-spacing: .04em; color: var(--marigold-on-red); }
+    .more-body .sg-tagline { margin: 14px auto 0; max-width: 30ch; min-height: 4.5em; font-family: var(--display); font-style: italic; font-size: .98rem; line-height: 1.5; color: var(--ivory-on-red); opacity: .9; }
     .sg-wardrobe { display: block; width: min(250px, 78%); height: auto; margin: 20px auto 0; filter: drop-shadow(0 10px 14px rgba(40,4,12,.35)); }
     .more-body p { font-size: 15.5px; line-height: 1.8; margin: 18px 0 0; }
     .more-body p.todo { font-size: 14px; color: var(--muted); font-family: var(--display); font-style: italic; }
@@ -387,7 +388,7 @@
         repeating-linear-gradient(90deg, var(--silk-marigold) 0 6px, transparent 6px 9px, var(--silk-marigold) 9px 11px, transparent 11px 18px) center / 100% 6px no-repeat;
     }
     .zari.top { top: 0; } .zari.bottom { bottom: 0; }
-    #events { position: relative; background: var(--silk-red); color: var(--ivory-on-red); padding-top: clamp(40px, 5vw, 72px); }
+    #events { position: relative; background: var(--silk-red); color: var(--ivory-on-red); padding-top: calc(var(--band-h, 180px) / 2 + clamp(8px, 1.5vw, 20px)); }
     #events .h-display { color: var(--ivory-on-red); }
     #events .h-display em, #events .cer h3 em { color: var(--marigold-on-red); }
     #events .lede, #events .cer .time, #events .more-body p.todo { color: var(--muted-on-red); }
@@ -413,9 +414,12 @@
     /* The gold skyline runs edge to edge, and the ceremony band now sits below it instead of overlapping its foot */
     #events { overflow-x: clip; }
     .skyline { display: block; width: 100%; height: auto; margin: clamp(32px, 4vw, 48px) 0 0; opacity: .7; pointer-events: none; }
-    #events #band { margin-top: clamp(16px, 2.5vw, 32px); }
+    /* The silk band straddles the seam from the story into the red ground, a woven border for the ceremonies */
+    #events { --band-h: clamp(130px, 17vw, 230px); }
+    #events #band { position: absolute; left: 0; right: 0; top: 0; height: var(--band-h); margin: 0; transform: translateY(-50%); z-index: 3; }
+    #events .skyline { margin-top: 0; }
     /* RSVP: sun-white ground, the red and marigold lanes crossing behind a gilt reply card */
-    #rsvp { position: relative; padding-top: clamp(150px, 16vw, 220px); overflow: hidden; background: radial-gradient(ellipse 90% 55% at 50% 0%, rgba(224,165,38,.14), transparent 70%), var(--ground); }
+    #rsvp { position: relative; padding-top: clamp(150px, 16vw, 220px); overflow: hidden; background: radial-gradient(ellipse 80% 55% at 50% 0%, rgba(224,165,38,.32), transparent 72%), var(--ground); }  /* continues the countdown glow across the seam */
     #rsvp .lede { color: var(--muted); }
     #rsvp .h-display em { color: var(--silk-red); }
     #rsvp > .wrap { position: relative; }
@@ -435,6 +439,21 @@
     #rsvp .chip input:checked + span { background: var(--silk-red); border-color: var(--silk-red); color: var(--ivory-on-red); }
     #rsvp .state h3 { color: var(--silk-red); }
     .petals { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 90; }
+    /* Music toggle: a small gilt-ringed button in the corner; sound waves breathe while the song plays */
+    .music { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 95;
+      width: 44px; height: 44px; padding: 0; display: grid; place-items: center; border-radius: 50%; cursor: pointer;
+      background: rgba(251,251,248,.92); border: 1px solid #B8892A; outline: 1px solid rgba(184,137,42,.35); outline-offset: 3px; color: var(--silk-red);
+      box-shadow: 0 6px 16px -10px rgba(20,20,20,.5); transition: transform .25s var(--ease), background .25s; }
+    .music:hover { transform: scale(1.06); background: #FFFDF8; }
+    .music:focus-visible { outline: 2px solid var(--silk-red); outline-offset: 3px; }
+    .music svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; grid-area: 1 / 1; }
+    .music svg path:first-child { fill: currentColor; fill-opacity: .14; }
+    .music .on { display: none; } .music[aria-pressed="true"] .on { display: block; } .music[aria-pressed="true"] .off { display: none; }
+    @media (prefers-reduced-motion: no-preference) {
+      .music[aria-pressed="true"] .w1 { animation: wave 1.6s ease-in-out infinite; }
+      .music[aria-pressed="true"] .w2 { animation: wave 1.6s ease-in-out .3s infinite; }
+    }
+    @keyframes wave { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
 
     /* ── Countdown: White Tie — ivory ground · black band · crimson ── */
     #countdown { background: var(--ground); color: var(--ink); text-align: center; position: relative; isolation: isolate; }
@@ -465,7 +484,9 @@
 
     /* ── RSVP ───────────────────────────────────────────────── */
     #rsvp { text-align: center; }
-    #countdown { padding-top: clamp(56px, 7vw, 96px); padding-bottom: clamp(56px, 7vw, 96px); }
+    /* The countdown stops early and a marigold glow pools at its foot: the same light that opens the RSVP, so the two read as one space */
+    #countdown { padding-top: calc(clamp(56px, 7vw, 96px) * .65); padding-bottom: clamp(20px, 3vw, 40px);
+      background: radial-gradient(ellipse 80% 70% at 50% 100%, rgba(224,165,38,.32), transparent 72%), var(--ground); }
     .card { max-width: 580px; margin: 44px auto 0; text-align: left; background: #fff; border: 1px solid var(--ink); padding: clamp(32px, 6vw, 56px); position: relative; }
     .card::before { content: ''; position: absolute; inset: 6px; border: 1px solid var(--ink); pointer-events: none; }
     .choice { display: grid; gap: 14px; justify-items: center; text-align: center; }
@@ -594,8 +615,26 @@
     .stub-val { font-family: var(--display); font-size: 1.45rem; font-weight: 700; color: #fff; line-height: 1.25; }
     .stub-val em { display: block; font-style: italic; font-weight: 400; color: rgba(240,228,205,.92); font-size: 1.15rem; }
     .stub-bow { position: absolute; top: -68px; left: -40px; width: 99px; height: auto; transform: rotate(135deg); transform-origin: center; z-index: 10; }
-    .stub-barcode { display: flex; align-items: stretch; gap: 0; height: 36px; margin-top: 14px; position: relative; z-index: 1; justify-content: center; }
-    .stub-barcode span { display: block; flex: none; height: 100%; background: rgba(230,217,191,.85); }
+    /* "You're in!!": the headline of the stub, in the invitation's italic, the plus-one line beneath in small capitals */
+    .stub-admit { font-family: var(--display); font-style: italic; font-size: 1.7rem; letter-spacing: 0; text-transform: none; color: #fff; margin-bottom: 22px; }
+    /* Venue: a map-pin link to the exact address */
+    .stub-venue { color: #fff; text-decoration: none; display: grid; justify-items: center; gap: 2px; }
+    .stub-venue .pin { width: 22px; height: 22px; fill: none; stroke: var(--silk-marigold); stroke-width: 1.8; margin-bottom: 4px; }
+    .stub-venue em { font-size: 1rem; }
+    /* Only the "Link to the venue" line is the link: gold small capitals, underlined, a real tap target */
+    .stub-venue-link { position: relative; z-index: 5; display: inline-block; margin-top: 8px; padding: 6px 2px; font-family: var(--text); font-size: 11.5px; font-weight: 400; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--marigold-on-red); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; }
+    .stub-venue-link:hover { color: #fff; }
+    .stub-venue-link:focus-visible { outline: 2px solid var(--silk-marigold); outline-offset: 4px; }
+    /* Add to calendar: one gold-ruled button on the stub; it downloads the .ics with both celebrations */
+    .stub-cal { position: relative; z-index: 5; display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 14px 22px; white-space: nowrap;
+      font-family: var(--text); font-size: 13px; letter-spacing: .16em; text-transform: uppercase; text-decoration: none;
+      color: var(--red-on-marigold); background: var(--marigold-on-red); border: 1px solid var(--marigold-on-red); outline: 1px solid rgba(244,194,78,.35); outline-offset: 3px;
+      transition: background .25s var(--ease), color .25s var(--ease), outline-offset .25s var(--ease); }
+    .stub-cal svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+    .stub-cal:hover { background: transparent; color: var(--marigold-on-red); outline-offset: 5px; }
+    .stub-cal:focus-visible { outline: 2px solid var(--marigold-on-red); outline-offset: 4px; }
+    .stub-cal-note { position: relative; z-index: 1; max-width: 26ch; margin: 18px auto 0; font-family: var(--display); font-style: italic; font-size: 1rem; line-height: 1.4; color: rgba(240,228,205,.92); text-align: center; }
     /* Moving glare highlight — updated via JS on mousemove */
     .stub-glare {
       position: absolute; inset: 0; z-index: 4; pointer-events: none;
@@ -635,7 +674,7 @@
 
     /* ── Events & RSVP: reduce excessive top whitespace on mobile */
     @media (max-width: 640px) {
-      #events { padding-top: 32px; }
+      #events { padding-top: calc(var(--band-h, 130px) / 2 + 12px); }
       #rsvp   { padding-top: clamp(108px, 16vw, 150px); }
     }
 
@@ -724,6 +763,10 @@
 </head>
 <body>
   <audio id="bg-audio" src="assets/audio/song.mp3" loop preload="none"></audio>
+  <button class="music" id="music-toggle" type="button" aria-pressed="false" aria-label="Play music" title="Play music">
+    <svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="w1" d="M15.5 9.2a4 4 0 0 1 0 5.6"/><path class="w2" d="M18 6.8a7.5 7.5 0 0 1 0 10.4"/></svg>
+    <svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></svg>
+  </button>
 
   <!-- ═══ COVER ═══ -->
   <header id="intro">
@@ -782,8 +825,8 @@
     <!-- ═══ CEREMONIES ═══ -->
     <section id="events" class="section" aria-label="The two celebrations">
       <div class="zari bottom" aria-hidden="true"></div>
-      <img class="skyline" src="assets/images/skyline-gold.webp" loading="lazy" decoding="async" alt="" aria-hidden="true" width="1903" height="679" />
       <div class="stage" id="band" aria-hidden="true"></div>
+      <img class="skyline" src="assets/images/skyline-gold.webp" loading="lazy" decoding="async" alt="" aria-hidden="true" width="1903" height="679" />
       <div class="wrap">
         <div class="ceremonies">
           <div class="cer" data-lanes="ring">
@@ -803,6 +846,7 @@
                   <h4 class="sg-title">Style guide</h4>
                   <ul class="sg-palette" aria-label="Suggested colours to wear"><li class="sw" style="--f:url('assets/images/fabric/champagne.webp')" title="Champagne sequin" aria-label="Champagne sequin"></li><li class="sw" style="--f:url('assets/images/fabric/emerald-satin.webp')" title="Emerald satin" aria-label="Emerald satin"></li><li class="sw" style="--f:url('assets/images/fabric/sage.webp')" title="Sage satin" aria-label="Sage satin"></li><li class="sw" style="--f:url('assets/images/fabric/charcoal.webp')" title="Charcoal suiting" aria-label="Charcoal suiting"></li><li class="sw" style="--f:url('assets/images/fabric/black.webp')" title="Black sequin" aria-label="Black sequin"></li><li class="sw" style="--f:url('assets/images/fabric/maroon.webp')" title="Maroon satin" aria-label="Maroon satin"></li></ul>
                   <p class="sg-tagline">Think classy, sparkly and effortlessly glamorous: ready for every beat.</p>
+                  <p class="sg-note">Just a guide, not a dress code. Wear whatever you feel wonderful in.</p>
                   <img class="sg-wardrobe" src="assets/images/wardrobe-ring.webp" alt="Wardrobe ideas for the Ring Exchange and Gala: a champagne gown, an emerald velvet tuxedo, a sage satin dress and a charcoal three-piece suit" width="264" height="320" loading="lazy" decoding="async" />
                 </div>
               </div></div>
@@ -815,7 +859,7 @@
             <button type="button" class="text-link" aria-expanded="false" aria-controls="more-thaali">Ceremony details</button>
             <div class="more" id="more-thaali" inert>
               <div class="more-in"><div class="more-body">
-                <img class="cer-art tamil" src="assets/images/tamil-wedding.webp" alt="Illustration of the couple in a kanjeevaram saree and veshti, playfully tugging a marigold-tied rope" width="870" height="737" loading="lazy" decoding="async" />
+                <img class="cer-art tamil" src="assets/images/tamil-wedding.webp" alt="Illustration of the couple in a kanjeevaram saree and veshti, playfully tugging a marigold-tied rope" width="870" height="742" loading="lazy" decoding="async" />
                 <ul class="facts">
                   <li><b class="caps">Date</b><span>Monday, 8 February 2027</span></li>
                   <li><b class="caps">Time</b><span>Morning, from 8:30 am onwards</span></li>
@@ -824,8 +868,9 @@
                 <p>A South Indian ceremony with a twist and lots of games. Jasmine in the air, kolam at the entrance, and everyone we love in one room.</p>
                 <div class="style-guide">
                   <h4 class="sg-title">Style guide</h4>
-                  <ul class="sg-palette" aria-label="Suggested colours to wear"><li class="sw" style="--f:url('assets/images/fabric/teal.webp')" title="Teal silk" aria-label="Teal silk"></li><li class="sw" style="--f:url('assets/images/fabric/peacock.webp')" title="Peacock blue silk" aria-label="Peacock blue silk"></li><li class="sw" style="--f:url('assets/images/fabric/ivory.webp')" title="Ivory silk" aria-label="Ivory silk"></li><li class="sw" style="--f:url('assets/images/fabric/emerald-silk.webp')" title="Emerald silk" aria-label="Emerald silk"></li><li class="sw" style="--f:url('assets/images/fabric/kumkum.webp')" title="Kumkum red silk" aria-label="Kumkum red silk"></li><li class="sw" style="--f:url('assets/images/fabric/gold.webp')" title="Temple gold silk" aria-label="Temple gold silk"></li></ul>
-                  <p class="sg-tagline">Think vintage elegance, traditional silks and timeless grace that take you back to olden times.</p>
+                  <ul class="sg-palette" aria-label="Suggested colours to wear"><li class="sw" style="--f:url('assets/images/fabric/teal.webp')" title="Teal silk" aria-label="Teal silk"></li><li class="sw" style="--f:url('assets/images/fabric/peacock.webp')" title="Peacock blue silk" aria-label="Peacock blue silk"></li><li class="sw" style="--f:url('assets/images/fabric/ivory.webp')" title="Ivory silk" aria-label="Ivory silk"></li><li class="sw" style="--f:url('assets/images/fabric/emerald-silk.webp')" title="Emerald silk" aria-label="Emerald silk"></li><li class="sw" style="--f:url('assets/images/fabric/gold.webp')" title="Temple gold silk" aria-label="Temple gold silk"></li></ul>
+                  <p class="sg-tagline">Think Indian vintage: rich traditional silks, temple gold and timeless grace from olden times.</p>
+                  <p class="sg-note">Just a guide, not a dress code. Wear whatever you feel wonderful in.</p>
                   <img class="sg-wardrobe" src="assets/images/wardrobe-wedding.webp" alt="Wardrobe ideas for the Wedding: a teal silk saree, an ivory veshti and shirt, a marigold saree, an emerald kurta and a red-and-gold pavadai" width="264" height="320" loading="lazy" decoding="async" />
                 </div>
               </div></div>
@@ -862,8 +907,8 @@
       <svg class="thoranam" viewBox="0 0 1440 136" preserveAspectRatio="xMidYMin slice" aria-hidden="true"></svg>
       <div class="stage" id="rsvp-silk" aria-hidden="true"></div>
       <div class="wrap">
-        <h2 class="h-display">Will you <em>join us?</em></h2>
-        <p class="lede">Kindly respond by 15 November 2026</p>
+        <h2 class="h-display">So, will you <em>join us?</em></h2>
+        <p class="lede">Kindly respond by 30th November, 2026</p>
         <div class="card">
           <div class="choice" id="rsvp-choice">
             <svg class="rule-diamond" viewBox="0 0 240 16" aria-hidden="true"><path d="M0 8 H106 M134 8 H240" stroke="#C8921E" stroke-width="1"/><path d="M120 1 L127 8 L120 15 L113 8 Z" fill="#C8921E"/></svg>
@@ -939,7 +984,7 @@
               <div class="tc-stub-stack" id="tc-stub-stack">
                 <div class="stub-wrap">
                   <div class="stub-card">
-                    <p class="stub-admit" id="tc-admit-final">ADMIT ONE</p>
+                    <p class="stub-admit" id="tc-admit-final">You’re in!!</p>
                     <p class="stub-title">DnA</p>
                     <p class="stub-subtitle">Wedding '27</p>
                     <div class="stub-rule"></div>
@@ -953,10 +998,12 @@
                     </div>
                     <div class="stub-field-row">
                       <span class="stub-lbl">Venue</span>
-                      <span class="stub-val">Coimbatore</span>
+                      <span class="stub-val stub-venue"><svg class="pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg><span class="stub-venue-name">Aarav Wedding Hall</span><em>Coimbatore</em><a class="stub-venue-link" href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x3ba8590000ab0821:0x78efe8be455c979f" target="_blank" rel="noopener">Link to the venue</a></span>
                     </div>
                     <div class="stub-rule"></div>
-                    <div class="stub-barcode" id="stub-barcode" aria-hidden="true"></div>
+                    <!-- Save the dates: one calendar file with both celebrations, downloaded and opened into any calendar -->
+                    <a class="stub-cal" href="dna-wedding.ics" download="DnA-Wedding-2027.ics"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4M12 12.5v5M9.5 15h5"/></svg>Add to calendar</a>
+                    <p class="stub-cal-note">Tap to download both dates, then open the file to save them to your calendar. The venue and map pin come with it.</p>
                   </div>
                   <div class="stub-glare" aria-hidden="true"></div>
 
@@ -1446,7 +1493,7 @@
     /* ── Toran: mango leaves and tuberose strands strung across the doorway ─ */
     /* ── RSVP doorway: a curtain of festive fairy lights in place of the mango-leaf toran ──
        Fine wires fall from the top, long at the sides and short over the heading, so the lights arch
-       around "Will you join us?". Bulbs glow champagne and warm white, like candlelight.
+       around "So, will you join us?". Bulbs glow champagne and warm white, like candlelight.
        Built for a phone's budget: the bulbs are split across four stacked SVG layers, and each layer
        breathes as one composited opacity animation (four animations, not one per bulb). A single
        glow band sweeps across for the chase, the whole curtain sways once in the breeze, and
@@ -1559,101 +1606,10 @@
       }(last));
     }
 
-    /* ── Ticket barcode: decorative bars ─────────────────────── */
-    function drawBarcode() {
-      // Code-128-style: alternating [bar, space, bar, space …] module counts (1 module = 2px)
-      // Even indices = black bars (ivory on red), odd indices = white spaces (transparent)
-      var pattern = [2,1,1,3,1,1,2,1,2,1,1,3,1,1,2,2,1,1,3,1,1,2,1,1,2,3,1,2,1,1,3,1,2,2,1,1,2,1,1,3,2,1,1,2];
-      var markup = pattern.map(function (w, i) {
-        var px = w * 2;
-        return i % 2 === 0
-          ? '<span style="width:' + px + 'px"></span>'
-          : '<span style="width:' + px + 'px;background:transparent"></span>';
-      }).join('');
-      var bc = document.getElementById('stub-barcode'); if (bc) bc.innerHTML = markup;
-    }
 
-    /* ── Petal shower: marigold, rose and jasmine drifting down ─ */
-    /* A marigold head is a dome of ruffled petals. Each sprite is lit as a sphere from the top left:
-       petals are drawn back (outer, low) to front (inner, raised), each with its own gradient from a
-       shadowed base to a sunlit frilled tip, then a soft specular bloom and a contact shadow underneath.
-       Several views per flower (top-down and tilted) are painted once, so a falling head can turn in 3D. */
-    var MARIGOLDS = (function () {
-      var pals = [
-        [[176, 58, 4], [236, 112, 10], [255, 168, 40]],
-        [[186, 74, 4], [244, 132, 16], [255, 186, 58]],
-        [[188, 120, 4], [246, 182, 22], [255, 222, 92]],
-        [[194, 92, 4], [250, 150, 18], [255, 200, 66]]
-      ];
-      function mix(a, b, t) { t = Math.max(0, Math.min(1, t)); return [0, 1, 2].map(function (k) { return Math.round(a[k] + (b[k] - a[k]) * t); }); }
-      function rgb(c, a) { return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + (a == null ? 1 : a) + ')'; }
-      // Ruffled petal: broad, crinkled fan with a scalloped tip
-      function petal(c, l, w, rnd) {
-        c.beginPath(); c.moveTo(0, -w * .18);
-        c.bezierCurveTo(l * .35, -w * .7, l * .7, -w * .62, l * .86, -w * .5);
-        var n = 4 + Math.floor(rnd() * 2);
-        for (var k = 0; k < n; k++) { var y0 = -w * .5 + w * k / n, y1 = -w * .5 + w * (k + 1) / n; c.quadraticCurveTo(l * (1.02 + rnd() * .06), (y0 + y1) / 2, l * (.88 + rnd() * .04), y1); }
-        c.bezierCurveTo(l * .7, w * .62, l * .35, w * .7, 0, w * .18); c.closePath();
-      }
-      function paint(pal, seed, tilt) {
-        var S = 140, R = S * .4, cv = document.createElement('canvas'); cv.width = cv.height = S;
-        var c = cv.getContext('2d'), rnd = rng(seed); c.translate(S / 2, S / 2 + R * .04 * tilt);
-        var squash = 1 - tilt * .42;  // tilted views are foreshortened vertically
-        // Contact shadow on whatever is below
-        var sh = c.createRadialGradient(R * .08, R * .18, R * .2, R * .08, R * .18, R * 1.05);
-        sh.addColorStop(0, 'rgba(90,30,0,.28)'); sh.addColorStop(1, 'rgba(90,30,0,0)');
-        c.fillStyle = sh; c.beginPath(); c.ellipse(R * .08, R * .18, R * 1.05, R * 1.05 * squash, 0, 0, 6.283); c.fill();
-        var rings = 7;
-        for (var ri = 0; ri < rings; ri++) {
-          var t = ri / (rings - 1), rad = R * (1 - t * .86), height = Math.sqrt(Math.max(0, 1 - Math.pow(1 - t * .95, 2)));
-          var count = Math.round(10 + (1 - t) * 22);
-          for (var k = 0; k < count; k++) {
-            var a = (k + rnd() * .7) / count * 6.283 + ri * .41;
-            var px = Math.cos(a) * rad * .62, py = Math.sin(a) * rad * .62 * squash - height * R * .22 * tilt;
-            var l = rad * (.52 + rnd() * .16) * (1 - t * .25), w = l * (.85 + rnd() * .3);
-            // Sphere lighting: light from top-left, petals facing away fall into shade
-            var nx = Math.cos(a), ny = Math.sin(a) * squash, lit = .5 + .5 * (-nx * .62 - ny * .78);
-            var lift = height * .45 + lit * .55;
-            var base = mix(pal[0], pal[1], .25 + lift * .5), tip = mix(pal[1], pal[2], .3 + lift * .7);
-            c.save(); c.translate(px, py); c.rotate(a + (rnd() - .5) * .6); c.scale(1, squash + (1 - squash) * Math.abs(Math.cos(a)));
-            petal(c, l, w, rnd);
-            var g = c.createLinearGradient(0, 0, l, 0);
-            g.addColorStop(0, rgb(mix(base, [60, 14, 0], .35))); g.addColorStop(.45, rgb(base)); g.addColorStop(1, rgb(tip));
-            c.fillStyle = g; c.fill();
-            // Crinkle: a fine darker crease and a lit ridge along each petal
-            c.lineWidth = .7; c.strokeStyle = rgb(mix(pal[0], [70, 16, 0], .5), .28 + (1 - lit) * .25); c.stroke();
-            if (t < .7) { c.beginPath(); c.moveTo(l * .15, -w * .05); c.quadraticCurveTo(l * .5, -w * .18, l * .82, -w * .1);
-              c.lineWidth = .8; c.strokeStyle = rgb(mix(pal[2], [255, 236, 170], .4), .1 + lit * .25); c.stroke(); }
-            c.restore();
-          }
-          // Ambient occlusion between rings: a soft dark band where the next ring sits
-          var ao = c.createRadialGradient(0, -height * R * .22 * tilt, rad * .3, 0, -height * R * .22 * tilt, rad * .75);
-          ao.addColorStop(0, 'rgba(90,24,0,0)'); ao.addColorStop(.8, 'rgba(90,24,0,.10)'); ao.addColorStop(1, 'rgba(90,24,0,0)');
-          c.fillStyle = ao; c.beginPath(); c.ellipse(0, -height * R * .22 * tilt, rad * .75, rad * .75 * squash, 0, 0, 6.283); c.fill();
-        }
-        // Tight crown of unopened florets at the top of the dome
-        var cg = c.createRadialGradient(0, -R * .2 * tilt, 0, 0, -R * .2 * tilt, R * .2);
-        cg.addColorStop(0, rgb(mix(pal[0], pal[1], .2))); cg.addColorStop(1, rgb(mix(pal[0], pal[1], .55)));
-        c.fillStyle = cg; c.beginPath(); c.ellipse(0, -R * .2 * tilt, R * .2, R * .2 * squash, 0, 0, 6.283); c.fill();
-        for (var q = 0; q < 26; q++) { var b = rnd() * 6.283, rr = rnd() * R * .14; c.beginPath(); c.ellipse(Math.cos(b) * rr, Math.sin(b) * rr * squash - R * .2 * tilt, R * .07, R * .045, b, 0, 6.283); c.fillStyle = rgb(mix(pal[0], pal[1], .15 + rnd() * .35)); c.fill(); }
-        // Specular bloom on the lit shoulder and core shadow on the far side
-        c.globalCompositeOperation = 'source-atop';
-        var hl = c.createRadialGradient(-R * .32, -R * .38 * squash, 0, -R * .32, -R * .38 * squash, R * .7);
-        hl.addColorStop(0, 'rgba(255,248,214,.42)'); hl.addColorStop(1, 'rgba(255,248,214,0)');
-        c.fillStyle = hl; c.fillRect(-S / 2, -S / 2, S, S);
-        var cs = c.createRadialGradient(R * .45, R * .5 * squash, 0, R * .45, R * .5 * squash, R * .9);
-        cs.addColorStop(0, 'rgba(110,30,0,.42)'); cs.addColorStop(1, 'rgba(110,30,0,0)');
-        c.fillStyle = cs; c.fillRect(-S / 2, -S / 2, S, S);
-        return cv;
-      }
-      return pals.map(function (pal, n) { return [0, .5, 1].map(function (tilt) { return paint(pal, 60 + n, tilt); }); });
-    }());
-    // A falling head turns slowly in 3D: pick the sprite view from its tumble angle
-    function bloomAt(c, p, now) {
-      var tumble = Math.abs(Math.sin(now / 1100 * p.tr + p.sw)), views = MARIGOLDS[p.bloomIdx];
-      var sp = views[tumble < .33 ? 0 : tumble < .66 ? 1 : 2], r = p.s;
-      c.drawImage(sp, -r * 1.25, -r * 1.25, r * 2.5, r * 2.5);
-    }
+    /* ── Petal rain: loose marigold and rose petals, jasmine buds and tiny jasmine flowers ──
+       Small, sparse and slow, at three depths: far pieces are smaller, fainter and drift slower, so the rain
+       reads as falling through the air. Each piece fades in at the top and out before the bottom. */
     // Loose petals: cupped and curled, shaded across their width, so they catch light as they flip
     function looseAt(c, p, flip) {
       var l = p.s, w = p.s * .62, g = c.createLinearGradient(0, -w, 0, w);
@@ -1664,7 +1620,27 @@
       c.bezierCurveTo(l * .4, w * .9, -l * .5, w * .9, -l, 0); c.closePath();
       c.fillStyle = g; c.fill();
       c.beginPath(); c.moveTo(-l * .8, 0); c.quadraticCurveTo(0, -w * (flip > 0 ? .25 : -.25), l * .8, -w * .1);
-      c.lineWidth = .6; c.strokeStyle = 'rgba(255,255,255,.35)'; c.stroke();
+      c.lineWidth = .5; c.strokeStyle = 'rgba(255,255,255,.35)'; c.stroke();
+    }
+    // Jasmine bud: a slim ivory teardrop on a short green calyx
+    function budAt(c, p) {
+      var l = p.s, w = p.s * .38, g = c.createLinearGradient(-w, 0, w, 0);
+      g.addColorStop(0, '#FFFFFF'); g.addColorStop(.6, '#F6EFDD'); g.addColorStop(1, '#D9CDB0');
+      c.beginPath(); c.moveTo(0, -l); c.bezierCurveTo(w * 1.3, -l * .55, w * 1.1, l * .35, 0, l * .55);
+      c.bezierCurveTo(-w * 1.1, l * .35, -w * 1.3, -l * .55, 0, -l); c.fillStyle = g; c.fill();
+      c.beginPath(); c.moveTo(-w * .7, l * .45); c.quadraticCurveTo(0, l * .95, w * .7, l * .45); c.quadraticCurveTo(0, l * .62, -w * .7, l * .45);
+      c.fillStyle = '#7A8F4A'; c.fill();
+    }
+    // Jasmine flower: five soft ivory petals around a pale butter centre
+    function floretAt(c, p) {
+      var r = p.s;
+      for (var k = 0; k < 5; k++) {
+        c.save(); c.rotate(k * 1.2566);
+        c.beginPath(); c.moveTo(0, 0); c.bezierCurveTo(r * .55, -r * .25, r * .55, -r * 1.05, 0, -r * 1.1); c.bezierCurveTo(-r * .55, -r * 1.05, -r * .55, -r * .25, 0, 0);
+        c.fillStyle = k % 2 ? '#FFFDF6' : '#F8F1E0'; c.fill();
+        c.restore();
+      }
+      c.beginPath(); c.arc(0, 0, r * .2, 0, 6.2832); c.fillStyle = '#E9D38A'; c.fill();
     }
     function petals(count) {
       if (reduce) return;
@@ -1672,28 +1648,42 @@
       var dpr = Math.min(window.devicePixelRatio || 1, 2), W = window.innerWidth, H = window.innerHeight;
       cv.width = W * dpr; cv.height = H * dpr;
       var c = cv.getContext('2d'); c.scale(dpr, dpr);
-      // [mid, light, dark] per petal colour: marigold, orange, rose red, jasmine white, pink
-      var cols = [['#E0A526', '#FFD46A', '#A86E10'], ['#EE7B1A', '#FFB45A', '#B04E08'], ['#C4213F', '#EE6078', '#7E0F24'], ['#FBF7EC', '#FFFFFF', '#D8CDB4'], ['#E8577A', '#FF9AB2', '#A82E4E']], P = [];
-      for (var i = 0; i < count; i++) P.push({ x: Math.random() * W, y: -20 - Math.random() * H * .6, vy: 50 + Math.random() * 70, sw: Math.random() * 6, sp: .8 + Math.random() * 1.4,
-        r: Math.random() * 6.28, vr: (Math.random() - .5) * 3, s: 5 + Math.random() * 6, col: cols[i % cols.length][0], lt: cols[i % cols.length][1], dk: cols[i % cols.length][2] });
-      // Every fifth piece is a whole marigold head, heavier, so it falls a little faster and turns slowly
-      P.forEach(function (p, i) { if (i % 5 === 2) { p.bloom = true; p.bloomIdx = Math.floor(Math.random() * MARIGOLDS.length); p.s = 12 + Math.random() * 6; p.vy *= 1.15; p.vr *= .4; p.tr = .6 + Math.random() * .8; } });
+      // [mid, light, dark]: marigold and its orange (most of the rain), then rose red and pink
+      var warm = [['#E9A92B', '#FFD878', '#B07812'], ['#EE7B1A', '#FFB45A', '#B04E08']], rose = [['#C4213F', '#EE6078', '#7E0F24'], ['#E8577A', '#FFA2B8', '#A82E4E']];
+      var P = [];
+      for (var i = 0; i < count; i++) {
+        var z = Math.random(), kind = Math.random(), col;
+        var p = { z: z, x: Math.random() * W, y: -12 - Math.random() * H * .55, sw: Math.random() * 6.28, sp: .5 + Math.random() * .9,
+          r: Math.random() * 6.28, vr: (Math.random() - .5) * (1.2 + z * 1.6), vy: 44 + z * 44 + Math.random() * 14, amp: 14 + z * 22,
+          sc: .62 + z * .5, a: .5 + z * .45 };
+        if (kind < .52) { p.k = 'petal'; col = warm[i % 2]; p.s = 6.5 + Math.random() * 3; }
+        else if (kind < .66) { p.k = 'petal'; col = rose[i % 2]; p.s = 6 + Math.random() * 2.6; }
+        else if (kind < .84) { p.k = 'bud'; p.s = 6.5 + Math.random() * 2; p.vr *= .5; }
+        else { p.k = 'floret'; p.s = 5.5 + Math.random() * 2.2; p.vr *= .35; }
+        if (col) { p.col = col[0]; p.lt = col[1]; p.dk = col[2]; }
+        P.push(p);
+      }
+      P.sort(function (m, n) { return m.z - n.z; });   // far pieces first, near pieces drawn over them
       var last = performance.now(), t0 = last;
       (function frame(now) {
-        var dt = Math.min(.05, (now - last) / 1000), alive = 0; last = now;
+        var dt = Math.min(.05, (now - last) / 1000), alive = 0, t = (now - t0) / 1000; last = now;
         c.clearRect(0, 0, W, H);
         P.forEach(function (p) {
-          p.y += p.vy * dt; p.x += Math.sin((now - t0) / 1000 * p.sp + p.sw) * 30 * dt; p.r += p.vr * dt;
-          if (p.y > H + 20) return; alive++;
-          c.save(); c.translate(p.x, p.y); c.rotate(p.r);
-          if (p.bloom) bloomAt(c, p, now);
-          else { var flip = Math.sin(now / 300 + p.sw); c.scale(1, .25 + .75 * Math.abs(flip)); looseAt(c, p, flip); }
+          p.y += p.vy * dt; p.x += Math.cos(t * p.sp + p.sw) * p.amp * dt; p.r += p.vr * dt;
+          if (p.y > H + 16) return; alive++;
+          if (p.y < -12) return;
+          var u = p.y / H, fade = Math.min(1, (u + .02) / .1, (1.04 - u) / .2);   // in over the top tenth, out over the last fifth
+          if (fade <= 0) return;
+          c.save(); c.globalAlpha = p.a * fade; c.translate(p.x, p.y); c.rotate(p.r); c.scale(p.sc, p.sc);
+          if (p.k === 'petal') { var flip = Math.sin(t * 2.4 + p.sw); c.scale(1, .3 + .7 * Math.abs(flip)); looseAt(c, p, flip); }
+          else if (p.k === 'bud') budAt(c, p);
+          else floretAt(c, p);
           c.restore();
         });
         if (alive) requestAnimationFrame(frame); else cv.remove();
       }(last));
     }
-    setTimeout(function () { petals(window.innerWidth < 600 ? 45 : 80); }, 900);
+    setTimeout(function () { petals(window.innerWidth < 600 ? 30 : 56); }, 900);
 
     /* ── Ceremony details: inline, under each ceremony ─────── */
     $$('[aria-controls^="more-"]').forEach(function (b) {
@@ -1909,10 +1899,7 @@
           hide(formWrap); show($('#state-registered')); return;
         }
         if (!reply || reply.ok !== true) throw new Error((reply && reply.error) || 'not saved');
-        // Saved: issue the guest's ticket (ADMIT TWO with a plus-one), burst, then the petal shower
-        var isPlus = plus && plus.value === 'yes';
-        var admitFinal = document.getElementById('tc-admit-final');
-        if (admitFinal) admitFinal.textContent = isPlus ? 'ADMIT TWO' : 'ADMIT ONE';
+        // Saved: issue the guest's ticket, burst, then the petal shower
         // Fetch the ticket's texture and bow only now
         var stubCard = $('.stub-card'); if (stubCard) stubCard.classList.add('ready');
         var wrapEl = $('.stub-wrap');
@@ -1920,13 +1907,12 @@
           var bow = new Image(); bow.className = 'stub-bow'; bow.src = 'assets/images/black-bow.webp'; bow.width = 300; bow.height = 447; bow.alt = ''; bow.setAttribute('aria-hidden', 'true');
           wrapEl.appendChild(bow);
         }
-        drawBarcode();
         hide(formWrap); show($('#state-success'));
         $('#state-success').scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });   // land on the ticket's top, not mid-stub
         var tcStack = document.getElementById('tc-stub-stack');
         if (tcStack) tcStack.classList.add('show');
         burst();
-        setTimeout(function () { petals(160); }, 320);
+        setTimeout(function () { petals(window.innerWidth < 600 ? 60 : 90); }, 320);
       } catch (_) {
         btn.disabled = false; btn.textContent = 'Confirm attendance'; btn.classList.remove('sending'); btn.removeAttribute('aria-busy');
         hide(formWrap); show($('#state-error'));
@@ -1984,14 +1970,30 @@
     }());
 
     /* ── Audio ─────────────────────────────────────────────── */
-    var audio = $('#bg-audio');
+    var audio = $('#bg-audio'), musicBtn = $('#music-toggle');
     audio.volume = 0.65;
+    // A guest who turned the music off keeps it off on their next visit
+    var musicOff = false; try { musicOff = localStorage.getItem('dna-music') === 'off'; } catch (_) {}
     function startAudio() {
+      if (musicOff) return;
       audio.muted = false;
       audio.play().catch(function () {});
     }
+    function syncMusic() {
+      var on = !audio.paused;
+      musicBtn.setAttribute('aria-pressed', String(on));
+      musicBtn.setAttribute('aria-label', on ? 'Turn music off' : 'Play music');
+      musicBtn.title = on ? 'Turn music off' : 'Play music';
+    }
+    audio.addEventListener('play', syncMusic); audio.addEventListener('pause', syncMusic);
+    musicBtn.addEventListener('click', function () {
+      if (audio.paused) { musicOff = false; audio.muted = false; audio.play().catch(function () {}); }
+      else { musicOff = true; audio.pause(); }
+      try { localStorage.setItem('dna-music', musicOff ? 'off' : 'on'); } catch (_) {}
+    });
     startAudio();
-    function onFirstGesture() {
+    function onFirstGesture(e) {
+      if (e.target.closest && e.target.closest('#music-toggle')) return;   // the toggle decides for itself
       document.removeEventListener('touchstart', onFirstGesture);
       document.removeEventListener('pointerdown', onFirstGesture);
       startAudio();
