@@ -558,6 +558,11 @@
     @media (hover: none) { .stub-glare { display: none; } .stub-wrap, .stub-card { -webkit-tap-highlight-color: transparent; } }
     /* The silk texture is only fetched once a ticket is issued (.ready), so it costs nothing on page load */
     .stub-card.ready { background: linear-gradient(rgba(22,4,3,.74), rgba(22,4,3,.74)), url('assets/images/texture.webp') center / cover no-repeat, #3A0A12; }
+    /* Phones: a lighter wash so the silk shows through and the stub reads warmer on a small screen */
+    @media (max-width: 600px) {
+      .stub-card { background: linear-gradient(rgba(40,8,10,.56), rgba(40,8,10,.56)), #5A1420; }
+      .stub-card.ready { background: linear-gradient(rgba(40,8,10,.56), rgba(40,8,10,.56)), url('assets/images/texture.webp') center / cover no-repeat, #5A1420; }
+    }
     /* Scalloped stub card — semicircular notches along left and right long edges */
     .stub-card {
       --sc: 7px;
