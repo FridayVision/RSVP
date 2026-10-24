@@ -1983,9 +1983,8 @@
     /* ── Audio ─────────────────────────────────────────────── */
     var audio = $('#bg-audio'), musicBtn = $('#music-toggle');
     audio.volume = 0.65;   // (iOS ignores this; elsewhere it softens the song a touch)
-    // The song is a 26-second piece: it plays three times through (about 80 s) and stops at its own ending,
-    // rather than looping forever. The toggle starts another round.
-    var PLAYS = 3, plays = 0, resumeOnReturn = false;
+    // The song is a 26-second piece: it plays once and stops at its own ending. The toggle plays it again.
+    var PLAYS = 1, plays = 0, resumeOnReturn = false;
     // A guest who turned the music off keeps it off on their next visit
     var musicOff = false; try { musicOff = localStorage.getItem('dna-music') === 'off'; } catch (_) {}
     function play() { audio.muted = false; audio.play().catch(function () {}); }
