@@ -122,7 +122,7 @@ components:
 
 **Creative North Star: "The Silk Canopy"**
 
-The page is a wedding courtyard seen from beneath its canopy. Lengths of saree silk in Kanjeevaram red, marigold, ivory and black cross overhead on the cover, drift behind the reply card, and return as a band across the ceremonies. Under them sits a courtyard-white ground woven with tiny gold DNA buttas, warming to a canopy cream where the story begins. Everything decorative is either cloth, flowers or gold line art: a mango-leaf and jasmine toran over the ceremonies, a curtain of fairy lights over the RSVP, watercolour banana plants with brass urns of tuberose framing the cover.
+The page is a wedding courtyard seen from beneath its canopy. Lengths of saree silk in Kanjeevaram red, marigold, ivory and black cross overhead on the cover, drift behind the reply card, and return as a band across the ceremonies. Under them sits a courtyard-white ground woven with tiny gold DNA buttas, warming to a canopy cream where the story begins. Everything decorative is either cloth, flowers or gold line art: a curtain of fairy lights over the RSVP, watercolour banana plants with brass urns of tuberose framing the cover.
 
 The two ceremonies set the two moods and the page alternates between them. **Courtyard white** (cover, story, countdown, RSVP) is the black-tie evening: Bodoni in black ink, a single red italic accent, gold hairlines. **Kanjeevaram red** (the ceremonies section) is the silk morning: the whole section printed on red, ivory roman type, marigold italics, gold zari borders top and bottom. The swing between the two grounds is the page's rhythm.
 
@@ -191,7 +191,7 @@ Kanjeevaram red and zari gold on courtyard white, with black ink for type.
 
 Single centred column, max width 1120px, side gutter 16px. Sections breathe with `clamp(96px, 12vw, 168px)` of vertical padding; the countdown is tighter (`clamp(56px, 7vw, 96px)`). Groups inside a section stay tight (10–28px).
 
-Section order: cover (full viewport, canopy overhead, banana plants at the sides, DnA and both dates) → story (graphite portrait dissolving into the cream on the left half, text on the right; stacked on phones) → ceremonies (red ground, toran at the top, heading, gold skyline line art edge to edge, a silk band, then the two ceremonies side by side split by a gold seam with a diamond; stacked on phones) → countdown (title with the gold DNA ornament, then the sketch band) → RSVP (fairy-light curtain, heading, deadline, silk lanes crossing behind the reply card) → footer.
+Section order: cover (full viewport, canopy overhead, banana plants at the sides, DnA and both dates) → story (graphite portrait dissolving into the cream on the left half, text on the right; stacked on phones) → ceremonies (red ground opening straight onto the gold skyline line art edge to edge, a silk band, then the two ceremonies side by side split by a gold seam with a diamond; stacked on phones) → countdown (title with the gold DNA ornament, then the sketch band) → RSVP (fairy-light curtain, heading, deadline, silk lanes crossing behind the reply card) → footer.
 
 Ceremony details open inline beneath each ceremony (a grid-rows expand, 0.7s), not as a modal. Below 560px the cover dates stack, buttons go full width, and the two-column story collapses.
 
@@ -240,8 +240,8 @@ The confirmation is an admission stub: a near-black red card with scalloped long
 ### Silk lanes (signature)
 Canvas-drawn lengths of sheer silk (red, marigold, ivory, black) with woven texture and zari edges. They enter with a slide, then breathe slowly. Used on the cover canopy, the ceremonies band (each pair soloes when its ceremony is hovered or focused) and behind the reply card.
 
-### Garlands and lights
-A mango-leaf toran with tuberose strands over the ceremonies; a curtain of fairy lights that drops and twinkles over the RSVP. Both pause off screen.
+### Fairy lights
+A curtain of fairy lights that drops and twinkles over the RSVP; it pauses off screen and while scrolling.
 
 ## Do's and Don'ts
 

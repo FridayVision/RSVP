@@ -387,7 +387,7 @@
         repeating-linear-gradient(90deg, var(--silk-marigold) 0 6px, transparent 6px 9px, var(--silk-marigold) 9px 11px, transparent 11px 18px) center / 100% 6px no-repeat;
     }
     .zari.top { top: 0; } .zari.bottom { bottom: 0; }
-    #events { position: relative; background: var(--silk-red); color: var(--ivory-on-red); padding-top: clamp(150px, 16vw, 220px); }
+    #events { position: relative; background: var(--silk-red); color: var(--ivory-on-red); padding-top: clamp(40px, 5vw, 72px); }
     #events .h-display { color: var(--ivory-on-red); }
     #events .h-display em, #events .cer h3 em { color: var(--marigold-on-red); }
     #events .lede, #events .cer .time, #events .more-body p.todo { color: var(--muted-on-red); }
@@ -635,7 +635,7 @@
 
     /* ── Events & RSVP: reduce excessive top whitespace on mobile */
     @media (max-width: 640px) {
-      #events { padding-top: clamp(108px, 16vw, 150px); }
+      #events { padding-top: 32px; }
       #rsvp   { padding-top: clamp(108px, 16vw, 150px); }
     }
 
@@ -780,13 +780,8 @@
     </section>
 
     <!-- ═══ CEREMONIES ═══ -->
-    <section id="events" class="section">
-      <svg class="thoranam" viewBox="0 0 1440 136" preserveAspectRatio="xMidYMin slice" aria-hidden="true"></svg>
+    <section id="events" class="section" aria-label="The two celebrations">
       <div class="zari bottom" aria-hidden="true"></div>
-      <div class="wrap">
-        <h2 class="h-display">One evening in black&nbsp;tie,<br> <em>one morning in silk</em></h2>
-        <p class="lede">Join us for a ring exchange and gala that dances into the night, then a South Indian wedding, reimagined our way.</p>
-      </div>
       <img class="skyline" src="assets/images/skyline-gold.webp" loading="lazy" decoding="async" alt="" aria-hidden="true" width="1903" height="679" />
       <div class="stage" id="band" aria-hidden="true"></div>
       <div class="wrap">
