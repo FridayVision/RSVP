@@ -670,6 +670,12 @@
     .input.cc { width: auto; padding-right: 22px; cursor: pointer; -webkit-appearance: none; appearance: none;
       background: linear-gradient(45deg, transparent 50%, currentColor 50%) right 8px center / 5px 5px no-repeat, linear-gradient(-45deg, transparent 50%, currentColor 50%) right 3px center / 5px 5px no-repeat; }
     .form-actions { display: grid; justify-items: start; gap: 14px; }
+    #btn-submit { position: relative; overflow: hidden; }
+    #btn-submit.sending { opacity: 1; cursor: progress; }
+    #btn-submit.sending::after { content: ''; position: absolute; inset: 0; width: 40%; pointer-events: none;
+      background: linear-gradient(100deg, transparent, rgba(244,194,78,.45), transparent); transform: translateX(-120%); }
+    @media (prefers-reduced-motion: no-preference) { #btn-submit.sending::after { animation: sending-sheen 1.4s cubic-bezier(.45,0,.55,1) infinite; } }
+    @keyframes sending-sheen { to { transform: translateX(300%); } }
     .link.back { justify-self: start; text-decoration: none; font-family: var(--display); font-style: italic; font-size: 1.05rem; }
     .link.back:hover { text-decoration: underline; }
     /* ── RSVP card: reduce inner padding on narrow screens ───── */
@@ -1815,7 +1821,15 @@
     var choice = $('#rsvp-choice'), formWrap = $('#rsvp-form-wrap');
     function show(n) { n.hidden = false; }
     function hide(n) { n.hidden = true; }
-    function showForm() { hide(choice); hide($('#state-decline')); hide($('#state-registered')); show(formWrap); }
+    function showForm() { hide(choice); hide($('#state-decline')); hide($('#state-registered')); show(formWrap); warmTicket(); }
+    // While the guest fills the form: wake the Apps Script (a cold script adds seconds to the first save) and
+    // fetch the ticket's texture and bow, so the ticket appears complete the moment the save is confirmed
+    var warmed = false;
+    function warmTicket() {
+      if (warmed) return; warmed = true;
+      try { fetch(SCRIPT_URL, { mode: 'no-cors', cache: 'no-store' }).catch(function () {}); } catch (_) {}
+      warmTicket.imgs = ['assets/images/texture.webp', 'assets/images/black-bow.webp'].map(function (u) { var i = new Image(); i.src = u; return i; });   // held so they stay in memory cache
+    }
     function showDecline() { hide(choice); hide(formWrap); show($('#state-decline')); }
     $('#btn-accept').addEventListener('click', showForm);
     $('#btn-decline').addEventListener('click', showDecline);
@@ -1877,7 +1891,7 @@
         return;
       }
       var btn = $('#btn-submit');
-      btn.disabled = true; btn.textContent = 'Sending…';
+      btn.disabled = true; btn.textContent = 'Issuing your ticket…'; btn.classList.add('sending'); btn.setAttribute('aria-busy', 'true');
       // Confirmed save: send as text/plain (a "simple" request, so no CORS preflight), then read the
       // script's JSON reply. Only show "You're locked in" once the sheet has actually written the row.
       var ctrl = new AbortController(), timer = setTimeout(function () { ctrl.abort(); }, 20000);
@@ -1896,7 +1910,7 @@
         });
         var reply = await res.json();
         if (reply && reply.duplicate) {   // this number has already RSVP'd
-          btn.disabled = false; btn.textContent = 'Confirm attendance';
+          btn.disabled = false; btn.textContent = 'Confirm attendance'; btn.classList.remove('sending'); btn.removeAttribute('aria-busy');
           hide(formWrap); show($('#state-registered')); return;
         }
         if (!reply || reply.ok !== true) throw new Error((reply && reply.error) || 'not saved');
@@ -1908,17 +1922,18 @@
         var stubCard = $('.stub-card'); if (stubCard) stubCard.classList.add('ready');
         var wrapEl = $('.stub-wrap');
         if (wrapEl && !$('.stub-bow')) {   // the bow image is created only now, so nothing loads before a ticket exists
-          var bow = new Image(); bow.className = 'stub-bow'; bow.src = 'assets/images/black-bow.webp'; bow.width = 640; bow.height = 954; bow.alt = ''; bow.setAttribute('aria-hidden', 'true');
+          var bow = new Image(); bow.className = 'stub-bow'; bow.src = 'assets/images/black-bow.webp'; bow.width = 300; bow.height = 447; bow.alt = ''; bow.setAttribute('aria-hidden', 'true');
           wrapEl.appendChild(bow);
         }
         drawBarcode();
         hide(formWrap); show($('#state-success'));
+        $('#state-success').scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });   // land on the ticket's top, not mid-stub
         var tcStack = document.getElementById('tc-stub-stack');
         if (tcStack) tcStack.classList.add('show');
         burst();
         setTimeout(function () { petals(160); }, 320);
       } catch (_) {
-        btn.disabled = false; btn.textContent = 'Confirm attendance';
+        btn.disabled = false; btn.textContent = 'Confirm attendance'; btn.classList.remove('sending'); btn.removeAttribute('aria-busy');
         hide(formWrap); show($('#state-error'));
       } finally {
         clearTimeout(timer);
